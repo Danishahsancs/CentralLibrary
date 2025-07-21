@@ -19,7 +19,6 @@ public class Person {
     // ---- Getters and Setters ----
 
     // Allow modification of the private fields
-    // Include edge cases for each setter method
     // Edge cases are handled in the setter methods
 
     // Edge cases include:
