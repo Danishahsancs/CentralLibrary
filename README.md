@@ -1,6 +1,6 @@
 # Shhhh! Central Library Management System
 
-As a team, fork this repository to an Organization and submit the URL of your fork via the Student Portal. Each teammate will submit the **SAME URL.** 
+As a team, fork this repository to an Organization and submit the URL of your fork to your instructors. Each teammate will submit the **SAME URL.** 
 
 ## Project Overview
 
