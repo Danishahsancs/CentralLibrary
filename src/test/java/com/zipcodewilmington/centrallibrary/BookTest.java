@@ -13,41 +13,44 @@ public class BookTest
     public void testConstructors()
     {
         // creating object and assiging values
-        Book book= new Book(1234L,"Title","Location",20.00,14,"Younis","isbn");
+        Book book= new Book(1234L,"Title","Location","Younis","isbn",256,"Horror");
         assertEquals(1234L,book.getId());
         assertEquals("Title",book.getTitle()); 
         assertEquals("Location",book.getLocation()); 
-        assertEquals(20.00,book.getLateFee()); 
+        assertEquals(0.5,book.getLateFee()); 
         assertEquals(14,book.getMaxBorrowDays()); 
         assertEquals("Younis",book.getAuthor()); 
         assertEquals("isbn",book.getIsbn());
+        assertEquals("Horror", book.getGenre());
+        assertEquals(256, book.getPages());
         assertTrue(book.isAvailable()) ;
          
 
     }
     @Test
     public void testSetter()
-    {   Book book= new Book(12345L,"Title1","Location1",21.00,15,"Younis1","isb2n");
+        {
+        Book book= new Book(1234L,"Title","Location","Younis","isbn",255,"Romantic");
         book.setId(1234L);
         book.setTitle("Title");
         book.setLocations("Location");
-        book.setLateFee(20.00);
-        book.setMaxBorrowDays(14);
         book.setAuthor("Younis");
         book.setIsbn("isbn");
+        book.setPages(256);
+        book.setGenre("Horror");
         
 
         assertEquals(1234L,book.getId());
         assertEquals("Title",book.getTitle()); 
         assertEquals("Location",book.getLocation()); 
-        assertEquals(20.00,book.getLateFee()); 
-        assertEquals(14,book.getMaxBorrowDays()); 
         assertEquals("Younis",book.getAuthor());
         assertEquals("isbn",book.getIsbn()); 
+        assertEquals("Horror", book.getGenre());
+        assertEquals(256, book.getPages());
         assertTrue(book.isAvailable()) ;
-         
+        } 
 
-    }
+}
     
     
 
@@ -63,8 +66,7 @@ public class BookTest
 
 
 
-}
-    
+ 
 
 
 
