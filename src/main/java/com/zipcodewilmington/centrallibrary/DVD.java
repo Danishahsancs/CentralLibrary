@@ -1,0 +1,87 @@
+package com.zipcodewilmington.centrallibrary;
+
+public class DVD extends LibraryItem {
+    
+    // Additional Fields from LibraryItem class
+    private String director;
+    private int duration; // in minutes
+    private String rating; // e.g., PG, R, etc.
+    private String genre;
+
+    public DVD(Long id, String title, String location, String director, int duration, String rating, String genre) {
+        
+        // Set fields from LibraryItem class
+        setId(id);
+        setTitle(title);
+        setLocations(location);
+        setLateFee(1.00); // DVDs have 1 dollar late fee
+        setMaxBorrowDays(7); // DVDs can be borrowed for 7 days
+        this.director = director;
+        this.duration = duration;
+        this.rating = rating;
+        this.genre = genre;
+        checkIn(); // set default as True therefore Available by default
+
+    }
+
+    //----- Getters ------
+
+    public String getDirector() {
+        return director;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public String getRating() {
+        return rating;
+    }
+    
+    public String getGenre() {
+        return genre;
+    }
+
+    //---- Setters ------
+
+    public void setDirector(String director) {
+        // Edge case -> if director is null or empty, throw an exception
+        if (director == null || director.trim().isEmpty()) {
+            throw new IllegalArgumentException("Director cannot be null or empty");
+        }
+        this.director = director;
+    }
+
+    public void setDuration(int duration) {
+        // Edge case -> if duration is less than or equal to 0, throw an exception
+        if (duration <= 0) {
+            throw new IllegalArgumentException("Duration must be a positive integer");
+        }
+        this.duration = duration;
+    }
+
+    public void setRating(String rating) {
+        // Edge case -> if rating is null or empty, throw an exception
+        if (rating == null || rating.trim().isEmpty()) {
+            throw new IllegalArgumentException("Rating cannot be null or empty");
+        }
+        this.rating = rating;
+    }
+
+    public void setGenre(String genre) {
+        // Edge case -> if genre is null or empty, throw an exception
+        if (genre == null || genre.trim().isEmpty()) {
+            throw new IllegalArgumentException("Genre cannot be null or empty");
+        }
+        this.genre = genre;
+    }
+
+    // -----LibraryItem methods-----
+
+    @Override
+    public String getItemType() {
+        // Return the type of item
+        return "DVD";
+    }
+
+}
