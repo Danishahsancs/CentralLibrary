@@ -8,14 +8,14 @@ public class DVD extends LibraryItem {
     private String rating; // e.g., PG, R, etc.
     private String genre;
 
-    public DVD(Long id, String title, String location, Double lateFee, int maxBorrowDays, String director, int duration, String rating, String genre) {
+    public DVD(Long id, String title, String location, String director, int duration, String rating, String genre) {
         
         // Set fields from LibraryItem class
         setId(id);
         setTitle(title);
         setLocations(location);
-        setLateFee(lateFee);
-        setMaxBorrowDays(maxBorrowDays);
+        setLateFee(1.00); // DVDs have 1 dollar late fee
+        setMaxBorrowDays(7); // DVDs can be borrowed for 7 days
         this.director = director;
         this.duration = duration;
         this.rating = rating;
@@ -82,33 +82,6 @@ public class DVD extends LibraryItem {
     public String getItemType() {
         // Return the type of item
         return "DVD";
-    }
-
-    @Override
-    public Double calculateLateFee(int daysCheckedOut) {
-        // If the number of days checked out is less than or equal to max borrow days, no late fee
-        if (daysCheckedOut <= getMaxBorrowDays()) {
-            return 0.0;
-        }
-
-        //what is the late fee for DVD?
-        return (daysCheckedOut - getMaxBorrowDays()) * getLateFee();
-    }
-
-    @Override
-    public int getMaxBorrowDays() {
-        // Return the maximum borrow days from the LibraryItem class
-
-        // what is the max borrow days for DVD?
-        return super.getMaxBorrowDays();
-    }
-
-    @Override
-    public Double getLateFee() {
-        // Return the late fee from the LibraryItem class
-
-        //what is the late fee for DVD?
-        return super.getLateFee();
     }
 
 }
