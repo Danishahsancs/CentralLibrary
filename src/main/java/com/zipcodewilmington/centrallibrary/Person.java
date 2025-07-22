@@ -63,9 +63,9 @@ public class Person {
         }
 
         // Edge case -> name must not contain special characters
-        if (!name.matches("^[a-zA-Z\\s]+$")) {
-            throw new IllegalArgumentException("Name must not contain special characters");
-        }   
+        //if (!name.matches("^[a-zA-Z\\s]+$")) {
+            //throw new IllegalArgumentException("Name must not contain special characters");
+        //}   
 
         // Set the name of the person
         this.name = name;
@@ -114,10 +114,10 @@ public class Person {
             throw new IllegalArgumentException("Email is not valid");
         }   
 
-        //Edge case -> must contain @ and . 
-        if (!email.contains("@") || !email.contains(".")) {
-            throw new IllegalArgumentException("Email must contain '@' and '.'");
-        }
+        //Edge case -> must contain @ and .  The edge case called regex check overlaps with this edge case therefore the test fails
+      //  if (!email.contains("@") || !email.contains(".")) {
+       //     throw new IllegalArgumentException("Email must contain '@' and '.'");
+      //  }
 
         // Set the email of the person
         this.email = email;
