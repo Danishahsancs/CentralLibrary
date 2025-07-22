@@ -84,4 +84,10 @@ public class DVD extends LibraryItem {
         return "DVD";
     }
 
+    @Override
+    public String toString() {
+
+        // Return a string representation of the DVD (title, id, and availability)
+        return "Title: " + getTitle() + " ID: " + getId() + " Available: " + isAvailable();
+    }
 }
