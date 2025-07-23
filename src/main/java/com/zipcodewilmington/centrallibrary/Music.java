@@ -58,5 +58,10 @@ public class Music extends LibraryItem
         {
             return "Music";
         }
-    
+      @Override 
+    public String toString() 
+    {
+        // Return a string representation of the Music (title, id, and availability)
+        return "Title: " + getTitle() + " ID: " + getId() + " Available: " + isAvailable();
+    }
     }
