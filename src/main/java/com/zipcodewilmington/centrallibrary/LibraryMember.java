@@ -16,6 +16,7 @@ public class LibraryMember extends Person {
         this.memberId = memberId;
         this.membershipDate = membershipDate;
         this.borrowedItems = new ArrayList<>();
+        this.reservedItem = new ArrayList<>();
         this.outstandingFees = 0.0;
     }
 
@@ -34,6 +35,10 @@ public class LibraryMember extends Person {
         } else {
             System.out.println("Item is not available to reserve.");
         }
+    }
+
+    public void removeReservedItem(LibraryItem item){
+        reservedItem.remove(item);
     }
 
     public void returnItem(LibraryItem item, int daysLate) {
