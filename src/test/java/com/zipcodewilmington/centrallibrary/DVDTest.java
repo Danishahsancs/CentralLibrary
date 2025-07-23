@@ -11,11 +11,11 @@ public class DVDTest {
 
         // Creating object and assigning values
 
-        DVD dvd = new DVD(1001L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1001L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         assertEquals(1001L, dvd.getId());
         assertEquals("Superbad", dvd.getTitle());
-        assertEquals("Comedy Section", dvd.getLocation());
+        assertEquals("Library", dvd.getLocation());
         assertEquals(1.00, dvd.getLateFee());
         assertEquals(7, dvd.getMaxBorrowDays());
         assertEquals("Greg Mottola", dvd.getDirector());
@@ -28,7 +28,7 @@ public class DVDTest {
     @Test
     public void testGetters() {
         
-        DVD dvd = new DVD(1002L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1002L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         assertEquals("Greg Mottola", dvd.getDirector());
         assertEquals(113, dvd.getDuration());
@@ -39,7 +39,7 @@ public class DVDTest {
     @Test
     public void testSetDirector() {
        
-        DVD dvd = new DVD(1001L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1001L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         dvd.setDirector("New Director");
 
@@ -49,7 +49,7 @@ public class DVDTest {
     @Test
     public void testSetDirectorWithEmptyStringThrowsException() {
         
-        DVD dvd = new DVD(1001L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1001L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         assertThrows(IllegalArgumentException.class, () -> {
             dvd.setDirector("");
@@ -59,7 +59,7 @@ public class DVDTest {
     @Test
     public void testSetDuration() {
     
-        DVD dvd = new DVD(1001L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1001L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         dvd.setDuration(180);
 
@@ -69,7 +69,7 @@ public class DVDTest {
     @Test
     public void testSetDurationWithNegativeValueThrowsException() {
 
-        DVD dvd = new DVD(1001L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1001L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         assertThrows(IllegalArgumentException.class, () -> {
             dvd.setDuration(-10);
@@ -79,7 +79,7 @@ public class DVDTest {
     @Test
     public void testSetRating() {
 
-        DVD dvd = new DVD(1002L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1002L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         dvd.setRating("PG-13");
 
@@ -89,7 +89,7 @@ public class DVDTest {
     @Test
     public void testSetRatingWithEmptyStringThrowsException() {
 
-        DVD dvd = new DVD(1002L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1002L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         assertThrows(IllegalArgumentException.class, () -> {
             dvd.setRating("");
@@ -99,7 +99,7 @@ public class DVDTest {
     @Test
     public void testSetGenre() {
 
-        DVD dvd = new DVD(1002L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1002L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         dvd.setGenre("Drama");
 
@@ -109,7 +109,7 @@ public class DVDTest {
     @Test
     public void testGetItemType() {
 
-        DVD dvd = new DVD(1002L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1002L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         String itemType = dvd.getItemType();
 
@@ -119,7 +119,7 @@ public class DVDTest {
     @Test
     public void testInheritedMethods() {
 
-        DVD dvd = new DVD(1001L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1001L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         assertTrue(dvd.isAvailable()); // Should be available by default
         
@@ -133,7 +133,7 @@ public class DVDTest {
     @Test
     public void testCalculateLateFeeWithLateFee() {
 
-        DVD dvd = new DVD(1001L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1001L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         // (3 days late)
         Double lateFee = dvd.calculateLateFee(10);
@@ -144,7 +144,7 @@ public class DVDTest {
     @Test
     public void testCalculateLateFeeUnderMaxDays() {
 
-        DVD dvd = new DVD(1002L, "Superbad", "Comedy Section", "Greg Mottola", 113, "R", "Comedy");
+        DVD dvd = new DVD(1002L, "Superbad", new Library("Library", null), "Greg Mottola", 113, "R", "Comedy");
 
         // 5 days (under the 7 day limit)
         Double lateFee = dvd.calculateLateFee(5);

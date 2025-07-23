@@ -8,7 +8,7 @@ public class DVD extends LibraryItem {
     private String rating; // e.g., PG, R, etc.
     private String genre;
 
-    public DVD(Long id, String title, String location, String director, int duration, String rating, String genre) {
+    public DVD(Long id, String title, Library location, String director, int duration, String rating, String genre) {
         
         // Set fields from LibraryItem class
         setId(id);

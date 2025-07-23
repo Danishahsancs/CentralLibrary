@@ -10,7 +10,7 @@ public class Book extends LibraryItem
     
 
     //Constructors
-    public Book(Long id,String title,String location,String author,String isbn,int pages,String genre)
+    public Book(Long id,String title,Library location,String author,String isbn,int pages,String genre)
         {
         setId(id);
         setTitle(title);

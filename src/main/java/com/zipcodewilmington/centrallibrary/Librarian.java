@@ -8,10 +8,10 @@ public class Librarian  extends Person {
     private String department;
     private double salary;
 
-    public Librarian(String name, int age, String email, String phoneNumber, String employeeId, String department, double salary) {
+    public Librarian(String name, int age, String email, String phoneNumber, String employeeId, String department, double salary,Address address) {
         
         // Call the constructor of Person class to set name, age, email, and phone number
-        super(name, age, email, phoneNumber);
+        super(name, age, email, phoneNumber, address);
         this.employeeId = employeeId;
         this.department = department;
         this.salary = salary;

@@ -11,7 +11,7 @@ public class PeriodicalTest {
     public void testConstructors()
     {
         // creating object and assiging values
-        Periodical news= new Periodical(1234L,"Title","Location","publisher","issn","volume","issuenumber","date");
+        Periodical news= new Periodical(1234L,"Title", new Library("Library", null),"publisher","issn","volume","issuenumber","date");
         assertEquals(1234L,news.getId());
         assertEquals("Title",news.getTitle()); 
         assertEquals("Location",news.getLocation()); 
@@ -30,10 +30,10 @@ public class PeriodicalTest {
     @Test
     public void testSetter()
         {
-         Periodical news= new Periodical(12345L,"Title1","Location1","publisher1","issn1","volume1","issuenumber1","date1");
+         Periodical news= new Periodical(12345L,"Title1", new Library("Library", null),"publisher1","issn1","volume1","issuenumber1","date1");
         news.setId(1234L);
         news.setTitle("Title");
-        news.setLocations("Location");
+        news.setLocations( new Library("Library", null));
         news.setPublisher("publisher");
         news.setIssn("issn");
         news.setVolume("volume");

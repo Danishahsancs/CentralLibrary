@@ -11,7 +11,7 @@ public class PersonTest
 @Test
     void testConstructorAndGetters() 
     {
-    Person p = new Person("Danish", 21, "Danish@example.com", "1234567890");
+    Person p = new Person("Danish", 21, "Danish@example.com", "1234567890", new Address("this street", "this city", "this state", "12312"));
     assertEquals("Danish", p.getName());
     assertEquals(Integer.valueOf(21), p.getAge());
     assertEquals("Danish@example.com", p.getEmail());
@@ -20,7 +20,7 @@ public class PersonTest
 @Test
     public void testSettersWork() // creates and object assigns values and then changes those values with Set and compares the result
     { 
-        Person person = new Person("Danish", 21, "Danish@example.com", "1234567890");
+        Person person = new Person("Danish", 21, "Danish@example.com", "1234567890",new Address("this street2", "this city2", "this state2", "22222"));
         person.setName("Younis");
         person.setAge(27);
         person.setEmail("Younis@email.com");
@@ -35,7 +35,7 @@ public class PersonTest
 @Test
     public void testSetNameThrowsExceptionForNull() 
     {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
+            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setName(null);
             });
@@ -47,7 +47,7 @@ public class PersonTest
     public void testSetNameLength()
     {
         
-        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
+        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < 51; i++) {
             sb.append("A");
@@ -62,7 +62,7 @@ public class PersonTest
 @Test
     public void testSetNameInvalidCharacter() 
     {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
+            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setName("$$$$");
             });
@@ -71,7 +71,7 @@ public class PersonTest
     @Test
 public void testSetNameFisrtLetter() 
     {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
+            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setName(" Danish");
             });
@@ -90,7 +90,7 @@ public void testSetNameFisrtLetter()
 @Test
 public void testSetAgeLessThanSeven() 
     {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
+            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setAge(4);
             });
@@ -99,7 +99,7 @@ public void testSetAgeLessThanSeven()
 @Test
 public void testSetAgeMoreThan120() 
     {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
+            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setAge(125);
             });
@@ -118,7 +118,7 @@ public void testSetAgeMoreThan120()
     @Test
 public void testSetEmailEmpty() 
     {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
+            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setEmail("");
             });
@@ -127,7 +127,7 @@ public void testSetEmailEmpty()
     @Test
 public void testSetEmailNotValid() 
     {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
+            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setEmail("hello+");
             });
@@ -145,7 +145,7 @@ public void testSetEmailNotValid()
 @Test
 public void testSetPhoneNumberEmpty() 
     {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
+            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setPhoneNumber("");
             });
@@ -154,7 +154,7 @@ public void testSetPhoneNumberEmpty()
         @Test
 public void testSePhoneNUmbertNotValid() 
     {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
+            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setPhoneNumber("123-456-789");
             });

@@ -11,7 +11,7 @@ public class Periodical extends LibraryItem {
     
 
     //Constructors
-    public Periodical(Long id,String title,String location,String publisher,String issn,String volume,String  issuenumber,String publicationdate)
+    public Periodical(Long id,String title,Library location,String publisher,String issn,String volume,String  issuenumber,String publicationdate)
         {
         setId(id);
         setTitle(title);

@@ -5,16 +5,16 @@ public abstract class LibraryItem {
     private String title;
 
     // maybe have this as address object
-    private String location;
+    private Library location;
     private Boolean availability;
     private Double lateFee;
     private int maxBorrowDays;
 
-    public String getLocation() {
+    public Library getLocation() {
         return location;
     }
 
-    public void setLocations(String location) {
+    public void setLocations(Library location) {
         this.location = location;
     }
 

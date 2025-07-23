@@ -3,21 +3,19 @@ package com.zipcodewilmington.centrallibrary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LibraryMember {
-    private Person person;
+public class LibraryMember extends Person {
     private long memberId;
     private String membershipDate;
     private List<LibraryItem> borrowedItems;
-    private Double outStandingFees;
-    private Address address;
+    private Double outstandingFees;
+    
 
-    public LibraryMember(Person person, long memberId, String membershipDate, Address address) {
-        this.person = person;
+    public LibraryMember(String name, int age, String email, String phoneNumber, long memberId, String membershipDate, Address address) {
+        super(name, age, email, phoneNumber,address);
         this.memberId = memberId;
         this.membershipDate = membershipDate;
-        this.address = address;
         this.borrowedItems = new ArrayList<>();
-        this.outStandingFees = 0.0;
+        this.outstandingFees = 0.0;
     }
 
     public void borrowItem(LibraryItem item) {
@@ -34,21 +32,17 @@ public class LibraryMember {
             item.checkIn();
             borrowedItems.remove(item);
             double lateFee = item.calculateLateFee(daysLate);
-            outStandingFees += lateFee;
+            outstandingFees += lateFee;
         }
     }
 
     public void payFees(double amount) {
         if (amount > 0) {
-            outStandingFees -= amount;
-            if (outStandingFees < 0) {
-                outStandingFees = 0.0;
+            outstandingFees -= amount;
+            if (outstandingFees < 0) {
+                outstandingFees = 0.0;
             }
         }
-    }
-
-    public Person getPerson() {
-        return person;
     }
 
     public long getMemberId() {
@@ -63,27 +57,19 @@ public class LibraryMember {
         return borrowedItems;
     }
 
-    public Double getOutStandingFees() {
-        return outStandingFees;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
+    public Double getoutstandingFees() {
+        return outstandingFees;
     }
 
     @Override
     public String toString() {
         return "LibraryMember{" +
-                "\nname=" + person.getName() +
+                "\nname=" + this.getName() +
                 "\nmemberId=" + memberId +
                 "\nmembershipDate='" + membershipDate + '\'' +
                 "\nborrowedItems=" + borrowedItems.size() +
-                "\noutStandingFees=" + outStandingFees +
-                "\naddress=" + address +
+                "\noutstandingFees=" + outstandingFees +
+                "\naddress=" +this.getAddress()+
                 "\n}";
     }
 }

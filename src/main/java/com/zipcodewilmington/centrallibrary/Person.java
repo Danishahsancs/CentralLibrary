@@ -6,12 +6,22 @@ public class Person {
     private int age;
     private String email;
     private String phoneNumber;
+    private Address address;
 
-    public Person(String name, int age, String email, String phoneNumber) {
+    public Person(String name, int age, String email, String phoneNumber, Address address) {
         setName(name);
         setAge(age);
         setEmail(email);
         setPhoneNumber(phoneNumber);
+        this.address = address;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     // ---- Getters and Setters ----

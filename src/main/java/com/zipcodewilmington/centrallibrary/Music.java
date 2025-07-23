@@ -12,7 +12,7 @@ public class Music extends LibraryItem
     
 
     //Constructors
-    public Music(Long id,String title,String location,String artist,String releasedate,String genre)
+    public Music(Long id,String title,Library location,String artist,String releasedate,String genre)
         {
         setId(id);
         setTitle(title);
