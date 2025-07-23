@@ -14,7 +14,7 @@ public class MusicTest {
         Music music = new Music(1234L, "Title", new Library("Library", null), "Younis", "1995", "Pop");
         assertEquals(1234L, music.getId());
         assertEquals("Title", music.getTitle());
-        assertEquals("Library", music.getLocation().toString());
+        assertEquals("Library: Library, Address: null", music.getLocation().toString());
         assertEquals(1.00, music.getLateFee());
         assertEquals(7, music.getMaxBorrowDays());
         assertEquals("Younis", music.getArtist());
@@ -36,7 +36,7 @@ public class MusicTest {
 
         assertEquals(1234L, music.getId());
         assertEquals("Title", music.getTitle());
-        assertEquals("Library", music.getLocation().toString());
+        assertEquals("Library: Library, Address: null", music.getLocation().toString());
         assertEquals(1.00, music.getLateFee());
         assertEquals(7, music.getMaxBorrowDays());
         assertEquals("Younis", music.getArtist());
