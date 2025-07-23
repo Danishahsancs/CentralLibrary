@@ -3,7 +3,7 @@ package com.zipcodewilmington.centrallibrary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Library{
+public class Library {
     private String libraryName;
     Address address;
     private List<LibraryItem> items;
@@ -28,10 +28,17 @@ public class Library{
 
     public void addItem(LibraryItem item) {
         items.add(item);
+        //System.out.println(libraryName + " added item: '" + item.getTitle() + "' (ID: " + item.getId() + ").");
     }
 
     public void removeItem(LibraryItem item) {
-        items.remove(item);
+
+        if (items.contains(item)) {
+           // System.out.println(libraryName + " added item: '" + item.getTitle() + "' (ID: " + item.getId() + ").");
+            items.remove(item);
+        }else{
+            System.out.println(item+" is not in library");
+        }
     }
 
     public void addMember(LibraryMember member) {
@@ -50,11 +57,11 @@ public class Library{
         return libraryName;
     }
 
-    public List<LibraryItem> search(String keyword){
+    public List<LibraryItem> search(String keyword) {
         List<LibraryItem> resultList = new ArrayList<>();
-        
-        for(LibraryItem item : items){
-            if(item.matchesKeyword(keyword)){
+
+        for (LibraryItem item : items) {
+            if (item.matchesKeyword(keyword)) {
                 resultList.add(item);
             }
         }

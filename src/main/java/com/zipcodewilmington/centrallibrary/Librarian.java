@@ -1,16 +1,18 @@
 package com.zipcodewilmington.centrallibrary;
 
-public class Librarian  extends Person {
-    
+public class Librarian extends Person {
+
     // ---- Attributes ----
 
     private String employeeId;
     private String department;
     private double salary;
 
-    public Librarian(String name, int age, String email, String phoneNumber, String employeeId, String department, double salary,Address address) {
-        
-        // Call the constructor of Person class to set name, age, email, and phone number
+    public Librarian(String name, int age, String email, String phoneNumber, String employeeId, String department,
+            double salary, Address address) {
+
+        // Call the constructor of Person class to set name, age, email, and phone
+        // number
         super(name, age, email, phoneNumber, address);
         this.employeeId = employeeId;
         this.department = department;
@@ -58,10 +60,10 @@ public class Librarian  extends Person {
     }
 
     // ---- Methods ----
-    
+
     public void addItemToLibrary(Library library, LibraryItem item) {
-        
-       // Edge cases -> if item is null or library is null, throw an exception
+
+        // Edge cases -> if item is null or library is null, throw an exception
         if (item == null) {
             throw new IllegalArgumentException("Error: Cannot add null item to the library.");
         } else if (library == null) {
@@ -69,14 +71,15 @@ public class Librarian  extends Person {
         } else {
             library.addItem(item);
 
-        // Log the addition of the item to the library
-        System.out.println(getName() + " (Librarian ID: " + employeeId + ") added item: '" + item.getTitle() + "' (ID: " + item.getId() + ").");
+            // Log the addition of the item to the library
+            System.out.println(getName() + " (Librarian ID: " + employeeId + ") added item: '" + item.getTitle()
+                    + "' (ID: " + item.getId() + ").");
         }
 
     }
-    
+
     public void removeItemFromLibrary(Library library, LibraryItem item) {
-        
+
         // Edge cases -> if item is null or library is null, throw an exception
         if (item == null) {
             throw new IllegalArgumentException("Error: Cannot remove null item from the library.");
@@ -85,9 +88,24 @@ public class Librarian  extends Person {
         } else {
             library.removeItem(item);
 
-        // Log the removal of the item from the library
-        System.out.println(getName() + " (Librarian ID: " + employeeId + ") removed item: '" + item.getTitle() + "' (ID: " + item.getId() + ").");
+            // Log the removal of the item from the library
+            System.out.println(getName() + " (Librarian ID: " + employeeId + ") removed item: '" + item.getTitle()
+                    + "' (ID: " + item.getId() + ").");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Librarian {" +
+                "Name='" + getName() + '\'' +
+                ", Age=" + getAge() +
+                ", Email='" + getEmail() + '\'' +
+                ", Phone='" + getPhoneNumber() + '\'' +
+                ", Employee ID='" + employeeId + '\'' +
+                ", Department='" + department + '\'' +
+                ", Salary=$" + salary +
+                ", Address=" + getAddress() +
+                '}';
     }
 
 }
