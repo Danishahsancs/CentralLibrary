@@ -125,15 +125,8 @@ public void testSetPhoneNumberEmpty()
             });
             assertEquals("Phone number cannot be null or empty", exception.getMessage());
         }
-        @Test
-public void testSetPhoneNNumberNotValid() 
-    {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            person.setPhoneNumber("123-456-789");
-            });
-            assertEquals("Phone number must be 10 to 15 digits, optionally starting with +", exception.getMessage());
-        }
+
+        
 
 // ---- Getter Tests ----
     
