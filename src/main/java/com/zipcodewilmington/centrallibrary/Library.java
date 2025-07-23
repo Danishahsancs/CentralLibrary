@@ -69,6 +69,33 @@ public class Library {
         return resultList;
     }
 
+    //Prints a list of all items ->  item type, title and availability
+    public void displayAllItems() {
+        System.out.println("Items in " + libraryName + ":");
+        System.out.println("=====================================");
+        
+        //Edge case -> if items is empty, print a message and return
+        if (items.isEmpty()) {
+            System.out.println("No items available in the library.");
+            return;
+        }
+        
+        // header
+        System.out.printf("%-12s %-30s %-12s%n", "Type", "Title", "Available");
+        System.out.println("---------------------------------------------");
+        
+        // Print each item with formatted output
+        for (LibraryItem item : items) {
+            String itemType = item.getItemType();
+            String title = item.getTitle();
+            String availability = item.isAvailable() ? "Yes" : "No";
+            
+            System.out.printf("%-12s %-30s %-12s%n", itemType, title, availability);
+        }
+        
+        System.out.println("=====================================");
+    }
+
     @Override
     public String toString() {
         return "Library: " + libraryName + ", Address: " + address;

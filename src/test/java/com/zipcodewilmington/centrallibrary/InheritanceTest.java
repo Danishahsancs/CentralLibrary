@@ -81,30 +81,30 @@ public class InheritanceTest {
 
     //----- Reservable instanceOf tests -----
 
-    // @Test
-    // @DisplayName("Book is an instanceof Reservable")
-    // void testBookIsReservable() {
-    //     assertTrue(book instanceof Reservable, "Book should be an instance of Reservable");
-    // }
+    @Test
+    @DisplayName("Book is an instanceof Reservable")
+    void testBookIsReservable() {
+        assertTrue(book instanceof Reservable, "Book should be an instance of Reservable");
+    }
 
-    // // Periodical is NOT an instanceof Reservable!
-    // @Test
-    // @DisplayName("Periodical is NOT an instanceof Reservable")
-    // void testPeriodicalIsReservable() {
-    //     assertFalse(periodical instanceof Reservable, "Periodical should NOT be an instance of Reservable");
-    // }
+    // Periodical is NOT an instanceof Reservable!
+    @Test
+    @DisplayName("Periodical is NOT an instanceof Reservable")
+    void testPeriodicalIsReservable() {
+        assertFalse(periodical instanceof Reservable, "Periodical should NOT be an instance of Reservable");
+    }
 
-    // @Test
-    // @DisplayName("DVD is an instanceof Reservable")
-    // void testDVDIsReservable() {
-    //     assertTrue(dvd instanceof Reservable, "DVD should be an instance of Reservable");
-    // }
+    @Test
+    @DisplayName("DVD is an instanceof Reservable")
+    void testDVDIsReservable() {
+        assertTrue(dvd instanceof Reservable, "DVD should be an instance of Reservable");
+    }
 
-    // @Test
-    // @DisplayName("Music is an instanceof Reservable")
-    // void testMusicIsReservable() {
-    //     assertTrue(music instanceof Reservable, "Music should be an instance of Reservable");
-    // }
+    @Test
+    @DisplayName("Music is NOT an instanceof Reservable")
+    void testMusicIsReservable() {
+        assertFalse(music instanceof Reservable, "Music should NOT be an instance of Reservable");
+    }
 
 
     //----- Inheritance tests -----
