@@ -7,6 +7,7 @@ public class LibraryMember extends Person {
     private long memberId;
     private String membershipDate;
     private List<LibraryItem> borrowedItems;
+    private List<LibraryItem> reservedItem;
     private Double outstandingFees;
     
 
@@ -24,6 +25,14 @@ public class LibraryMember extends Person {
             borrowedItems.add(item);
         } else {
             System.out.println("Item is not available.");
+        }
+    }
+
+    public void reserveItem(LibraryItem item) {
+        if (item.isAvailable()) {
+           reservedItem.add(item);
+        } else {
+            System.out.println("Item is not available to reserve.");
         }
     }
 
