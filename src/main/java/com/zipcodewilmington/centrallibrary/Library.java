@@ -3,7 +3,7 @@ package com.zipcodewilmington.centrallibrary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Library {
+public class Library{
     private String libraryName;
     Address address;
     private List<LibraryItem> items;
@@ -48,6 +48,18 @@ public class Library {
 
     public String getLibraryName() {
         return libraryName;
+    }
+
+    public List<LibraryItem> search(String keyword){
+        List<LibraryItem> resultList = new ArrayList<>();
+        
+        for(LibraryItem item : items){
+            if(item.matchesKeyword(keyword)){
+                resultList.add(item);
+            }
+        }
+
+        return resultList;
     }
 
     @Override

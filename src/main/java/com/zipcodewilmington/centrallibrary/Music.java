@@ -3,7 +3,7 @@ package com.zipcodewilmington.centrallibrary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Music extends LibraryItem implements Searchable
+public class Music extends LibraryItem
 {
     // Additional Fields from LibraryItem class
     private String artist;

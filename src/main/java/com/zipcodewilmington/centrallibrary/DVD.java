@@ -3,7 +3,7 @@ package com.zipcodewilmington.centrallibrary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DVD extends LibraryItem implements Searchable {
+public class DVD extends LibraryItem {
     
     // Additional Fields from LibraryItem class
     private String director;
