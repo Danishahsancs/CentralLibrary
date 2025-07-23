@@ -9,6 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+
 public class InheritanceTest {
 
     //----- instance variables -----
@@ -137,7 +139,7 @@ public class InheritanceTest {
 
     @Test
     @DisplayName("Test getMaxBorrowDays method overriding")
-    void testGetMaxBorrowDaysPolymorphism() {
+    void testGetMaxBorrowDays() {
 
         // Books: 14 Periodical: 7 DVD: 7 Music: 7
         assertEquals(14, book.getMaxBorrowDays(), "Book max borrow days should be 14.");
@@ -146,8 +148,18 @@ public class InheritanceTest {
         assertEquals(7, music.getMaxBorrowDays(), "Music max borrow days should be 7.");
     }
 
+       //----- Searchable tests -----
 
-
+    @Test
+    @DisplayName("All LibraryItems are instances of Searchable")
+    void testAllLibraryItemsAreSearchable() {
+        
+        assertTrue(book instanceof Searchable, "Book should be an instance of Searchable");
+        assertTrue(periodical instanceof Searchable, "Periodical should be an instance of Searchable");
+        assertTrue(dvd instanceof Searchable, "DVD should be an instance of Searchable");
+        assertTrue(music instanceof Searchable, "Music should be an instance of Searchable");
+    }
+    
     //----- Reservable tests -----
 
     // @Test
@@ -177,14 +189,5 @@ public class InheritanceTest {
 
 
 
-    //----- Searchable tests -----
 
-    // @Test
-    // @DisplayName("All LibraryItems are instances of Searchable")
-    // void testAllLibraryItemsAreSearchable() {
-    //     assertTrue(book instanceof Searchable, "Book should be an instance of Searchable");
-    //     assertTrue(periodical instanceof Searchable, "Periodical should be an instance of Searchable");
-    //     assertTrue(dvd instanceof Searchable, "DVD should be an instance of Searchable");
-    //     assertTrue(music instanceof Searchable, "Music should be an instance of Searchable");
-    // }
 }
