@@ -3,14 +3,15 @@ package com.zipcodewilmington.centrallibrary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Book extends LibraryItem implements Searchable
+public class Book extends LibraryItem implements Searchable , Reservable
 {
     // Additional Fields from LibraryItem class
     private String author;
     private String isbn;
     private int pages;
     private String  genre;
-    
+    private boolean reserved = false; // setting the reserved to to false therefore book is available
+   
 
     //Constructors
     public Book(Long id,String title,Library location,String author,String isbn,int pages,String genre)
@@ -75,6 +76,9 @@ public class Book extends LibraryItem implements Searchable
         // Return a string representation of the Book (title, id, and availability)
         return "Title: " + getTitle() + " ID: " + getId() + " Available: " + isAvailable();
     }
+
+
+    //// Search
     @Override
     public List<String> getSearchableFields() {
         List<String> fields = new ArrayList<>();
@@ -84,6 +88,32 @@ public class Book extends LibraryItem implements Searchable
         fields.add(isbn);
         return fields;
     }
+ // Reserve
+    @Override
+public void reserve(LibraryMember member) 
+{
+    if (reserved) 
+    {
+        throw new IllegalStateException("Book is already reserved.");
+    }
+    this.reserved = true;
+}
+
+@Override
+public void cancelReservation() 
+{
+    if (!reserved) 
+    {
+        throw new IllegalStateException("Book is not reserved.");
+    }
+    this.reserved = false;
+}
+
+@Override
+public boolean isReserved() 
+{
+    return reserved;
+}
 
     // @Override
     // public boolean matchesKeyword(String keyword) {

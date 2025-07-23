@@ -3,13 +3,14 @@ package com.zipcodewilmington.centrallibrary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DVD extends LibraryItem implements Searchable {
+public class DVD extends LibraryItem implements Searchable , Reservable {
     
     // Additional Fields from LibraryItem class
     private String director;
     private int duration; // in minutes
     private String rating; // e.g., PG, R, etc.
     private String genre;
+    private boolean reserved = false; // setting the reserved to to false therefore book is available
 
     public DVD(Long id, String title, Library location, String director, int duration, String rating, String genre) {
         
@@ -112,4 +113,31 @@ public class DVD extends LibraryItem implements Searchable {
         fields.add(genre);
         return fields;
     }
+
+    // Reserve
+    @Override
+public void reserve(LibraryMember member) 
+{
+    if (reserved) 
+    {
+        throw new IllegalStateException("Dvd is already reserved.");
+    }
+    this.reserved = true;
+}
+
+@Override
+public void cancelReservation() 
+{
+    if (!reserved) 
+    {
+        throw new IllegalStateException("Dvd is not reserved.");
+    }
+    this.reserved = false;
+}
+
+@Override
+public boolean isReserved() 
+{
+    return reserved;
+}
 }
