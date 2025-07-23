@@ -66,7 +66,7 @@ public class PersonTest
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setName("$$$$");
             });
-            assertEquals("Name can only contain letters and spaces", exception.getMessage());
+            assertEquals("Name must start with a letter and contain only letters and spaces", exception.getMessage());
     }
     @Test
 public void testSetNameFisrtLetter() 
@@ -75,18 +75,9 @@ public void testSetNameFisrtLetter()
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setName(" Danish");
             });
-            assertEquals("Name must start with a letter", exception.getMessage());
+            assertEquals("Name must start with a letter and contain only letters and spaces", exception.getMessage());
     }
     
-/*public void testSetNameNumber() 
-    {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            person.setName("97");
-            });
-            assertEquals("Name must not contain numbers", exception.getMessage());
-    }
-            */
 @Test
 public void testSetAgeLessThanSeven() 
     {
@@ -94,7 +85,7 @@ public void testSetAgeLessThanSeven()
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setAge(4);
             });
-            assertEquals("Age must be at least 7 years old", exception.getMessage());
+            assertEquals("Age must be between 7 and 120", exception.getMessage());
     }
 @Test
 public void testSetAgeMoreThan120() 
@@ -103,18 +94,9 @@ public void testSetAgeMoreThan120()
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setAge(125);
             });
-            assertEquals("Age cannot be greater than 120", exception.getMessage());
+            assertEquals("Age must be between 7 and 120", exception.getMessage());
     }
 
-    /*public void testSetAgeNotValid() 
-    {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            person.setAge(-6);
-            });
-            assertEquals("Age must be a valid number", exception.getMessage());
-    }
-    */
     @Test
 public void testSetEmailEmpty() 
     {
@@ -133,15 +115,7 @@ public void testSetEmailNotValid()
             });
             assertEquals("Email is not valid", exception.getMessage());
     }
-    //@Test
- //public void testSetEmailMustContainAt() 
-  //  {
-           // Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
-           // Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-           // person.setEmail("younisatemailcom");
-           // });
-           // assertEquals("Email must contain '@' and '.'", exception.getMessage());
-   // }
+
 @Test
 public void testSetPhoneNumberEmpty() 
     {
@@ -152,49 +126,60 @@ public void testSetPhoneNumberEmpty()
             assertEquals("Phone number cannot be null or empty", exception.getMessage());
         }
         @Test
-public void testSePhoneNUmbertNotValid() 
+public void testSetPhoneNNumberNotValid() 
     {
             Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
             Exception exception = assertThrows(IllegalArgumentException.class, () -> {
             person.setPhoneNumber("123-456-789");
             });
-            assertEquals("Phone number is not valid", exception.getMessage());
+            assertEquals("Phone number must be 10 to 15 digits, optionally starting with +", exception.getMessage());
         }
-/* 
+
+// ---- Getter Tests ----
+    
     @Test
-public void testSetPhoneNumberNumbersOnly() 
-    {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            person.setPhoneNumber("abcdefght");
-            });
-            assertEquals("Phone number must contain only digits", exception.getMessage());
-        }
-*/
-/* @Test
-public void testSetPhoneNumberLessthan10() 
-    {
-            Person person = new Person("Valid Name", 25, "email@example.com", "1234567890");
-            Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            person.setPhoneNumber("12345678901234567890");
-            });
-            assertEquals("Phone number must be between 10 and 15 digits", exception.getMessage());
-        }
-*/
+    public void testGetName() {
 
+        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
+        String name = person.getName();
+        assertEquals("Valid Name", name);
+    }
+    
+    @Test
+    public void testGetAge() {
 
+        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
+        int age = person.getAge();
+        assertEquals(25, age);
+    }
     
-    
+    @Test
+    public void testGetEmail() {
         
+        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
+        String email = person.getEmail();
+        assertEquals("email@example.com", email);
+    }
+    
+    @Test
+    public void testGetPhoneNumber() {
 
+        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
+        String phoneNumber = person.getPhoneNumber();
+        assertEquals("1234567890", phoneNumber);
+    }
+    
+    @Test
+    public void testGetAddress() {
 
-
-
-
-
+        Address expectedAddress = new Address("this street", "this city", "this state", "12312");
+        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",expectedAddress);
+        Address actualAddress = person.getAddress();
+        assertEquals(expectedAddress, actualAddress);
+    }
 
 }
-    
+
 
 
 

@@ -15,7 +15,7 @@ public class DVDTest {
 
         assertEquals(1001L, dvd.getId());
         assertEquals("Superbad", dvd.getTitle());
-        assertEquals("Library", dvd.getLocation());
+        assertEquals("Library: Library, Address: null", dvd.getLocation().toString());
         assertEquals(1.00, dvd.getLateFee());
         assertEquals(7, dvd.getMaxBorrowDays());
         assertEquals("Greg Mottola", dvd.getDirector());
