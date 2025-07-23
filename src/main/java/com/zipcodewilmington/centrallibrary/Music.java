@@ -1,8 +1,9 @@
 package com.zipcodewilmington.centrallibrary;
 
+import java.util.ArrayList;
+import java.util.List;
 
-
-public class Music extends LibraryItem 
+public class Music extends LibraryItem
 {
     // Additional Fields from LibraryItem class
     private String artist;
@@ -63,5 +64,23 @@ public class Music extends LibraryItem
     {
         // Return a string representation of the Music (title, id, and availability)
         return "Title: " + getTitle() + " ID: " + getId() + " Available: " + isAvailable();
+    }
+    // @Override
+    // public boolean matchesKeyword(String keyWord) {
+    //     for (String field : this.getSearchableFields()) {
+    //         if (field != null && field.toLowerCase().contains(keyWord.toLowerCase())) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+
+    @Override
+    public List<String> getSearchableFields() {
+        List<String> fields = new ArrayList<>();
+        fields.add(this.getTitle());
+        fields.add(artist);
+        fields.add(genre);
+        return fields;
     }
     }
