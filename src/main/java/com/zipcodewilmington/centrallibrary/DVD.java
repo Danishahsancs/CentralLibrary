@@ -3,7 +3,7 @@ package com.zipcodewilmington.centrallibrary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DVD extends LibraryItem implements Searchable , Reservable {
+public class DVD extends LibraryItem implements Reservable {
     
     // Additional Fields from LibraryItem class
     private String director;
@@ -11,6 +11,7 @@ public class DVD extends LibraryItem implements Searchable , Reservable {
     private String rating; // e.g., PG, R, etc.
     private String genre;
     private boolean reserved = false; // setting the reserved to to false therefore book is available
+    private LibraryMember reservee;
 
     public DVD(Long id, String title, Library location, String director, int duration, String rating, String genre) {
         
@@ -24,7 +25,8 @@ public class DVD extends LibraryItem implements Searchable , Reservable {
         this.duration = duration;
         this.rating = rating;
         this.genre = genre;
-        checkIn(); // set default as True therefore Available by default
+        checkIn();// set default as True therefore Available by default
+        reservee = null;
 
     }
 
@@ -118,21 +120,25 @@ public class DVD extends LibraryItem implements Searchable , Reservable {
     @Override
 public void reserve(LibraryMember member) 
 {
-    if (reserved) 
-    {
-        throw new IllegalStateException("Dvd is already reserved.");
-    }
-    this.reserved = true;
+     if (reserved) {
+            throw new IllegalStateException("Book is already reserved.");
+        } else {
+            this.reserved = true;
+            member.reserveItem(this);
+            reservee = member;
+        }
 }
 
 @Override
-public void cancelReservation() 
+public void cancelReservation(LibraryMember member) 
 {
-    if (!reserved) 
-    {
-        throw new IllegalStateException("Dvd is not reserved.");
-    }
-    this.reserved = false;
+    if (!reserved) {
+            throw new IllegalStateException("Book is not reserved.");
+        } else {
+            reservee = null;
+            this.reserved = false;
+            member.removeReservedItem(this);
+        }
 }
 
 @Override
