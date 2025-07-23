@@ -66,5 +66,11 @@ public class Book extends LibraryItem
         {
             return "Book";
         }
+      @Override 
+    public String toString() {
+
+        // Return a string representation of the Book (title, id, and availability)
+        return "Title: " + getTitle() + " ID: " + getId() + " Available: " + isAvailable();
+    }
     
 }
