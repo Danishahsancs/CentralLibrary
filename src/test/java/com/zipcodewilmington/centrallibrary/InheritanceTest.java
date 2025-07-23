@@ -33,9 +33,9 @@ public class InheritanceTest {
         libraryMember = new LibraryMember("Jenn Staci", 29, "jenn@example.com", "555-1234", 1L, "2023-01-01", memberAddress);
         memberAddress = new Address("123 Main St", "Springfield", "IL", "62701");
     }
-    
-    
-    //----- instanceOf tests -----
+
+
+    //----- Library Item instanceOf tests -----
 
     @Test
     @DisplayName("Book is an instanceof LibraryItem")
@@ -64,6 +64,47 @@ public class InheritanceTest {
 
         assertTrue(music instanceof LibraryItem, "Music should be an instance of LibraryItem");
     }
+
+
+     //----- Searchable instanceOf tests -----
+
+    @Test
+    @DisplayName("All LibraryItems are instances of Searchable")
+    void testAllLibraryItemsAreSearchable() {
+        
+        assertTrue(book instanceof Searchable, "Book should be an instance of Searchable");
+        assertTrue(periodical instanceof Searchable, "Periodical should be an instance of Searchable");
+        assertTrue(dvd instanceof Searchable, "DVD should be an instance of Searchable");
+        assertTrue(music instanceof Searchable, "Music should be an instance of Searchable");
+    }
+
+
+    //----- Reservable instanceOf tests -----
+
+    // @Test
+    // @DisplayName("Book is an instanceof Reservable")
+    // void testBookIsReservable() {
+    //     assertTrue(book instanceof Reservable, "Book should be an instance of Reservable");
+    // }
+
+    // // Periodical is NOT an instanceof Reservable!
+    // @Test
+    // @DisplayName("Periodical is NOT an instanceof Reservable")
+    // void testPeriodicalIsReservable() {
+    //     assertFalse(periodical instanceof Reservable, "Periodical should NOT be an instance of Reservable");
+    // }
+
+    // @Test
+    // @DisplayName("DVD is an instanceof Reservable")
+    // void testDVDIsReservable() {
+    //     assertTrue(dvd instanceof Reservable, "DVD should be an instance of Reservable");
+    // }
+
+    // @Test
+    // @DisplayName("Music is an instanceof Reservable")
+    // void testMusicIsReservable() {
+    //     assertTrue(music instanceof Reservable, "Music should be an instance of Reservable");
+    // }
 
 
     //----- Inheritance tests -----
@@ -147,47 +188,5 @@ public class InheritanceTest {
         assertEquals(7, dvd.getMaxBorrowDays(), "DVD max borrow days should be 7.");
         assertEquals(7, music.getMaxBorrowDays(), "Music max borrow days should be 7.");
     }
-
-       //----- Searchable tests -----
-
-    @Test
-    @DisplayName("All LibraryItems are instances of Searchable")
-    void testAllLibraryItemsAreSearchable() {
-        
-        assertTrue(book instanceof Searchable, "Book should be an instance of Searchable");
-        assertTrue(periodical instanceof Searchable, "Periodical should be an instance of Searchable");
-        assertTrue(dvd instanceof Searchable, "DVD should be an instance of Searchable");
-        assertTrue(music instanceof Searchable, "Music should be an instance of Searchable");
-    }
-    
-    //----- Reservable tests -----
-
-    // @Test
-    // @DisplayName("Book is an instanceof Reservable")
-    // void testBookIsReservable() {
-    //     assertTrue(book instanceof Reservable, "Book should be an instance of Reservable");
-    // }
-
-    // // Periodical is NOT an instanceof Reservable!
-    // @Test
-    // @DisplayName("Periodical is NOT an instanceof Reservable")
-    // void testPeriodicalIsReservable() {
-    //     assertFalse(periodical instanceof Reservable, "Periodical should NOT be an instance of Reservable");
-    // }
-
-    // @Test
-    // @DisplayName("DVD is an instanceof Reservable")
-    // void testDVDIsReservable() {
-    //     assertTrue(dvd instanceof Reservable, "DVD should be an instance of Reservable");
-    // }
-
-    // @Test
-    // @DisplayName("Music is an instanceof Reservable")
-    // void testMusicIsReservable() {
-    //     assertTrue(music instanceof Reservable, "Music should be an instance of Reservable");
-    // }
-
-
-
 
 }
