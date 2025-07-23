@@ -93,10 +93,7 @@ public class Person {
         if (phoneNumber == null || phoneNumber.trim().isEmpty()) {
             throw new IllegalArgumentException("Phone number cannot be null or empty");
         }
-        // Edge case -> if phone number is not between 10 and 15 digits, throw an exception
-        if (!phoneNumber.matches("^\\+?\\d{10,15}$")) {
-            throw new IllegalArgumentException("Phone number must be 10 to 15 digits, optionally starting with +");
-        }
+        
         this.phoneNumber = phoneNumber;
     }
 }
