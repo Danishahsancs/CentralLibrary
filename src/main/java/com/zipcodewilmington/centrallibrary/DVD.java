@@ -1,6 +1,9 @@
 package com.zipcodewilmington.centrallibrary;
 
-public class DVD extends LibraryItem {
+import java.util.ArrayList;
+import java.util.List;
+
+public class DVD extends LibraryItem implements Searchable {
     
     // Additional Fields from LibraryItem class
     private String director;
@@ -89,5 +92,24 @@ public class DVD extends LibraryItem {
 
         // Return a string representation of the DVD (title, id, and availability)
         return "Title: " + getTitle() + " ID: " + getId() + " Available: " + isAvailable();
+    }
+
+    // @Override
+    // public boolean matchesKeyword(String keyWord) {
+    //     for (String field : this.getSearchableFields()) {
+    //         if (field != null && field.toLowerCase().contains(keyWord.toLowerCase())) {
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+
+    @Override
+    public List<String> getSearchableFields() {
+        List<String> fields = new ArrayList<>();
+        fields.add(this.getTitle());
+        fields.add(director);
+        fields.add(genre);
+        return fields;
     }
 }
