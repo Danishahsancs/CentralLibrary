@@ -135,8 +135,51 @@ public void testSetPhoneNNumberNotValid()
             assertEquals("Phone number must be 10 to 15 digits, optionally starting with +", exception.getMessage());
         }
 
-}
+// ---- Getter Tests ----
     
+    @Test
+    public void testGetName() {
+
+        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
+        String name = person.getName();
+        assertEquals("Valid Name", name);
+    }
+    
+    @Test
+    public void testGetAge() {
+
+        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
+        int age = person.getAge();
+        assertEquals(25, age);
+    }
+    
+    @Test
+    public void testGetEmail() {
+        
+        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
+        String email = person.getEmail();
+        assertEquals("email@example.com", email);
+    }
+    
+    @Test
+    public void testGetPhoneNumber() {
+
+        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",new Address("this street", "this city", "this state", "12312"));
+        String phoneNumber = person.getPhoneNumber();
+        assertEquals("1234567890", phoneNumber);
+    }
+    
+    @Test
+    public void testGetAddress() {
+
+        Address expectedAddress = new Address("this street", "this city", "this state", "12312");
+        Person person = new Person("Valid Name", 25, "email@example.com", "1234567890",expectedAddress);
+        Address actualAddress = person.getAddress();
+        assertEquals(expectedAddress, actualAddress);
+    }
+
+}
+
 
 
 
