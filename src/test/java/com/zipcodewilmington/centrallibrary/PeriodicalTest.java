@@ -14,7 +14,7 @@ public class PeriodicalTest {
         Periodical news= new Periodical(1234L,"Title", new Library("Library", null),"publisher","issn","volume","issuenumber","date");
         assertEquals(1234L,news.getId());
         assertEquals("Title",news.getTitle()); 
-        assertEquals("Location",news.getLocation()); 
+        assertEquals("Library: Library, Address: null", news.getLocation().toString()); 
         assertEquals(0.25,news.getLateFee()); 
         assertEquals(7,news.getMaxBorrowDays()); 
         assertEquals("publisher",news.getPublisher()); 
@@ -42,7 +42,7 @@ public class PeriodicalTest {
 
         assertEquals(1234L,news.getId());
         assertEquals("Title",news.getTitle()); 
-        assertEquals("Location",news.getLocation()); 
+        assertEquals("Library: Library, Address: null", news.getLocation().toString()); 
         assertEquals(0.25,news.getLateFee()); 
         assertEquals(7,news.getMaxBorrowDays()); 
         assertEquals("publisher",news.getPublisher()); 
