@@ -45,7 +45,7 @@ public class LibraryMember extends Person {
         if (borrowedItems.contains(item)) {
             item.checkIn();
             borrowedItems.remove(item);
-            double lateFee = item.calculateLateFee(daysLate);
+            double lateFee = item.calculateLateFee();
             outstandingFees += lateFee;
         }
     }

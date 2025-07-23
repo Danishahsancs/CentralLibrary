@@ -62,6 +62,29 @@ public class Library{
         return resultList;
     }
 
+    public void generateReportItems()
+    {
+        for (LibraryMember member : members) 
+        {
+            List<LibraryItem> borrowedItems = member.getBorrowedItems();
+            if (!borrowedItems.isEmpty())
+            {
+                for ( LibraryItem item : borrowedItems)
+                {
+                    System.out.println("********************************");
+                    System.out.println("Member: " + member.getName());
+                   // double fee = item.calculateLateFee(); 
+                    System.out.println("  Title: " + item.getTitle());
+                    System.out.println("    Max Borrow Days: " + item.getMaxBorrowDays());
+                    // System.out.printf("    Late Fee: $%.2f\n", fee);
+                    System.out.println("********************************");
+                }
+            }
+            
+            
+        }
+    }
+
     @Override
     public String toString() {
         return "Library: " + libraryName + ", Address: " + address;
