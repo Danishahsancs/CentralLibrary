@@ -6,9 +6,9 @@ import java.util.List;
 public class Library {
     private String libraryName;
     Address address;
-    List<LibraryItem> items;
-    List<LibraryMember> members;
-    List<Librarian> librarians;
+    private List<LibraryItem> items;
+    private List<LibraryMember> members;
+    private List<Librarian> librarians;
 
     public Library(String libraryName, Address address) {
         this.libraryName = libraryName;
