@@ -3,7 +3,7 @@ package com.zipcodewilmington.centrallibrary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Periodical extends LibraryItem implements Searchable {
+public class Periodical extends LibraryItem {
     // Additional Fields from LibraryItem class
     private String publisher;
     private String issn;
