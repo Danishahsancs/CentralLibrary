@@ -3,7 +3,7 @@ package com.zipcodewilmington.centrallibrary;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Library{
+public class Library {
     private String libraryName;
     Address address;
     private List<LibraryItem> items;
@@ -28,10 +28,17 @@ public class Library{
 
     public void addItem(LibraryItem item) {
         items.add(item);
+        //System.out.println(libraryName + " added item: '" + item.getTitle() + "' (ID: " + item.getId() + ").");
     }
 
     public void removeItem(LibraryItem item) {
-        items.remove(item);
+
+        if (items.contains(item)) {
+           // System.out.println(libraryName + " added item: '" + item.getTitle() + "' (ID: " + item.getId() + ").");
+            items.remove(item);
+        }else{
+            System.out.println(item+" is not in library");
+        }
     }
 
     public void addMember(LibraryMember member) {
@@ -50,16 +57,43 @@ public class Library{
         return libraryName;
     }
 
-    public List<LibraryItem> search(String keyword){
+    public List<LibraryItem> search(String keyword) {
         List<LibraryItem> resultList = new ArrayList<>();
-        
-        for(LibraryItem item : items){
-            if(item.matchesKeyword(keyword)){
+
+        for (LibraryItem item : items) {
+            if (item.matchesKeyword(keyword)) {
                 resultList.add(item);
             }
         }
 
         return resultList;
+    }
+
+    //Prints a list of all items ->  item type, title and availability
+    public void displayAllItems() {
+        System.out.println("Items in " + libraryName + ":");
+        System.out.println("=====================================");
+        
+        //Edge case -> if items is empty, print a message and return
+        if (items.isEmpty()) {
+            System.out.println("No items available in the library.");
+            return;
+        }
+        
+        // header
+        System.out.printf("%-12s %-30s %-12s%n", "Type", "Title", "Available");
+        System.out.println("---------------------------------------------");
+        
+        // Print each item with formatted output
+        for (LibraryItem item : items) {
+            String itemType = item.getItemType();
+            String title = item.getTitle();
+            String availability = item.isAvailable() ? "Yes" : "No";
+            
+            System.out.printf("%-12s %-30s %-12s%n", itemType, title, availability);
+        }
+        
+        System.out.println("=====================================");
     }
 
     public void generateReportItems()

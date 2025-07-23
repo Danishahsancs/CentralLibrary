@@ -45,7 +45,7 @@ public class LibraryMember extends Person {
         if (borrowedItems.contains(item)) {
             item.checkIn();
             borrowedItems.remove(item);
-            double lateFee = item.calculateLateFee();
+            double lateFee = item.calculateLateFee(daysLate);
             outstandingFees += lateFee;
         }
     }
@@ -80,9 +80,10 @@ public class LibraryMember extends Person {
         return "LibraryMember{" +
                 "\nname=" + this.getName() +
                 "\nmemberId=" + memberId +
-                "\nmembershipDate='" + membershipDate + '\'' +
-                "\nborrowedItems=" + borrowedItems.size() +
-                "\noutstandingFees=" + outstandingFees +
+                "\nmembership Date='" + membershipDate + '\'' +
+                "\nborrowedI tems=" + borrowedItems.size() +
+                "\nreserved items=" + reservedItem.size() +
+                "\noutstanding Fees=" + outstandingFees +
                 "\naddress=" +this.getAddress()+
                 "\n}";
     }
