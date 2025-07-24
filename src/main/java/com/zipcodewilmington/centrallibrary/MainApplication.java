@@ -55,7 +55,7 @@ public class MainApplication {
                 // System.out.println("\n"+librarian);
                 // System.out.println("\n"+jounish);
 
-                jounish.returnItem(music2, 20);
+                ///jounish.returnItem(music2, 20);
                 jounish.removeReservedItem(music1);
                 // System.out.println("\n"+jounish);
                 Scanner scanner = new Scanner(System.in);
@@ -157,15 +157,31 @@ public class MainApplication {
                 int choice = -1;
                 do {
                         System.out.print(
-                                        "0. go back\n1. view borrowed items\n2. search for item \n3. checkout item\n4. check in item\n5. reserve item\n6. cancel reservation\n7. pay fees\n\nSelect Option: ");
+                                        "\n0. go back\n1. view borrowed items\n2. search for item \n3. checkout item\n4. check in item\n5. reserve item\n6. cancel reservation\n7. pay fees\n\nSelect Option: ");
                         choice = scanner.nextInt();
                         scanner.nextLine();
                         switch (choice) {
                                 case 1:
-
+                                        flushScreen();
+                                        int y = 1;
+                                        for (Library library : libraries) {
+                                                System.out.println(y + ". " + library.getLibraryName());
+                                        }
+                                        System.out.print("Select choice: ");
+                                        int x = scanner.nextInt();
+                                        scanner.nextLine();
+                                        viewBorrowedItems(scanner, libraries.get(x - 1));
                                         break;
                                 case 2:
-
+                                        flushScreen();
+                                        System.out.print("Enter search parameter: ");
+                                        String keyword = scanner.nextLine();
+                                        for (Library library : libraries) {
+                                                System.out.println(library.getLibraryName() + "'s Results:");
+                                                List<LibraryItem> temp = library.search(keyword);
+                                                for (LibraryItem item : temp)
+                                                        System.out.println(item);
+                                        }
                                         break;
                                 case 3:
 
@@ -188,11 +204,22 @@ public class MainApplication {
                 } while (choice != 0);
         }
 
+        private static void viewBorrowedItems(Scanner scanner, Library library) {
+                List<LibraryMember> temp = library.getMembers();
+                for(LibraryMember member : temp){
+                        System.out.println(member.getName() + " borrowed items: ");
+                        List<LibraryItem> items = member.getBorrowedItems();
+                        for(LibraryItem item : items){
+                                System.out.println(item.getTitle());
+                        }
+                }
+        }
+
         private static void addItemToLibrary(Scanner scanner, Library librarychoice) {
                 System.out.println(librarychoice);
         }
 
         private static void removeItemfromLibrary(Scanner scanner, Library library) {
-                
+
         }
 }
