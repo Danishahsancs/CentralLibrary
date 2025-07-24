@@ -127,7 +127,15 @@ public class MainApplication {
                                         addItemToLibrary(scanner, libraries.get(temp - 1));
                                         break;
                                 case 4:
-
+                                        flushScreen();
+                                        int y = 1;
+                                        for (Library library : libraries) {
+                                                System.out.println(y + ". " + library.getLibraryName());
+                                        }
+                                        System.out.print("Select choice: ");
+                                        int x = scanner.nextInt();
+                                        scanner.nextLine();
+                                        removeItemfromLibrary(scanner, libraries.get(x - 1));
                                         break;
                                 case 5:
                                         flushScreen();
@@ -182,5 +190,9 @@ public class MainApplication {
 
         private static void addItemToLibrary(Scanner scanner, Library librarychoice) {
                 System.out.println(librarychoice);
+        }
+
+        private static void removeItemfromLibrary(Scanner scanner, Library library) {
+                
         }
 }
