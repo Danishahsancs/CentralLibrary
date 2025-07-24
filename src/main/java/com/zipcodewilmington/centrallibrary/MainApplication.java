@@ -83,7 +83,7 @@ public class MainApplication {
                 scanner.close();
         }
 
-        private static void flushScreen(){
+        private static void flushScreen() {
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
         }
@@ -108,18 +108,33 @@ public class MainApplication {
                                         flushScreen();
                                         System.out.print("Enter search parameter: ");
                                         String keyword = scanner.nextLine();
-                                        for(Library library : libraries){
-                                                System.out.println(library.getLibraryName()+"'s Results:");
+                                        for (Library library : libraries) {
+                                                System.out.println(library.getLibraryName() + "'s Results:");
                                                 List<LibraryItem> temp = library.search(keyword);
-                                                for(LibraryItem item : temp)
-                                                        System.out.println(item); 
+                                                for (LibraryItem item : temp)
+                                                        System.out.println(item);
                                         }
                                         break;
                                 case 3:
-                                        addItemToLibrary(scanner);
+                                        flushScreen();
+                                        int i = 1;
+                                        for (Library library : libraries) {
+                                                System.out.println(i + ". " + library.getLibraryName());
+                                        }
+                                        System.out.print("Select choice: ");
+                                        int temp = scanner.nextInt();
+                                        scanner.nextLine();
+                                        addItemToLibrary(scanner, libraries.get(temp - 1));
                                         break;
                                 case 4:
 
+                                        break;
+                                case 5:
+                                        flushScreen();
+                                        for (Library library : libraries) {
+                                                System.out.println(library.getLibraryName() + "'s late fee report:");
+                                                library.generateReportItems();
+                                        }
                                         break;
                                 default:
                                         break;
@@ -127,7 +142,6 @@ public class MainApplication {
                 } while (choice != 0);
 
         }
-
 
         private static void libraryMemberOptions(Scanner scanner, List<Library> libraries) {
                 flushScreen();
@@ -165,10 +179,8 @@ public class MainApplication {
                         }
                 } while (choice != 0);
         }
-        
-        
-        private static void addItemToLibrary(Scanner scanner) {
-                // TODO Auto-generated method stub
-                throw new UnsupportedOperationException("Unimplemented method 'addItemToLibrary'");
+
+        private static void addItemToLibrary(Scanner scanner, Library librarychoice) {
+                System.out.println(librarychoice);
         }
 }
