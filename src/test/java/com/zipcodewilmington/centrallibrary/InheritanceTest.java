@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -189,4 +190,71 @@ public class InheritanceTest {
         assertEquals(7, music.getMaxBorrowDays(), "Music max borrow days should be 7.");
     }
 
+    // toString override method tests
+    @Test
+    @DisplayName("Book toString method is properly overridden")
+    void testBookToString() {
+
+        String result = book.toString();
+        
+        assertNotNull(result, "toString should not return null");
+        assertTrue(result.contains("Title"), "toString should contain the title");
+        assertTrue(result.contains("1234"), "toString should contain the ID");
+        assertTrue(result.contains("Available") || result.contains("true"), "toString should indicate availability");
+        
+        String expected = "Title: Title ID: 1234 Available: true";
+        assertEquals(expected, result, "toString should match expected format");
+    }
+
+    @Test
+    @DisplayName("DVD toString method is properly overridden")
+    void testDVDToString() {
+    
+        String result = dvd.toString();
+        
+        assertNotNull(result, "toString should not return null");
+        assertTrue(result.contains("Superbad"), "toString should contain the title");
+        assertTrue(result.contains("1001"), "toString should contain the ID");
+        assertTrue(result.contains("Available") || result.contains("true"), "toString should indicate availability");
+        
+        String expected = "Title: Superbad ID: 1001 Available: true";
+        assertEquals(expected, result, "toString should match expected format");
+    }
+
+    @Test
+    @DisplayName("Music toString method is properly overridden")
+    void testMusicToString() {
+        
+        String result = music.toString();
+        
+        assertNotNull(result, "toString should not return null");
+        assertTrue(result.contains("Title"), "toString should contain the title");
+        assertTrue(result.contains("1234"), "toString should contain the ID");
+        assertTrue(result.contains("Available") || result.contains("true"), "toString should indicate availability");
+        
+        String expected = "Title: Title ID: 1234 Available: true";
+        assertEquals(expected, result, "toString should match expected format");
+    }
+
+    @Test
+    @DisplayName("Periodical toString method is properly overridden")
+    void testPeriodicalToString() {
+        
+        String result = periodical.toString();
+        
+        assertNotNull(result, "toString should not return null");
+        assertTrue(result.contains("Title"), "toString should contain the title");
+        assertTrue(result.contains("1234"), "toString should contain the ID");
+        assertTrue(result.contains("Available") || result.contains("true"), "toString should indicate availability");
+        assertTrue(result.contains("publisher"), "toString should contain the publisher");
+        assertTrue(result.contains("issn"), "toString should contain the ISSN");
+        
+        // Periodical has a different toString format 
+        assertTrue(result.startsWith("Periodical {"), "toString should start with 'Periodical {'");
+        assertTrue(result.contains("ID=1234"), "toString should contain the ID");
+        assertTrue(result.contains("Title='Title'"), "toString should contain the title");
+        assertTrue(result.contains("Publisher='publisher'"), "toString should contain the publisher");
+    }
+
 }
+

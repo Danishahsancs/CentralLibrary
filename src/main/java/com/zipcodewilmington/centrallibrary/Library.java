@@ -28,16 +28,18 @@ public class Library {
 
     public void addItem(LibraryItem item) {
         items.add(item);
-        //System.out.println(libraryName + " added item: '" + item.getTitle() + "' (ID: " + item.getId() + ").");
+        // System.out.println(libraryName + " added item: '" + item.getTitle() + "' (ID:
+        // " + item.getId() + ").");
     }
 
     public void removeItem(LibraryItem item) {
 
         if (items.contains(item)) {
-           // System.out.println(libraryName + " added item: '" + item.getTitle() + "' (ID: " + item.getId() + ").");
+            // System.out.println(libraryName + " added item: '" + item.getTitle() + "' (ID:
+            // " + item.getId() + ").");
             items.remove(item);
-        }else{
-            System.out.println(item+" is not in library");
+        } else {
+            System.out.println(item + " is not in library");
         }
     }
 
@@ -69,31 +71,67 @@ public class Library {
         return resultList;
     }
 
-    //Prints a list of all items ->  item type, title and availability
+    // Prints a list of all items -> item type, title and availability
     public void displayAllItems() {
         System.out.println("Items in " + libraryName + ":");
         System.out.println("=====================================");
-        
-        //Edge case -> if items is empty, print a message and return
+
+        // Edge case -> if items is empty, print a message and return
         if (items.isEmpty()) {
             System.out.println("No items available in the library.");
             return;
         }
-        
+
         // header
         System.out.printf("%-12s %-30s %-12s%n", "Type", "Title", "Available");
         System.out.println("---------------------------------------------");
-        
+
         // Print each item with formatted output
         for (LibraryItem item : items) {
             String itemType = item.getItemType();
             String title = item.getTitle();
             String availability = item.isAvailable() ? "Yes" : "No";
-            
+
             System.out.printf("%-12s %-30s %-12s%n", itemType, title, availability);
         }
-        
+
         System.out.println("=====================================");
+    }
+
+    public void generateReportItems()
+    {
+        double total = 0.0;
+        for (LibraryMember member : members) 
+        {
+            // List<LibraryItem> borrowedItems = member.getBorrowedItems();
+            // if (!borrowedItems.isEmpty())
+            // {
+            //     // for ( LibraryItem item : borrowedItems)
+            //     // {
+            //     //     System.out.println("********************************");
+            //     //     System.out.println("Member: " + member.getName());
+            //     //    // double fee = item.calculateLateFee(); 
+            //     //     System.out.println("  Title: " + item.getTitle());
+            //     //     System.out.println("    Max Borrow Days: " + item.getMaxBorrowDays());
+            //     //     // System.out.printf("    Late Fee: $%.2f\n", fee);
+            //     //     System.out.println("********************************");
+            //     // }
+
+
+            // }
+            
+            if (member.getoutstandingFees()>0.0)
+            {
+                System.out.println("********************************");
+                 System.out.println("Member: " + member.getName() + "Amount Owed:" + member.getoutstandingFees());
+                total = total + member.getoutstandingFees();
+
+                System.out.println("********************************");
+                
+            }
+            
+            
+        } System.out.println("Amount of money owed to Libarary:"+ total);
     }
 
     @Override
