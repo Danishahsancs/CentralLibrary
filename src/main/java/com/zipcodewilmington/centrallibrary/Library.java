@@ -123,7 +123,7 @@ public class Library {
             if (member.getoutstandingFees()>0.0)
             {
                 System.out.println("********************************");
-                 System.out.println("Member: " + member.getName() + "amount owed:" + member.getoutstandingFees());
+                 System.out.println("Member: " + member.getName() + "Amount Owed:" + member.getoutstandingFees());
                 total = total + member.getoutstandingFees();
 
                 System.out.println("********************************");
@@ -131,7 +131,7 @@ public class Library {
             }
             
             
-        } System.out.println("Amount of money owed to libarary:"+ total);
+        } System.out.println("Amount of money owed to Libarary:"+ total);
     }
 
     @Override
