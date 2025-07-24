@@ -66,6 +66,7 @@ public class MainApplication {
                         System.out.println("0. Quit\n1. Librarian\n2. Library Member\n");
                         System.out.print("Select Option:");
                         choice = scanner.nextInt();
+                        scanner.nextLine();
 
                         switch (choice) {
                                 case 1:
@@ -82,29 +83,92 @@ public class MainApplication {
                 scanner.close();
         }
 
-        private static void librarianOptions(Scanner scanner, List<Library> libraries) {
+        private static void flushScreen(){
                 System.out.print("\033[H\033[2J");
                 System.out.flush();
+        }
+
+        private static void librarianOptions(Scanner scanner, List<Library> libraries) {
+                flushScreen();
 
                 int choice = -1;
                 do {
                         System.out.print(
-                                        "1. view all items\n2. search for item\n3. add item to library\n4. remove item from library\n\nSelect Option: ");
+                                        "\n0. go back\n1. view all items\n2. search for item\n3. add item to library\n4. remove item from library\n5. print late fee report \n\nSelect Option: ");
                         choice = scanner.nextInt();
+                        scanner.nextLine();
+                        switch (choice) {
+                                case 1:
+                                        flushScreen();
+                                        for (Library library : libraries) {
+                                                library.displayAllItems();
+                                        }
+                                        break;
+                                case 2:
+                                        flushScreen();
+                                        System.out.print("Enter search parameter: ");
+                                        String keyword = scanner.nextLine();
+                                        for(Library library : libraries){
+                                                System.out.println(library.getLibraryName()+"'s Results:");
+                                                List<LibraryItem> temp = library.search(keyword);
+                                                for(LibraryItem item : temp)
+                                                        System.out.println(item); 
+                                        }
+                                        break;
+                                case 3:
+                                        addItemToLibrary(scanner);
+                                        break;
+                                case 4:
+
+                                        break;
+                                default:
+                                        break;
+                        }
                 } while (choice != 0);
 
         }
+
 
         private static void libraryMemberOptions(Scanner scanner, List<Library> libraries) {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
+                flushScreen();
 
                 int choice = -1;
                 do {
                         System.out.print(
-                                        "1. view borrowed items\n2. search for item \n3. checkout item\n4. check in item\n5. reserve item\n6. cancel reservation\n7. pay fees\n\nSelect Option: ");
+                                        "0. go back\n1. view borrowed items\n2. search for item \n3. checkout item\n4. check in item\n5. reserve item\n6. cancel reservation\n7. pay fees\n\nSelect Option: ");
                         choice = scanner.nextInt();
+                        scanner.nextLine();
+                        switch (choice) {
+                                case 1:
+
+                                        break;
+                                case 2:
+
+                                        break;
+                                case 3:
+
+                                        break;
+                                case 4:
+
+                                        break;
+                                case 5:
+
+                                        break;
+                                case 6:
+
+                                        break;
+                                case 7:
+
+                                        break;
+                                default:
+                                        break;
+                        }
                 } while (choice != 0);
         }
-
+        
+        
+        private static void addItemToLibrary(Scanner scanner) {
+                // TODO Auto-generated method stub
+                throw new UnsupportedOperationException("Unimplemented method 'addItemToLibrary'");
+        }
 }

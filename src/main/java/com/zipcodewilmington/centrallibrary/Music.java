@@ -81,6 +81,7 @@ public class Music extends LibraryItem
         fields.add(this.getTitle());
         fields.add(artist);
         fields.add(genre);
+        fields.add(String.valueOf(getId()));
         return fields;
     }
     }

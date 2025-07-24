@@ -113,6 +113,7 @@ public class DVD extends LibraryItem implements Reservable {
         fields.add(this.getTitle());
         fields.add(director);
         fields.add(genre);
+        fields.add(String.valueOf(getId()));
         return fields;
     }
 

@@ -79,15 +79,16 @@ public class Periodical extends LibraryItem {
 
     @Override
     public String toString() {
-        return "Periodical {" +
-                "ID=" + getId() +
-                ", Title='" + getTitle() + '\'' +
-                ", Publisher='" + publisher + '\'' +
-                ", IssueNumber='" + issuenumber + '\'' +
-                ", PublicationDate='" + publicationdate + '\'' +
-                ", ISSN= " + issn + '\''+
-                 " Available: " + isAvailable()+
-                '}';
+        // return "Periodical {" +
+        //         "ID=" + getId() +
+        //         ", Title='" + getTitle() + '\'' +
+        //         ", Publisher='" + publisher + '\'' +
+        //         ", IssueNumber='" + issuenumber + '\'' +
+        //         ", PublicationDate='" + publicationdate + '\'' +
+        //         ", ISSN= " + issn + '\''+
+        //          " Available: " + isAvailable()+
+        //         '}';
+        return "Title: " + getTitle()+" Publisher: " + publisher + " ID: " + getId() + " Available: " + isAvailable()+ " ISSN: " + issn;
     }
 
     // @Override
@@ -106,6 +107,7 @@ public class Periodical extends LibraryItem {
         fields.add(this.getTitle());
         fields.add(publisher);
         fields.add(issn);
+        fields.add(String.valueOf(getId()));
         return fields;
     }
 }
