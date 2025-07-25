@@ -140,8 +140,6 @@ public class MainApplication {
         private static void libraryMemberOptions(Scanner scanner) {
                 flushScreen();
 
-                List<LibraryItem> temp;
-
                 int choice = -1;
                 do {
                         System.out.print(
@@ -158,33 +156,20 @@ public class MainApplication {
                                         System.out.print("Enter search parameter: ");
                                         String keyword = scanner.nextLine();
                                         System.out.println(currentLibrary.getLibraryName() + "'s Results:");
-                                        temp = currentLibrary.search(keyword);
+                                        List<LibraryItem> temp = currentLibrary.search(keyword);
                                         for (LibraryItem item : temp)
                                                 System.out.println(item);
                                         break;
                                 case 3:
                                         flushScreen();
-                                        checkout(scanner);
                                         break;
                                 case 4:
                                         flushScreen();
                                         checkInItemfromMember(scanner);
                                         break;
                                 case 5:
-                                        flushScreen();
-                                        reserve(scanner);
                                         break;
                                 case 6:
-                                        flushScreen();
-                                        temp = currentLibraryMember.getReservedItems();
-                                        int i = 0;
-                                        for (LibraryItem item : temp) {
-                                                System.out.println(i + ". " + item.getTitle());
-                                                i++;
-                                        }
-                                        int x = scanner.nextInt();
-                                        scanner.nextLine();
-                                        currentLibraryMember.removeReservedItem(temp.get(x-1));
                                         break;
                                 case 7:
                                         System.out.println("Member: " + currentLibraryMember.getName() + "Amount Owed:"
@@ -201,26 +186,14 @@ public class MainApplication {
         }
 
         private static void checkInItemfromMember(Scanner scanner) {
-                int i = 1;
-                List<LibraryItem> temp = currentLibraryMember.getBorrowedItems();
-                for (LibraryItem item : temp) {
-                        System.out.println(i + ". " + item); //
-                        i++;
-                }
-                if (temp.size() != 0) {
-                        System.out.print("Please enter number of item you would like to check in: ");
-                        int choice = scanner.nextInt();
-                        scanner.nextLine();
-                        System.out.print("Please enter number of days late: ");
-                        int late = scanner.nextInt();
-                        scanner.nextLine();
-                        currentLibraryMember.returnItem(temp.get(choice-1), late);
-                }
+                
+                       
+                
 
         }
 
+        private static void removeItemfromLibrary(Scanner scanner) {
 
-        private static List<LibraryItem> displayItemsChoice(Scanner scanner) {
                 int i = 1;
                 System.out.print("Enter search parameter: ");
                 String keyword = scanner.nextLine();
@@ -231,33 +204,6 @@ public class MainApplication {
                         i++;
                 }
 
-                return temp;
-        }
-
-        private static void reserve(Scanner scanner) {
-                List<LibraryItem> temp = displayItemsChoice(scanner);
-                if (temp.size() != 0) {
-                        System.out.println("Please enter number of item you would like to checkout:");
-                        int choice = scanner.nextInt();
-                        scanner.nextLine();
-                        currentLibraryMember.reserveItem(temp.get(choice - 1));
-                }
-        }
-
-        private static void checkout(Scanner scanner) {
-
-                List<LibraryItem> temp = displayItemsChoice(scanner);
-                if (temp.size() != 0) {
-                        System.out.println("Please enter number of item you would like to checkout:");
-                        int choice = scanner.nextInt();
-                        scanner.nextLine();
-                        currentLibraryMember.borrowItem(temp.get(choice - 1));
-                }
-        }
-
-        private static void removeItemfromLibrary(Scanner scanner) {
-
-                List<LibraryItem> temp = displayItemsChoice(scanner);
                 if (temp.size() != 0) {
                         System.out.println("Please enter number of item you would like to remove:");
                         int choice = scanner.nextInt();
@@ -426,7 +372,7 @@ public class MainApplication {
                                                 }
 
                                                 flushScreen();
-                                                System.out.print("Enter Release Date (DD-MM-YYYY): ");
+                                                System.out.print("Enter Release Date (YYYY-MM-DD): ");
                                                 String releaseDate = scanner.nextLine().trim();
 
                                                 // Edge case -> if empty
@@ -436,9 +382,9 @@ public class MainApplication {
                                                 }
 
                                                 // Edge case -> Invalid date format
-                                                if (!releaseDate.matches("\\d{2}-\\d{2}-\\d{4}")) {
+                                                if (!releaseDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
                                                         throw new IllegalArgumentException(
-                                                                        "Invalid date format. Use DD-MM-YYYY format.");
+                                                                        "Invalid date format. Use YYYY-MM-DD format.");
                                                 }
 
                                                 flushScreen();
@@ -558,7 +504,7 @@ public class MainApplication {
                                                 }
 
                                                 flushScreen();
-                                                System.out.print("Enter Publication Date (DD-MM-YYYY): ");
+                                                System.out.print("Enter Publication Date (YYYY-MM-DD): ");
                                                 String publicationDate = scanner.nextLine().trim();
 
                                                 // Edge case -> Empty publication date
@@ -568,9 +514,9 @@ public class MainApplication {
                                                 }
 
                                                 // Edge case -> Invalid date format
-                                                if (!publicationDate.matches("\\d{2}-\\d{2}-\\d{4}")) {
+                                                if (!publicationDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
                                                         throw new IllegalArgumentException(
-                                                                        "Invalid date format. Use DD-MM-YYYY format.");
+                                                                        "Invalid date format. Use YYYY-MM-DD format.");
                                                 }
 
                                                 newItem = new Periodical((long) id, title, currentLibrary, publisher,
