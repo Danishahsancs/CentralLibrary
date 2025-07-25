@@ -71,7 +71,7 @@ public class LibraryMember extends Person {
         return borrowedItems;
     }
 
-    public Double getoutstandingFees() {
+    public Double getOutstandingFees() {
         return outstandingFees;
     }
 

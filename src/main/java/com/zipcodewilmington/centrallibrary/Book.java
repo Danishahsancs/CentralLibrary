@@ -73,7 +73,7 @@ public class Book extends LibraryItem implements Reservable {
     public String toString() {
 
         // Return a string representation of the Book (title, id, and availability)
-        return "Title: " + getTitle() + " ID: " + getId() + " Available: " + isAvailable()+ " ISBN: " + isbn;
+        return "Title: " + getTitle() + " ID: " + getId() + " Available: " + isAvailable();
     }
 
     //// Search
