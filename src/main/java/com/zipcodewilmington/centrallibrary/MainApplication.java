@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Created by n3pjk on 6/9/2025.
- */
 public class MainApplication {
+
+        private static Library currentLibrary = null;
+        private static LibraryMember currentLibraryMember = null;
 
         public static void main(String[] args) {
                 Library library1 = new Library("Library1", new Address("12 abc st", "wilmington", "Delaware", "19801"));
@@ -16,8 +16,7 @@ public class MainApplication {
                                 LocalDate.now().toString(),
                                 new Address("12 jump st", "new castle", "Delaware", "19720"));
                 Librarian librarian = new Librarian("librarian", 67, "librarian@library.com", "098-765-4321", "1",
-                                "front desk",
-                                30000, null);
+                                "front desk", 30000, null);
 
                 Book book1 = new Book(1L, "The Great Gatsby", library1, "F. Scott Fitzgerald", "9780743273565", 180,
                                 "Classic");
@@ -25,8 +24,7 @@ public class MainApplication {
                 DVD dvd1 = new DVD(3L, "Inception", library1, "Christopher Nolan", 148, "PG-13", "Sci-Fi");
                 DVD dvd2 = new DVD(4L, "The Godfather", library1, "Francis Ford Coppola", 175, "R", "Crime");
                 Periodical p1 = new Periodical(5L, "National Geographic", library1, "NatGeo Society", "0027-9358",
-                                "Vol. 245",
-                                "No. 6", "2025-06");
+                                "Vol. 245", "No. 6", "2025-06");
                 Periodical p2 = new Periodical(6L, "Time Magazine", library1, "Time Inc.", "0040-781X", "Vol. 198",
                                 "No. 12",
                                 "2025-07");
@@ -57,23 +55,32 @@ public class MainApplication {
 
                 /// jounish.returnItem(music2, 20);
                 jounish.removeReservedItem(music1);
-                // System.out.println("\n"+jounish);
+
                 Scanner scanner = new Scanner(System.in);
                 List<Library> libraries = new ArrayList<>();
                 libraries.add(library1);
+
+                setStates(scanner, libraries);
+
                 int choice = -1;
                 do {
-                        System.out.println("0. Quit\n1. Librarian\n2. Library Member\n");
+                        flushScreen();
+                        System.out.println(
+                                        "0. Quit\n1. Librarian\n2. Library Member\n3. Change Library and Member choice");
                         System.out.print("Select Option:");
                         choice = scanner.nextInt();
                         scanner.nextLine();
 
                         switch (choice) {
                                 case 1:
-                                        librarianOptions(scanner, libraries);
+                                        librarianOptions(scanner);
                                         break;
                                 case 2:
-                                        libraryMemberOptions(scanner, libraries);
+                                        libraryMemberOptions(scanner);
+                                        break;
+                                case 3:
+                                        flushScreen();
+                                        setStates(scanner, libraries);
                                         break;
                                 default:
                                         break;
@@ -88,7 +95,7 @@ public class MainApplication {
                 System.out.flush();
         }
 
-        private static void librarianOptions(Scanner scanner, List<Library> libraries) {
+        private static void librarianOptions(Scanner scanner) {
                 flushScreen();
 
                 int choice = -1;
@@ -100,58 +107,37 @@ public class MainApplication {
                         switch (choice) {
                                 case 1:
                                         flushScreen();
-                                        for (Library library : libraries) {
-                                                library.displayAllItems();
-                                        }
+                                        currentLibrary.displayAllItems();
                                         break;
                                 case 2:
                                         flushScreen();
                                         System.out.print("Enter search parameter: ");
                                         String keyword = scanner.nextLine();
-                                        for (Library library : libraries) {
-                                                System.out.println(library.getLibraryName() + "'s Results:");
-                                                List<LibraryItem> temp = library.search(keyword);
-                                                for (LibraryItem item : temp)
-                                                        System.out.println(item);
-                                        }
+                                        System.out.println(currentLibrary.getLibraryName() + "'s Results:");
+                                        List<LibraryItem> temp = currentLibrary.search(keyword);
+                                        for (LibraryItem item : temp)
+                                                System.out.println(item);
                                         break;
                                 case 3:
                                         flushScreen();
-                                        int i = 1;
-                                        for (Library library : libraries) {
-                                                System.out.println(i + ". " + library.getLibraryName());
-                                        }
-                                        System.out.print("Select choice: ");
-                                        int temp = scanner.nextInt();
-                                        scanner.nextLine();
-                                        addItemToLibrary(scanner, libraries.get(temp - 1));
+                                        addItemToLibrary(scanner);
                                         break;
                                 case 4:
                                         flushScreen();
-                                        int y = 1;
-                                        for (Library library : libraries) {
-                                                System.out.println(y + ". " + library.getLibraryName());
-                                        }
-                                        System.out.print("Select choice: ");
-                                        int x = scanner.nextInt();
-                                        scanner.nextLine();
-                                        removeItemfromLibrary(scanner, libraries.get(x - 1));
+                                        removeItemfromLibrary(scanner);
                                         break;
                                 case 5:
                                         flushScreen();
-                                        for (Library library : libraries) {
-                                                System.out.println(library.getLibraryName() + "'s late fee report:");
-                                                library.generateReportItems();
-                                        }
+                                        System.out.println(currentLibrary.getLibraryName() + "'s late fee report:");
+                                        currentLibrary.generateReportItems();
                                         break;
                                 default:
                                         break;
                         }
                 } while (choice != 0);
-
         }
 
-        private static void libraryMemberOptions(Scanner scanner, List<Library> libraries) {
+        private static void libraryMemberOptions(Scanner scanner) {
                 flushScreen();
 
                 int choice = -1;
@@ -163,41 +149,27 @@ public class MainApplication {
                         switch (choice) {
                                 case 1:
                                         flushScreen();
-                                        int y = 1;
-                                        for (Library library : libraries) {
-                                                System.out.println(y + ". " + library.getLibraryName());
-                                        }
-                                        System.out.print("Select choice: ");
-                                        int x = scanner.nextInt();
-                                        scanner.nextLine();
-                                        viewBorrowedItems(scanner, libraries.get(x - 1));
+                                        viewBorrowedItems();
                                         break;
                                 case 2:
                                         flushScreen();
                                         System.out.print("Enter search parameter: ");
                                         String keyword = scanner.nextLine();
-                                        for (Library library : libraries) {
-                                                System.out.println(library.getLibraryName() + "'s Results:");
-                                                List<LibraryItem> temp = library.search(keyword);
-                                                for (LibraryItem item : temp)
-                                                        System.out.println(item);
-                                        }
+                                        System.out.println(currentLibrary.getLibraryName() + "'s Results:");
+                                        List<LibraryItem> temp = currentLibrary.search(keyword);
+                                        for (LibraryItem item : temp)
+                                                System.out.println(item);
                                         break;
                                 case 3:
-                                
-
+                                flushScreen();
                                         break;
                                 case 4:
-
                                         break;
                                 case 5:
-
                                         break;
                                 case 6:
-
                                         break;
                                 case 7:
-
                                         break;
                                 default:
                                         break;
@@ -205,21 +177,68 @@ public class MainApplication {
                 } while (choice != 0);
         }
 
-        private static void viewBorrowedItems(Scanner scanner, Library library) {
-                List<LibraryMember> temp = library.getMembers();
-                for (LibraryMember member : temp) {
-                        System.out.println(member.getName() + " borrowed items: ");
-                        List<LibraryItem> items = member.getBorrowedItems();
-                        for (LibraryItem item : items) {
-                                System.out.println(item.getTitle());
-                        }
+
+        private static void removeItemfromLibrary(Scanner scanner) {
+
+                int i = 1;
+                System.out.print("Enter search parameter: ");
+                String keyword = scanner.nextLine();
+                System.out.println(currentLibrary.getLibraryName() + "'s Results:");
+                List<LibraryItem> temp = currentLibrary.search(keyword);
+                for (LibraryItem item : temp) {
+                        System.out.println(i + ". " + item); // displaying all library items
+                        i++;
                 }
+
+                if (temp.size() != 0) {
+                        System.out.println("Please enter number of item you would like to remove:");
+                        int choice = scanner.nextInt();
+                        scanner.nextLine();
+                        currentLibrary.removeItem(temp.get(choice - 1));
+                } // using method to remove item from Library
+
         }
 
-        private static void addItemToLibrary(Scanner scanner, Library librarychoice) {
+        private static void viewBorrowedItems() {
+
+                System.out.println(currentLibraryMember.getName() + " borrowed items: ");
+                List<LibraryItem> temp = currentLibraryMember.getBorrowedItems();
+
+                for (LibraryItem item : temp) {
+                        System.out.println("Title: " + item.getTitle() + " ID: " + item.getId());
+                }
+
+        }
+
+        private static void setStates(Scanner scanner, List<Library> libraries) {
+                int i = 1;
+                for (Library library : libraries) {
+                        System.out.println(i + ". " + library.getLibraryName());
+                        i++;
+                }
+                System.out.print("Select Library: ");
+                int temp = scanner.nextInt();
+                scanner.nextLine();
+
+                currentLibrary = libraries.get(temp - 1);
+
+                int y = 1;
+                for (LibraryMember member : currentLibrary.getMembers()) {
+                        System.out.println(y + ". " + member.getName());
+                        y++;
+                }
+                System.out.print("Select Member: ");
+                int x = scanner.nextInt();
+                scanner.nextLine();
+                currentLibraryMember = currentLibrary.getMembers().get(x - 1);
+
+                System.out.println(currentLibrary + ": " + currentLibraryMember);
+        }
+
+        private static void addItemToLibrary(Scanner scanner) {
 
                 // Display library name
-                System.out.println("Adding item to " + librarychoice.getLibraryName());
+                System.out.println("Adding item to " + currentLibrary.getLibraryName());
 
                 // Variable for itemTypeChoice
                 String itemTypeChoice = "";
@@ -257,7 +276,7 @@ public class MainApplication {
                                 }
 
                                 // Edge case: Duplicate ID check
-                                for (LibraryItem existingItem : librarychoice.getItems()) {
+                                for (LibraryItem existingItem : currentLibrary.getItems()) {
                                         if (existingItem.getId() == id) {
                                                 throw new IllegalArgumentException("An item with ID " + id
                                                                 + " already exists: " + existingItem.getTitle());
@@ -321,7 +340,8 @@ public class MainApplication {
                                                         throw new IllegalArgumentException("Genre cannot be empty.");
                                                 }
 
-                                                newItem = new Book((long) id, title, librarychoice, author, isbn, pages,
+                                                newItem = new Book((long) id, title, currentLibrary, author, isbn,
+                                                                pages,
                                                                 genreBook);
                                                 validItemType = true; // Exit loop
                                                 break;
@@ -362,7 +382,7 @@ public class MainApplication {
                                                         throw new IllegalArgumentException("Genre cannot be empty.");
                                                 }
 
-                                                newItem = new Music((long) id, title, librarychoice, artist,
+                                                newItem = new Music((long) id, title, currentLibrary, artist,
                                                                 releaseDate, genreMusic);
                                                 validItemType = true; // Exit loop
                                                 break;
@@ -420,7 +440,7 @@ public class MainApplication {
                                                         throw new IllegalArgumentException("Genre cannot be empty.");
                                                 }
 
-                                                newItem = new DVD((long) id, title, librarychoice, director,
+                                                newItem = new DVD((long) id, title, currentLibrary, director,
                                                                 durationDVD, rating, genreMovie);
                                                 validItemType = true; // Exit loop
                                                 break;
@@ -485,7 +505,7 @@ public class MainApplication {
                                                                         "Invalid date format. Use YYYY-MM-DD format.");
                                                 }
 
-                                                newItem = new Periodical((long) id, title, librarychoice, publisher,
+                                                newItem = new Periodical((long) id, title, currentLibrary, publisher,
                                                                 issn, volume, issue, publicationDate);
                                                 validItemType = true; // Exit loop
                                                 break;
@@ -498,7 +518,7 @@ public class MainApplication {
 
                                 // Add the new item to the library collection
                                 if (newItem != null) {
-                                        librarychoice.addItem(newItem);
+                                        currentLibrary.addItem(newItem);
                                         flushScreen();
                                         System.out.println("Item added successfully.");
                                         System.out.println("\nNewly added item:");
@@ -524,17 +544,4 @@ public class MainApplication {
                 }
         }
 
-        private static void removeItemfromLibrary(Scanner scanner, Library library) {
-
-                int i = 1;
-                List<LibraryItem> temp = library.getItems(); // getting all library items
-                for (LibraryItem item : temp) {
-                        System.out.println(i + ". " + item); // displaying all library items
-                }
-                System.out.println("Please enter number of item you would like to remove:");
-                int choice = scanner.nextInt();
-                scanner.nextLine();
-                library.removeItem(temp.get(choice - 1)); // using method to remove item from Library
-
-        }
 }
