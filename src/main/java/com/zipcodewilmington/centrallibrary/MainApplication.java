@@ -68,7 +68,8 @@ public class MainApplication {
                         choice = scanner.nextInt();
                         scanner.nextLine();
 
-                        switch (choice) {
+                        switch (choice) 
+                        {
                                 case 1:
                                         librarianOptions(scanner, libraries);
                                         break;
@@ -508,7 +509,20 @@ public class MainApplication {
                 }
         }
 
-        private static void removeItemfromLibrary(Scanner scanner, Library library) {
+        private static void removeItemfromLibrary(Scanner scanner, Library library) 
+        {
+
+                int i = 1;
+                List<LibraryItem> temp = library.getItems();  // getting all library items
+                for (LibraryItem item : temp) 
+                {
+                        System.out.println(i + ". " + item); // displaying all library items
+                }
+                System.out.println("Please enter number of item you would like to remove:");
+                int choice = scanner.nextInt();
+                scanner.nextLine();
+                library.removeItem(temp.get(choice-1)); // using method to remove item from Library 
+                
 
         }
 }
