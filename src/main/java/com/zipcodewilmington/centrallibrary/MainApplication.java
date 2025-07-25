@@ -1,9 +1,18 @@
 package com.zipcodewilmington.centrallibrary;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 public class MainApplication {
 
@@ -18,43 +27,51 @@ public class MainApplication {
                 Librarian librarian = new Librarian("librarian", 67, "librarian@library.com", "098-765-4321", "1",
                                 "front desk", 30000, null);
 
-                Book book1 = new Book(1L, "The Great Gatsby", library1, "F. Scott Fitzgerald", "9780743273565", 180,
-                                "Classic");
-                Book book2 = new Book(2L, "1984", library1, "George Orwell", "9780451524935", 328, "Dystopian");
-                DVD dvd1 = new DVD(3L, "Inception", library1, "Christopher Nolan", 148, "PG-13", "Sci-Fi");
-                DVD dvd2 = new DVD(4L, "The Godfather", library1, "Francis Ford Coppola", 175, "R", "Crime");
-                Periodical p1 = new Periodical(5L, "National Geographic", library1, "NatGeo Society", "0027-9358",
-                                "Vol. 245", "No. 6", "2025-06");
-                Periodical p2 = new Periodical(6L, "Time Magazine", library1, "Time Inc.", "0040-781X", "Vol. 198",
-                                "No. 12",
-                                "2025-07");
-                Music music1 = new Music(7L, "Thriller", library1, "Michael Jackson", "1982-11-30", "Pop");
-                Music music2 = new Music(8L, "Back in Black", library1, "AC/DC", "1980-07-25", "Rock");
-
                 library1.addLibrarian(librarian);
                 library1.addMember(jounish);
-                library1.addItem(book1);
-                library1.addItem(book2);
-                library1.addItem(dvd1);
-                library1.addItem(dvd2);
-                librarian.addItemToLibrary(library1, p1);
-                librarian.addItemToLibrary(library1, p2);
-                librarian.addItemToLibrary(library1, music1);
-                librarian.addItemToLibrary(library1, music2);
 
-                library1.removeItem(book1);
-                librarian.removeItemFromLibrary(library1, p1);
+                long autoIncrementedId = 0;
 
-                jounish.borrowItem(music2);
-                jounish.reserveItem(music1);
+                try {
+                        JsonArray jArray = JsonParser.parseReader(new FileReader(
+                                        "src/main/java/com/zipcodewilmington/centrallibrary/Data/music_json.json"))
+                                        .getAsJsonArray();
+                        for (JsonElement element : jArray) {
+                                JsonObject obj = element.getAsJsonObject();
+                                Music music = new Music(autoIncrementedId, obj.get("track_name").getAsString(),
+                                                library1, obj.get("artist_name").getAsString(),
+                                                obj.get("release_date").getAsString(), obj.get("genre").getAsString());
+                                library1.addItem(music);
+                                autoIncrementedId++;
+                        }
+                } catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                }
 
-                // library1.displayAllItems();
-                // System.out.println("\n"+library1);
-                // System.out.println("\n"+librarian);
-                // System.out.println("\n"+jounish);
-
-                /// jounish.returnItem(music2, 20);
-                jounish.removeReservedItem(music1);
+                try {
+                        JsonArray jArray = JsonParser.parseReader(new FileReader(
+                                        "src/main/java/com/zipcodewilmington/centrallibrary/Data/book_json.json"))
+                                        .getAsJsonArray();
+                        for (JsonElement jsonElement : jArray) {
+                                JsonObject obj = jsonElement.getAsJsonObject();
+                                String genres = "";
+                                String authors = "";
+                                for (JsonElement gElement : obj.get("Genres").getAsJsonArray()) {
+                                        genres += gElement.getAsString() + " ";
+                                }
+                                for (JsonElement gElement : obj.get("Authors").getAsJsonArray()) {
+                                        authors += gElement.getAsString() + " ";
+                                }
+                                Book book = new Book(autoIncrementedId, obj.get("Title").getAsString(), library1, "hi",
+                                                obj.get("ISBN").getAsString(), obj.get("Pages").getAsInt(), authors);
+                                autoIncrementedId++;
+                                library1.addItem(book);
+                        }
+                } catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                }
 
                 Scanner scanner = new Scanner(System.in);
                 List<Library> libraries = new ArrayList<>();
@@ -116,7 +133,7 @@ public class MainApplication {
                                         System.out.println(currentLibrary.getLibraryName() + "'s Results:");
                                         List<LibraryItem> temp = currentLibrary.search(keyword);
                                         for (LibraryItem item : temp)
-                                                System.out.println(item);
+                                                System.out.println(item.getItemType() + ":\t" + item.getTitle()+"\n");
                                         break;
                                 case 3:
                                         flushScreen();
@@ -158,7 +175,7 @@ public class MainApplication {
                                         System.out.println(currentLibrary.getLibraryName() + "'s Results:");
                                         List<LibraryItem> temp = currentLibrary.search(keyword);
                                         for (LibraryItem item : temp)
-                                                System.out.println(item);
+                                                System.out.println(item.getItemType() + ":\t" + item.getTitle()+"\n");
                                         break;
                                 case 3:
                                         flushScreen();
@@ -170,9 +187,19 @@ public class MainApplication {
                                 case 5:
                                         break;
                                 case 6:
+                                        flushScreen();
+                                        temp = currentLibraryMember.getReservedItems();
+                                        int i = 0;
+                                        for (LibraryItem item : temp) {
+                                                System.out.println(i + ". " + item.getTitle());
+                                                i++;
+                                        }
+                                        int x = scanner.nextInt();
+                                        scanner.nextLine();
+                                        currentLibraryMember.removeReservedItem(temp.get(x - 1));
                                         break;
                                 case 7:
-                                        System.out.println("Member: " + currentLibraryMember.getName() + "Amount Owed:"
+                                        System.out.println("Member: " + currentLibraryMember.getName() + " Amount Owed:"
                                                         + currentLibraryMember.getOutstandingFees());
                                         System.out.print("How much would you like to pay: ");
                                         Double amount = scanner.nextDouble();
@@ -186,21 +213,32 @@ public class MainApplication {
         }
 
         private static void checkInItemfromMember(Scanner scanner) {
-                
-                       
-                
+                int i = 1;
+                List<LibraryItem> temp = currentLibraryMember.getBorrowedItems();
+                for (LibraryItem item : temp) {
+                        System.out.println(i + ". " + item); //
+                        i++;
+                }
+                if (temp.size() != 0) {
+                        System.out.print("Please enter number of item you would like to check in: ");
+                        int choice = scanner.nextInt();
+                        scanner.nextLine();
+                        System.out.print("Please enter number of days late: ");
+                        int late = scanner.nextInt();
+                        scanner.nextLine();
+                        currentLibraryMember.returnItem(temp.get(choice - 1), late);
+                }
 
         }
 
-        private static void removeItemfromLibrary(Scanner scanner) {
-
+        private static List<LibraryItem> displayItemsChoice(Scanner scanner) {
                 int i = 1;
                 System.out.print("Enter search parameter: ");
                 String keyword = scanner.nextLine();
                 System.out.println(currentLibrary.getLibraryName() + "'s Results:");
                 List<LibraryItem> temp = currentLibrary.search(keyword);
                 for (LibraryItem item : temp) {
-                        System.out.println(i + ". " + item);
+                        System.out.println(i + ". " + item+"\n");
                         i++;
                 }
 
