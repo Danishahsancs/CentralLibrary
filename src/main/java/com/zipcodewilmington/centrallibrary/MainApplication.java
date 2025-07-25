@@ -188,7 +188,7 @@ public class MainApplication {
                                         break;
                                 case 7:
                                         System.out.println("Member: " + currentLibraryMember.getName() + "Amount Owed:"
-                                                        + currentLibraryMember.getoutstandingFees());
+                                                        + currentLibraryMember.getOutstandingFees());
                                         System.out.print("How much would you like to pay: ");
                                         Double amount = scanner.nextDouble();
                                         scanner.nextLine();

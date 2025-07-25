@@ -219,30 +219,31 @@ public class MainApplicationTest {
     }
     
     // FAILING
-    // @Test
-    // @DisplayName("Check in a borrowed item with late fees")
-    // void testCheckInLate() {
+    @Test
+    @DisplayName("Check in a borrowed item with late fees")
+    void testCheckInLate() {
 
-    //     // Setup: member borrows a dvd
-    //     testLibrary.addMember(testMember);
+        // Setup: member borrows a dvd
+        testLibrary.addMember(testMember);
         
-    //     testMember.borrowItem(testDVD);
-    //     double initialFees = testMember.getOutstandingFees();
+        testMember.borrowItem(testDVD);
+        double initialFees = testMember.getOutstandingFees();
         
-    //     // Return the item late (5 days late)
-    //     int daysLate = 5;
-    //     testMember.returnItem(testDVD, daysLate);
+        // Return the item late (5 days late)
+        int daysLate = 5;
+        testMember.returnItem(testDVD, daysLate);
         
-    //     // Verify post-return state
-    //     assertTrue(testDVD.isAvailable(), "DVD should be available after return");
-    //     assertEquals(0, testMember.getBorrowedItems().size(), "Member should have no borrowed items after return");
-    //     assertFalse(testMember.getBorrowedItems().contains(testDVD), "Member should not have the returned DVD");
+        // Verify post-return state
+        assertTrue(testDVD.isAvailable(), "DVD should be available after return");
+        assertEquals(0, testMember.getBorrowedItems().size(), "Member should have no borrowed items after return");
+        assertFalse(testMember.getBorrowedItems().contains(testDVD), "Member should not have the returned DVD");
         
-    //     // Verify late fees were calculated and added
-    //     double expectedLateFee = testDVD.calculateLateFee(daysLate);
-    //     assertEquals(initialFees + expectedLateFee, testMember.getOutstandingFees(), "Late fees should be added to member's outstanding fees");
-    //     assertTrue(testMember.getOutstandingFees() > initialFees, "Outstanding fees should increase after late return");
-    // }
+        // Verify late fees were calculated and added
+        int totalDaysCheckedOut = testDVD.getMaxBorrowDays() + daysLate;
+        double expectedLateFee = testDVD.calculateLateFee(totalDaysCheckedOut);
+        assertEquals(initialFees + expectedLateFee, testMember.getOutstandingFees(), "Late fees should be added to member's outstanding fees");
+        assertTrue(testMember.getOutstandingFees() > initialFees, "Outstanding fees should increase after late return");
+    }
     
     @Test
     @DisplayName("Cannot check in an item that wasn't borrowed by the member")
