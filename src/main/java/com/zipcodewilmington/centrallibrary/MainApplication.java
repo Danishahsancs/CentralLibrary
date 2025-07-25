@@ -202,20 +202,19 @@ public class MainApplication {
 
         private static void checkInItemfromMember(Scanner scanner) {
                 int i = 1;
-                System.out.print("Enter search parameter: ");
-                String keyword = scanner.nextLine();
-                System.out.println(currentLibrary.getLibraryName() + "'s Results:");
-                List<LibraryItem> temp = currentLibrary.search(keyword);
+                List<LibraryItem> temp = currentLibraryMember.getBorrowedItems();
                 for (LibraryItem item : temp) {
                         System.out.println(i + ". " + item); //
                         i++;
                 }
                 if (temp.size() != 0) {
-                        System.out.println("Please enter number of item you would like to check in");
+                        System.out.print("Please enter number of item you would like to check in: ");
                         int choice = scanner.nextInt();
                         scanner.nextLine();
-                        LibraryItem item = temp.get(choice - 1);
-                        item.checkIn();
+                        System.out.print("Please enter number of days late: ");
+                        int late = scanner.nextInt();
+                        scanner.nextLine();
+                        currentLibraryMember.returnItem(temp.get(choice-1), late);
                 }
 
         }
