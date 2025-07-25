@@ -232,12 +232,15 @@ public class MainApplication {
                                         break;
                                 case 3:
                                         flushScreen();
+                                        checkout(scanner);
                                         break;
                                 case 4:
                                         flushScreen();
                                         checkInItemfromMember(scanner);
                                         break;
                                 case 5:
+                                        flushScreen();
+                                        reserve(scanner);
                                         break;
                                 case 6:
                                         flushScreen();
