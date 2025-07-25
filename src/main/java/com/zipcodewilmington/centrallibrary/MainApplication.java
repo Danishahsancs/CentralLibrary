@@ -85,7 +85,24 @@ public class MainApplication {
                         System.out.println(
                                         "0. Quit\n1. Librarian\n2. Library Member\n3. Change Library and Member choice");
                         System.out.print("Select Option:");
+                        
+                        // Input validated here
+                        while (!scanner.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a number between 0 and 3.");
+                                System.out.print("Select Option:");
+                                scanner.next();
+                        }
                         choice = scanner.nextInt();
+                        while (choice < 0 || choice > 3) {
+                                System.out.println("Invalid choice. Please enter a number between 0 and 3.");
+                                System.out.print("Select Option:");
+                                while (!scanner.hasNextInt()) {
+                                        System.out.println("Invalid input. Please enter a number between 0 and 3.");
+                                        System.out.print("Select Option:");
+                                        scanner.next();
+                                }
+                                choice = scanner.nextInt();
+                        }
                         scanner.nextLine();
 
                         switch (choice) {
@@ -119,8 +136,26 @@ public class MainApplication {
                 do {
                         System.out.print(
                                         "\n0. go back\n1. view all items\n2. search for item\n3. add item to library\n4. remove item from library\n5. print late fee report \n\nSelect Option: ");
+                        
+                        // Input validated here
+                        while (!scanner.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a number between 0 and 5.");
+                                System.out.print("Select Option: ");
+                                scanner.next();
+                        }
                         choice = scanner.nextInt();
+                        while (choice < 0 || choice > 5) {
+                                System.out.println("Invalid choice. Please enter a number between 0 and 5.");
+                                System.out.print("Select Option: ");
+                                while (!scanner.hasNextInt()) {
+                                        System.out.println("Invalid input. Please enter a number between 0 and 5.");
+                                        System.out.print("Select Option: ");
+                                        scanner.next();
+                                }
+                                choice = scanner.nextInt();
+                        }
                         scanner.nextLine();
+                        
                         switch (choice) {
                                 case 1:
                                         flushScreen();
@@ -163,8 +198,26 @@ public class MainApplication {
                 do {
                         System.out.print(
                                         "\n0. go back\n1. view borrowed items\n2. search for item \n3. checkout item\n4. check in item\n5. reserve item\n6. cancel reservation\n7. pay fees\n\nSelect Option: ");
+                        
+                        // Input validated here
+                        while (!scanner.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a number between 0 and 7.");
+                                System.out.print("Select Option: ");
+                                scanner.next();
+                        }
                         choice = scanner.nextInt();
+                        while (choice < 0 || choice > 7) {
+                                System.out.println("Invalid choice. Please enter a number between 0 and 7.");
+                                System.out.print("Select Option: ");
+                                while (!scanner.hasNextInt()) {
+                                        System.out.println("Invalid input. Please enter a number between 0 and 7.");
+                                        System.out.print("Select Option: ");
+                                        scanner.next();
+                                }
+                                choice = scanner.nextInt();
+                        }
                         scanner.nextLine();
+                        
                         switch (choice) {
                                 case 1:
                                         flushScreen();
@@ -194,12 +247,30 @@ public class MainApplication {
                                 case 6:
                                         flushScreen();
                                         temp = currentLibraryMember.getReservedItems();
-                                        int i = 0;
+                                        int i = 1;
                                         for (LibraryItem item : temp) {
                                                 System.out.println(i + ". " + item.getTitle());
                                                 i++;
                                         }
+                                        
+                                        // Input validated here
+                                        System.out.print("Enter item number to cancel: ");
+                                        while (!scanner.hasNextInt()) {
+                                                System.out.println("Invalid input. Please enter a valid number.");
+                                                System.out.print("Enter item number to cancel: ");
+                                                scanner.next();
+                                        }
                                         int x = scanner.nextInt();
+                                        while (x < 1 || x > temp.size()) {
+                                                System.out.println("Invalid choice. Please enter a number between 1 and " + temp.size());
+                                                System.out.print("Enter item number to cancel: ");
+                                                while (!scanner.hasNextInt()) {
+                                                        System.out.println("Invalid input. Please enter a valid number.");
+                                                        System.out.print("Enter item number to cancel: ");
+                                                        scanner.next();
+                                                }
+                                                x = scanner.nextInt();
+                                        }
                                         scanner.nextLine();
                                         currentLibraryMember.removeReservedItem(temp.get(x - 1));
                                         break;
@@ -207,7 +278,24 @@ public class MainApplication {
                                         System.out.println("Member: " + currentLibraryMember.getName() + " Amount Owed:"
                                                         + currentLibraryMember.getOutstandingFees());
                                         System.out.print("How much would you like to pay: ");
+                                        
+                                        // Input validated here
+                                        while (!scanner.hasNextDouble()) {
+                                                System.out.println("Invalid input. Please enter a valid amount.");
+                                                System.out.print("How much would you like to pay: ");
+                                                scanner.next();
+                                        }
                                         Double amount = scanner.nextDouble();
+                                        while (amount < 0) {
+                                                System.out.println("Amount cannot be negative. Please enter a positive amount.");
+                                                System.out.print("How much would you like to pay: ");
+                                                while (!scanner.hasNextDouble()) {
+                                                        System.out.println("Invalid input. Please enter a valid amount.");
+                                                        System.out.print("How much would you like to pay: ");
+                                                        scanner.next();
+                                                }
+                                                amount = scanner.nextDouble();
+                                        }
                                         scanner.nextLine();
                                         currentLibraryMember.payFees(amount);
                                         break;
@@ -226,14 +314,48 @@ public class MainApplication {
                 }
                 if (temp.size() != 0) {
                         System.out.print("Please enter number of item you would like to check in: ");
+                        
+                        // Input validated here
+                        while (!scanner.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a valid number.");
+                                System.out.print("Please enter number of item you would like to check in: ");
+                                scanner.next();
+                        }
                         int choice = scanner.nextInt();
+                        while (choice < 1 || choice > temp.size()) {
+                                System.out.println("Invalid choice. Please enter a number between 1 and " + temp.size());
+                                System.out.print("Please enter number of item you would like to check in: ");
+                                while (!scanner.hasNextInt()) {
+                                        System.out.println("Invalid input. Please enter a valid number.");
+                                        System.out.print("Please enter number of item you would like to check in: ");
+                                        scanner.next();
+                                }
+                                choice = scanner.nextInt();
+                        }
                         scanner.nextLine();
+                        
                         System.out.print("Please enter number of days late: ");
+                        
+                        // Input validated here
+                        while (!scanner.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a valid number.");
+                                System.out.print("Please enter number of days late: ");
+                                scanner.next();
+                        }
                         int late = scanner.nextInt();
+                        while (late < 0) {
+                                System.out.println("Days late cannot be negative. Please enter 0 or a positive number.");
+                                System.out.print("Please enter number of days late: ");
+                                while (!scanner.hasNextInt()) {
+                                        System.out.println("Invalid input. Please enter a valid number.");
+                                        System.out.print("Please enter number of days late: ");
+                                        scanner.next();
+                                }
+                                late = scanner.nextInt();
+                        }
                         scanner.nextLine();
                         currentLibraryMember.returnItem(temp.get(choice - 1), late);
                 }
-
         }
 
         private static List<LibraryItem> displayItemsChoice(Scanner scanner) {
@@ -254,44 +376,90 @@ public class MainApplication {
                 List<LibraryItem> temp = displayItemsChoice(scanner);
                 if (temp.size() != 0) {
                         System.out.println("Please enter number of item you would like to checkout:");
+                        
+                        // Input validated here
+                        while (!scanner.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a valid number.");
+                                System.out.print("Please enter number of item you would like to checkout:");
+                                scanner.next();
+                        }
                         int choice = scanner.nextInt();
+                        while (choice < 1 || choice > temp.size()) {
+                                System.out.println("Invalid choice. Please enter a number between 1 and " + temp.size());
+                                System.out.print("Please enter number of item you would like to checkout:");
+                                while (!scanner.hasNextInt()) {
+                                        System.out.println("Invalid input. Please enter a valid number.");
+                                        System.out.print("Please enter number of item you would like to checkout:");
+                                        scanner.next();
+                                }
+                                choice = scanner.nextInt();
+                        }
                         scanner.nextLine();
                         currentLibraryMember.reserveItem(temp.get(choice - 1));
                 }
         }
 
         private static void checkout(Scanner scanner) {
-
                 List<LibraryItem> temp = displayItemsChoice(scanner);
                 if (temp.size() != 0) {
                         System.out.println("Please enter number of item you would like to checkout:");
+                        
+                        // Input validated here
+                        while (!scanner.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a valid number.");
+                                System.out.print("Please enter number of item you would like to checkout:");
+                                scanner.next();
+                        }
                         int choice = scanner.nextInt();
+                        while (choice < 1 || choice > temp.size()) {
+                                System.out.println("Invalid choice. Please enter a number between 1 and " + temp.size());
+                                System.out.print("Please enter number of item you would like to checkout:");
+                                while (!scanner.hasNextInt()) {
+                                        System.out.println("Invalid input. Please enter a valid number.");
+                                        System.out.print("Please enter number of item you would like to checkout:");
+                                        scanner.next();
+                                }
+                                choice = scanner.nextInt();
+                        }
                         scanner.nextLine();
                         currentLibraryMember.borrowItem(temp.get(choice - 1));
                 }
         }
 
         private static void removeItemfromLibrary(Scanner scanner) {
-
                 List<LibraryItem> temp = displayItemsChoice(scanner);
                 if (temp.size() != 0) {
                         System.out.println("Please enter number of item you would like to remove:");
+                        
+                        // Input validated here
+                        while (!scanner.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a valid number.");
+                                System.out.print("Please enter number of item you would like to remove:");
+                                scanner.next();
+                        }
                         int choice = scanner.nextInt();
+                        while (choice < 1 || choice > temp.size()) {
+                                System.out.println("Invalid choice. Please enter a number between 1 and " + temp.size());
+                                System.out.print("Please enter number of item you would like to remove:");
+                                while (!scanner.hasNextInt()) {
+                                        System.out.println("Invalid input. Please enter a valid number.");
+                                        System.out.print("Please enter number of item you would like to remove:");
+                                        scanner.next();
+                                }
+                                choice = scanner.nextInt();
+                        }
                         scanner.nextLine();
                         currentLibrary.removeItem(temp.get(choice - 1));
                 } // using method to remove item from Library
-
         }
 
         private static void viewBorrowedItems() {
-
                 System.out.println(currentLibraryMember.getName() + " borrowed items: ");
                 List<LibraryItem> temp = currentLibraryMember.getBorrowedItems();
 
                 for (LibraryItem item : temp) {
                         System.out.println("Title: " + item.getTitle() + " ID: " + item.getId());
                 }
-
         }
 
         private static void setStates(Scanner scanner, List<Library> libraries) {
@@ -301,7 +469,24 @@ public class MainApplication {
                         i++;
                 }
                 System.out.print("Select Library: ");
+                
+                // Input validated here
+                while (!scanner.hasNextInt()) {
+                        System.out.println("Invalid input. Please enter a valid number.");
+                        System.out.print("Select Library: ");
+                        scanner.next();
+                }
                 int temp = scanner.nextInt();
+                while (temp < 1 || temp > libraries.size()) {
+                        System.out.println("Invalid choice. Please enter a number between 1 and " + libraries.size());
+                        System.out.print("Select Library: ");
+                        while (!scanner.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a valid number.");
+                                System.out.print("Select Library: ");
+                                scanner.next();
+                        }
+                        temp = scanner.nextInt();
+                }
                 scanner.nextLine();
 
                 currentLibrary = libraries.get(temp - 1);
@@ -312,7 +497,24 @@ public class MainApplication {
                         y++;
                 }
                 System.out.print("Select Member: ");
+                
+                // Input validated here
+                while (!scanner.hasNextInt()) {
+                        System.out.println("Invalid input. Please enter a valid number.");
+                        System.out.print("Select Member: ");
+                        scanner.next();
+                }
                 int x = scanner.nextInt();
+                while (x < 1 || x > currentLibrary.getMembers().size()) {
+                        System.out.println("Invalid choice. Please enter a number between 1 and " + currentLibrary.getMembers().size());
+                        System.out.print("Select Member: ");
+                        while (!scanner.hasNextInt()) {
+                                System.out.println("Invalid input. Please enter a valid number.");
+                                System.out.print("Select Member: ");
+                                scanner.next();
+                        }
+                        x = scanner.nextInt();
+                }
                 scanner.nextLine();
                 currentLibraryMember = currentLibrary.getMembers().get(x - 1);
 
@@ -320,7 +522,6 @@ public class MainApplication {
         }
 
         private static void addItemToLibrary(Scanner scanner) {
-
                 // Display library name
                 System.out.println("Adding item to " + currentLibrary.getLibraryName());
 
@@ -410,10 +611,10 @@ public class MainApplication {
                                                 // convert to Int
                                                 int pages = Integer.parseInt(pagesInput);
 
-                                                // Edge case -> Invalid page count
-                                                if (pages <= 0) {
+                                                // Edge case -> Invalid page count - Input validated here
+                                                if (pages <= 0 || pages > 10000) {
                                                         throw new IllegalArgumentException(
-                                                                        "Number of pages must be greater than 0.");
+                                                                        "Number of pages must be between 1 and 10000.");
                                                 }
 
                                                 System.out.print("Enter Genre: ");
@@ -451,7 +652,7 @@ public class MainApplication {
                                                                         "Release date cannot be empty.");
                                                 }
 
-                                                // Edge case -> Invalid date format
+                                                // Edge case -> Invalid date format - Input validated here
                                                 if (!releaseDate.matches("\\d{2}-\\d{2}-\\d{4}")) {
                                                         throw new IllegalArgumentException(
                                                                         "Invalid date format. Use DD-MM-YYYY format.");
@@ -494,10 +695,10 @@ public class MainApplication {
                                                 // convert to Int
                                                 int durationDVD = Integer.parseInt(durationInput);
 
-                                                // Edge case -> cant be less than or equal to 0
-                                                if (durationDVD <= 0) {
+                                                // Edge case -> cant be less than or equal to 0 - Input validated here
+                                                if (durationDVD <= 0 || durationDVD > 1000) {
                                                         throw new IllegalArgumentException(
-                                                                        "Duration must be greater than 0 minutes.");
+                                                                        "Duration must be between 1 and 1000 minutes.");
                                                 }
 
                                                 flushScreen();
@@ -509,7 +710,7 @@ public class MainApplication {
                                                         throw new IllegalArgumentException("Rating cannot be empty.");
                                                 }
 
-                                                // Edge case -> Invalid rating
+                                                // Edge case -> Invalid rating - Input validated here
                                                 if (!rating.matches("G|PG|PG-13|R|NC-17")) {
                                                         throw new IllegalArgumentException(
                                                                         "Invalid rating. Must be G, PG, PG-13, R, or NC-17.");
@@ -549,7 +750,7 @@ public class MainApplication {
                                                         throw new IllegalArgumentException("ISSN cannot be empty.");
                                                 }
 
-                                                // Edge case -> Invalid ISSN
+                                                // Edge case -> Invalid ISSN - Input validated here
                                                 if (!issn.matches("\\d{4}-\\d{4}")) {
                                                         throw new IllegalArgumentException(
                                                                         "Invalid ISSN format. Use XXXX-XXXX format.");
@@ -583,7 +784,7 @@ public class MainApplication {
                                                                         "Publication date cannot be empty.");
                                                 }
 
-                                                // Edge case -> Invalid date format
+                                                // Edge case -> Invalid date format - Input validated here
                                                 if (!publicationDate.matches("\\d{2}-\\d{2}-\\d{4}")) {
                                                         throw new IllegalArgumentException(
                                                                         "Invalid date format. Use DD-MM-YYYY format.");
