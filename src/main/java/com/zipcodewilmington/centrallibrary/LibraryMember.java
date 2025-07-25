@@ -59,6 +59,9 @@ public class LibraryMember extends Person {
         }
     }
 
+    public List<LibraryItem> getReservedItems(){
+        return reservedItem;
+    }
     public long getMemberId() {
         return memberId;
     }

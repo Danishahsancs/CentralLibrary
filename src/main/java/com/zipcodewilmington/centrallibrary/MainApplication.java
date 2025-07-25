@@ -134,6 +134,8 @@ public class MainApplication {
         private static void libraryMemberOptions(Scanner scanner) {
                 flushScreen();
 
+                List<LibraryItem> temp;
+
                 int choice = -1;
                 do {
                         System.out.print(
@@ -150,19 +152,31 @@ public class MainApplication {
                                         System.out.print("Enter search parameter: ");
                                         String keyword = scanner.nextLine();
                                         System.out.println(currentLibrary.getLibraryName() + "'s Results:");
-                                        List<LibraryItem> temp = currentLibrary.search(keyword);
+                                        temp = currentLibrary.search(keyword);
                                         for (LibraryItem item : temp)
                                                 System.out.println(item);
                                         break;
                                 case 3:
-                                flushScreen();
-                                checkou
+                                        flushScreen();
+                                        checkout(scanner);
                                         break;
                                 case 4:
                                         break;
                                 case 5:
+                                        flushScreen();
+                                        reserve(scanner);
                                         break;
                                 case 6:
+                                        flushScreen();
+                                        temp = currentLibraryMember.getReservedItems();
+                                        int i = 0;
+                                        for (LibraryItem item : temp) {
+                                                System.out.println(i + ". " + item.getTitle());
+                                                i++;
+                                        }
+                                        int x = scanner.nextInt();
+                                        scanner.nextLine();
+                                        currentLibraryMember.removeReservedItem(temp.get(x-1));
                                         break;
                                 case 7:
                                         break;
@@ -172,9 +186,7 @@ public class MainApplication {
                 } while (choice != 0);
         }
 
-
-        private static void removeItemfromLibrary(Scanner scanner) {
-
+        private static List<LibraryItem> displayItemsChoice(Scanner scanner) {
                 int i = 1;
                 System.out.print("Enter search parameter: ");
                 String keyword = scanner.nextLine();
@@ -185,6 +197,33 @@ public class MainApplication {
                         i++;
                 }
 
+                return temp;
+        }
+
+        private static void reserve(Scanner scanner) {
+                List<LibraryItem> temp = displayItemsChoice(scanner);
+                if (temp.size() != 0) {
+                        System.out.println("Please enter number of item you would like to checkout:");
+                        int choice = scanner.nextInt();
+                        scanner.nextLine();
+                        currentLibraryMember.reserveItem(temp.get(choice - 1));
+                }
+        }
+
+        private static void checkout(Scanner scanner) {
+
+                List<LibraryItem> temp = displayItemsChoice(scanner);
+                if (temp.size() != 0) {
+                        System.out.println("Please enter number of item you would like to checkout:");
+                        int choice = scanner.nextInt();
+                        scanner.nextLine();
+                        currentLibraryMember.borrowItem(temp.get(choice - 1));
+                }
+        }
+
+        private static void removeItemfromLibrary(Scanner scanner) {
+
+                List<LibraryItem> temp = displayItemsChoice(scanner);
                 if (temp.size() != 0) {
                         System.out.println("Please enter number of item you would like to remove:");
                         int choice = scanner.nextInt();
