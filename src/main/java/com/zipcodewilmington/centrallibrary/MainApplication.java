@@ -225,7 +225,7 @@ public class MainApplication {
                 LibraryItem newItem = null;
 
                 //Give option for book, music, dvd or periodical
-                System.out.print("Select item type (1: Book, 2: Music, 3: DVD, 4: Periodical): ");
+                System.out.print("Select item type:\n 1: Book\n 2: Music\n 3: DVD\n 4: Periodical\n ");
                 System.out.print("Enter Choice: ");
 
                 itemTypeChoice = scanner.nextLine().trim().toLowerCase();
