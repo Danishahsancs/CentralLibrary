@@ -558,7 +558,7 @@ public class MainApplication {
                                                 }
 
                                                 flushScreen();
-                                                System.out.print("Enter Publication Date (YYYY-MM-DD): ");
+                                                System.out.print("Enter Publication Date (DD-MM-YYYY): ");
                                                 String publicationDate = scanner.nextLine().trim();
 
                                                 // Edge case -> Empty publication date
@@ -568,9 +568,9 @@ public class MainApplication {
                                                 }
 
                                                 // Edge case -> Invalid date format
-                                                if (!publicationDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                                                if (!publicationDate.matches("\\d{2}-\\d{2}-\\d{4}")) {
                                                         throw new IllegalArgumentException(
-                                                                        "Invalid date format. Use YYYY-MM-DD format.");
+                                                                        "Invalid date format. Use DD-MM-YYYY format.");
                                                 }
 
                                                 newItem = new Periodical((long) id, title, currentLibrary, publisher,
