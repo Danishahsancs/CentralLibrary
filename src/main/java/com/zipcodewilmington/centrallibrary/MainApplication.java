@@ -155,6 +155,8 @@ public class MainApplication {
                                                 System.out.println(item);
                                         break;
                                 case 3:
+                                flushScreen();
+                                checkou
                                         break;
                                 case 4:
                                         break;
@@ -170,6 +172,7 @@ public class MainApplication {
                 } while (choice != 0);
         }
 
+
         private static void removeItemfromLibrary(Scanner scanner) {
 
                 int i = 1;
@@ -179,11 +182,15 @@ public class MainApplication {
                 List<LibraryItem> temp = currentLibrary.search(keyword);
                 for (LibraryItem item : temp) {
                         System.out.println(i + ". " + item); // displaying all library items
+                        i++;
                 }
-                System.out.println("Please enter number of item you would like to remove:");
-                int choice = scanner.nextInt();
-                scanner.nextLine();
-                currentLibrary.removeItem(temp.get(choice - 1)); // using method to remove item from Library
+
+                if (temp.size() != 0) {
+                        System.out.println("Please enter number of item you would like to remove:");
+                        int choice = scanner.nextInt();
+                        scanner.nextLine();
+                        currentLibrary.removeItem(temp.get(choice - 1));
+                } // using method to remove item from Library
 
         }
 
@@ -328,7 +335,8 @@ public class MainApplication {
                                                         throw new IllegalArgumentException("Genre cannot be empty.");
                                                 }
 
-                                                newItem = new Book((long) id, title, currentLibrary, author, isbn, pages,
+                                                newItem = new Book((long) id, title, currentLibrary, author, isbn,
+                                                                pages,
                                                                 genreBook);
                                                 validItemType = true; // Exit loop
                                                 break;
