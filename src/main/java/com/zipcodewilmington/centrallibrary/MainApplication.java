@@ -181,6 +181,112 @@ public class MainApplication {
         }
 
         private static void addItemToLibrary(Scanner scanner, Library librarychoice) {
-                System.out.println(librarychoice);
+
+                //Display library name 
+                System.out.println("Adding item to " + librarychoice.getLibraryName());
+
+                //Variable for itemTypeChoice
+                String itemTypeChoice = "";
+                LibraryItem newItem = null;
+
+                //Give option for book, music, dvd or periodical
+                System.out.print("Select item type (1: Book, 2: Music, 3: DVD, 4: Periodical): ");
+                System.out.print("Enter Choice: ");
+
+                itemTypeChoice = scanner.nextLine().trim().toLowerCase();
+
+                try {
+                        //Get common details 
+                        System.out.print("Enter ID: ");
+                        Long id = Long.parseLong(scanner.nextLine().trim());
+
+                        System.out.print("Enter Title: ");
+                        String title = scanner.nextLine().trim();
+
+                        //Select option
+                        switch (itemTypeChoice) {
+                                case "1": //Book
+
+                                        // Get book details
+                                        System.out.println("Enter Author: ");
+                                        String author = scanner.nextLine().trim();
+
+                                        System.out.print("Enter ISBN: ");
+                                        String isbn = scanner.nextLine().trim();
+
+                                        System.out.print("Enter Pages: ");
+                                        int pages = scanner.nextInt();
+                                        scanner.nextLine(); // Consume newline
+
+                                        System.out.print("Enter Genre: ");
+                                        String genre = scanner.nextLine().trim();
+
+                                        newItem = new Book(id, title, librarychoice, author, isbn, pages, genre);
+                                        break;
+
+                                case "2":
+                                        // Get music details
+                                        System.out.print("Enter Artist: ");
+                                        String artist = scanner.nextLine().trim();
+
+                                        System.out.print("Enter Album: ");
+                                        String album = scanner.nextLine().trim();
+
+                                        System.out.print("Enter Duration: ");
+                                        String duration = scanner.nextLine().trim();
+
+                                        newItem = new Music(id, title, librarychoice, artist, album, duration);
+                                        break;
+
+                                case "3":
+                                        // Get DVD details
+                                        System.out.print("Enter Director: ");
+                                        String director = scanner.nextLine().trim();
+
+                                        System.out.print("Enter Duration (in minutes): ");
+                                        int durationDVD = scanner.nextInt();
+
+                                        System.out.print("Enter Rating: (G, PG, PG-13, R) ");
+                                        String rating = scanner.nextLine().trim();
+
+                                        newItem = new DVD(id, title, librarychoice, director, durationDVD, rating, null);
+                                        break;
+                                case "4":
+                                        // Get periodical details
+                                        System.out.print("Enter Publisher: ");
+                                        String publisher = scanner.nextLine().trim();
+
+                                        System.out.print("Enter ISSN: ");
+                                        String issn = scanner.nextLine().trim();
+
+                                        System.out.print("Enter Volume: ");
+                                        String volume = scanner.nextLine().trim();
+
+                                        System.out.print("Enter Issue: ");
+                                        String issue = scanner.nextLine().trim();
+
+                                        System.out.print("Enter Publication Date (YYYY-MM-DD): ");
+                                        String publicationDate = scanner.nextLine().trim();
+
+                                        newItem = new Periodical(id, title, librarychoice, publisher, issn, volume, issue, publicationDate);
+                                        break;
+
+                                default:
+                                        System.out.println("Invalid item type. Please try again.");
+                        }
+
+                        // Add the new item to the library collection
+                        if (newItem != null) {
+                                librarychoice.addItem(newItem);
+                                System.out.println("Item added successfully.");
+                                System.out.println("\nNewly added item:");
+                                System.out.println(newItem);
+                        } else {
+                                System.out.println("Error adding item.");
+                        }
+
+                } catch (Exception e) {
+                        System.out.println("Error: " + e.getMessage());
+                }
         }
 }
