@@ -55,7 +55,7 @@ public class MainApplication {
                 // System.out.println("\n"+librarian);
                 // System.out.println("\n"+jounish);
 
-                ///jounish.returnItem(music2, 20);
+                /// jounish.returnItem(music2, 20);
                 jounish.removeReservedItem(music1);
                 // System.out.println("\n"+jounish);
                 Scanner scanner = new Scanner(System.in);
@@ -68,8 +68,7 @@ public class MainApplication {
                         choice = scanner.nextInt();
                         scanner.nextLine();
 
-                        switch (choice) 
-                        {
+                        switch (choice) {
                                 case 1:
                                         librarianOptions(scanner, libraries);
                                         break;
@@ -185,6 +184,7 @@ public class MainApplication {
                                         }
                                         break;
                                 case 3:
+                                
 
                                         break;
                                 case 4:
@@ -207,10 +207,10 @@ public class MainApplication {
 
         private static void viewBorrowedItems(Scanner scanner, Library library) {
                 List<LibraryMember> temp = library.getMembers();
-                for(LibraryMember member : temp){
+                for (LibraryMember member : temp) {
                         System.out.println(member.getName() + " borrowed items: ");
                         List<LibraryItem> items = member.getBorrowedItems();
-                        for(LibraryItem item : items){
+                        for (LibraryItem item : items) {
                                 System.out.println(item.getTitle());
                         }
                 }
@@ -218,13 +218,13 @@ public class MainApplication {
 
         private static void addItemToLibrary(Scanner scanner, Library librarychoice) {
 
-                //Display library name 
+                // Display library name
                 System.out.println("Adding item to " + librarychoice.getLibraryName());
 
-                //Variable for itemTypeChoice
+                // Variable for itemTypeChoice
                 String itemTypeChoice = "";
                 LibraryItem newItem = null;
-                
+
                 // Loop until valid item type is selected
                 boolean validItemType = false;
                 while (!validItemType) {
@@ -232,7 +232,7 @@ public class MainApplication {
                         // Clear the screen
                         flushScreen();
 
-                        //Give option for book, music, dvd or periodical
+                        // Give option for book, music, dvd or periodical
                         System.out.print("Select item type:\n 1: Book\n 2: Music\n 3: DVD\n 4: Periodical\n ");
                         System.out.print("Enter Choice: ");
 
@@ -240,10 +240,10 @@ public class MainApplication {
 
                         try {
                                 flushScreen();
-                                //Get common details 
+                                // Get common details
                                 System.out.print("Enter ID: ");
                                 String idInput = scanner.nextLine().trim();
-                                
+
                                 // Edge case: Empty ID
                                 if (idInput.isEmpty()) {
                                         throw new IllegalArgumentException("ID cannot be empty.");
@@ -255,18 +255,19 @@ public class MainApplication {
                                 if (id <= 0) {
                                         throw new IllegalArgumentException("ID must be a positive number.");
                                 }
-                                
+
                                 // Edge case: Duplicate ID check
                                 for (LibraryItem existingItem : librarychoice.getItems()) {
                                         if (existingItem.getId() == id) {
-                                                throw new IllegalArgumentException("An item with ID " + id + " already exists: " + existingItem.getTitle());
+                                                throw new IllegalArgumentException("An item with ID " + id
+                                                                + " already exists: " + existingItem.getTitle());
                                         }
                                 }
 
                                 flushScreen();
                                 System.out.print("Enter Title: ");
                                 String title = scanner.nextLine().trim();
-                                
+
                                 // Edge case: Empty title
                                 if (title.isEmpty()) {
                                         throw new IllegalArgumentException("Title cannot be empty.");
@@ -274,13 +275,13 @@ public class MainApplication {
 
                                 // Select option
                                 switch (itemTypeChoice) {
-                                        case "1": //Book
+                                        case "1": // Book
 
                                                 flushScreen();
                                                 // Get book details
                                                 System.out.print("Enter Author: ");
                                                 String author = scanner.nextLine().trim();
-                                                
+
                                                 // Edge case -> if empty
                                                 if (author.isEmpty()) {
                                                         throw new IllegalArgumentException("Author cannot be empty.");
@@ -294,21 +295,22 @@ public class MainApplication {
                                                         throw new IllegalArgumentException("ISBN cannot be empty.");
                                                 }
 
-
                                                 System.out.print("Enter Pages: ");
                                                 String pagesInput = scanner.nextLine().trim();
 
                                                 // Edge case -> if empty
                                                 if (pagesInput.isEmpty()) {
-                                                        throw new IllegalArgumentException("Number of pages cannot be empty.");
+                                                        throw new IllegalArgumentException(
+                                                                        "Number of pages cannot be empty.");
                                                 }
-                                                
+
                                                 // convert to Int
                                                 int pages = Integer.parseInt(pagesInput);
 
                                                 // Edge case -> Invalid page count
                                                 if (pages <= 0) {
-                                                        throw new IllegalArgumentException("Number of pages must be greater than 0.");
+                                                        throw new IllegalArgumentException(
+                                                                        "Number of pages must be greater than 0.");
                                                 }
 
                                                 System.out.print("Enter Genre: ");
@@ -319,12 +321,13 @@ public class MainApplication {
                                                         throw new IllegalArgumentException("Genre cannot be empty.");
                                                 }
 
-                                                newItem = new Book((long) id, title, librarychoice, author, isbn, pages, genreBook);
+                                                newItem = new Book((long) id, title, librarychoice, author, isbn, pages,
+                                                                genreBook);
                                                 validItemType = true; // Exit loop
                                                 break;
 
-                                        case "2":     
-                                         // Get music details
+                                        case "2":
+                                                // Get music details
                                                 flushScreen();
                                                 System.out.print("Enter Artist: ");
                                                 String artist = scanner.nextLine().trim();
@@ -340,12 +343,14 @@ public class MainApplication {
 
                                                 // Edge case -> if empty
                                                 if (releaseDate.isEmpty()) {
-                                                        throw new IllegalArgumentException("Release date cannot be empty.");
+                                                        throw new IllegalArgumentException(
+                                                                        "Release date cannot be empty.");
                                                 }
 
                                                 // Edge case -> Invalid date format
                                                 if (!releaseDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
-                                                        throw new IllegalArgumentException("Invalid date format. Use YYYY-MM-DD format.");
+                                                        throw new IllegalArgumentException(
+                                                                        "Invalid date format. Use YYYY-MM-DD format.");
                                                 }
 
                                                 flushScreen();
@@ -357,7 +362,8 @@ public class MainApplication {
                                                         throw new IllegalArgumentException("Genre cannot be empty.");
                                                 }
 
-                                                newItem = new Music((long) id, title, librarychoice, artist, releaseDate, genreMusic);
+                                                newItem = new Music((long) id, title, librarychoice, artist,
+                                                                releaseDate, genreMusic);
                                                 validItemType = true; // Exit loop
                                                 break;
 
@@ -375,44 +381,47 @@ public class MainApplication {
                                                 flushScreen();
                                                 System.out.print("Enter Duration (in minutes): ");
                                                 String durationInput = scanner.nextLine().trim();
-                                                
+
                                                 // Edge case: Empty duration
                                                 if (durationInput.isEmpty()) {
                                                         throw new IllegalArgumentException("Duration cannot be empty.");
                                                 }
-                                                
+
                                                 // convert to Int
                                                 int durationDVD = Integer.parseInt(durationInput);
-                                                
+
                                                 // Edge case -> cant be less than or equal to 0
                                                 if (durationDVD <= 0) {
-                                                        throw new IllegalArgumentException("Duration must be greater than 0 minutes.");
+                                                        throw new IllegalArgumentException(
+                                                                        "Duration must be greater than 0 minutes.");
                                                 }
 
                                                 flushScreen();
                                                 System.out.print("Enter Rating (G, PG, PG-13, R): ");
                                                 String rating = scanner.nextLine().trim().toUpperCase();
-                                                
+
                                                 // Edge case -> Empty rating
                                                 if (rating.isEmpty()) {
                                                         throw new IllegalArgumentException("Rating cannot be empty.");
                                                 }
-                                                
+
                                                 // Edge case -> Invalid rating
                                                 if (!rating.matches("G|PG|PG-13|R|NC-17")) {
-                                                        throw new IllegalArgumentException("Invalid rating. Must be G, PG, PG-13, R, or NC-17.");
+                                                        throw new IllegalArgumentException(
+                                                                        "Invalid rating. Must be G, PG, PG-13, R, or NC-17.");
                                                 }
 
                                                 flushScreen();
                                                 System.out.print("Enter Genre: ");
                                                 String genreMovie = scanner.nextLine().trim();
-                                                
+
                                                 // Edge case -> Empty genre
                                                 if (genreMovie.isEmpty()) {
                                                         throw new IllegalArgumentException("Genre cannot be empty.");
                                                 }
 
-                                                newItem = new DVD((long) id, title, librarychoice, director, durationDVD, rating, genreMovie);
+                                                newItem = new DVD((long) id, title, librarychoice, director,
+                                                                durationDVD, rating, genreMovie);
                                                 validItemType = true; // Exit loop
                                                 break;
                                         case "4":
@@ -423,7 +432,8 @@ public class MainApplication {
 
                                                 // Edge case -> Empty publisher
                                                 if (publisher.isEmpty()) {
-                                                        throw new IllegalArgumentException("Publisher cannot be empty.");
+                                                        throw new IllegalArgumentException(
+                                                                        "Publisher cannot be empty.");
                                                 }
 
                                                 flushScreen();
@@ -435,9 +445,10 @@ public class MainApplication {
                                                         throw new IllegalArgumentException("ISSN cannot be empty.");
                                                 }
 
-                                                // Edge case -> Invalid ISSN 
+                                                // Edge case -> Invalid ISSN
                                                 if (!issn.matches("\\d{4}-\\d{4}")) {
-                                                        throw new IllegalArgumentException("Invalid ISSN format. Use XXXX-XXXX format.");
+                                                        throw new IllegalArgumentException(
+                                                                        "Invalid ISSN format. Use XXXX-XXXX format.");
                                                 }
 
                                                 flushScreen();
@@ -464,15 +475,18 @@ public class MainApplication {
 
                                                 // Edge case -> Empty publication date
                                                 if (publicationDate.isEmpty()) {
-                                                        throw new IllegalArgumentException("Publication date cannot be empty.");
+                                                        throw new IllegalArgumentException(
+                                                                        "Publication date cannot be empty.");
                                                 }
 
                                                 // Edge case -> Invalid date format
                                                 if (!publicationDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
-                                                        throw new IllegalArgumentException("Invalid date format. Use YYYY-MM-DD format.");
+                                                        throw new IllegalArgumentException(
+                                                                        "Invalid date format. Use YYYY-MM-DD format.");
                                                 }
 
-                                                newItem = new Periodical((long) id, title, librarychoice, publisher, issn, volume, issue, publicationDate);
+                                                newItem = new Periodical((long) id, title, librarychoice, publisher,
+                                                                issn, volume, issue, publicationDate);
                                                 validItemType = true; // Exit loop
                                                 break;
 
@@ -494,7 +508,8 @@ public class MainApplication {
                                 }
 
                         } catch (NumberFormatException e) {
-                                System.out.println("Error: Invalid number format. Please enter valid numbers for ID, pages, or duration.");
+                                System.out.println(
+                                                "Error: Invalid number format. Please enter valid numbers for ID, pages, or duration.");
                                 System.out.println("Press Enter to try again...");
                                 scanner.nextLine(); // Loop will continue, validItemType remains false
                         } catch (IllegalArgumentException e) {
@@ -509,20 +524,17 @@ public class MainApplication {
                 }
         }
 
-        private static void removeItemfromLibrary(Scanner scanner, Library library) 
-        {
+        private static void removeItemfromLibrary(Scanner scanner, Library library) {
 
                 int i = 1;
-                List<LibraryItem> temp = library.getItems();  // getting all library items
-                for (LibraryItem item : temp) 
-                {
+                List<LibraryItem> temp = library.getItems(); // getting all library items
+                for (LibraryItem item : temp) {
                         System.out.println(i + ". " + item); // displaying all library items
                 }
                 System.out.println("Please enter number of item you would like to remove:");
                 int choice = scanner.nextInt();
                 scanner.nextLine();
-                library.removeItem(temp.get(choice-1)); // using method to remove item from Library 
-                
+                library.removeItem(temp.get(choice - 1)); // using method to remove item from Library
 
         }
 }
