@@ -426,7 +426,7 @@ public class MainApplication {
                                                 }
 
                                                 flushScreen();
-                                                System.out.print("Enter Release Date (YYYY-MM-DD): ");
+                                                System.out.print("Enter Release Date (DD-MM-YYYY): ");
                                                 String releaseDate = scanner.nextLine().trim();
 
                                                 // Edge case -> if empty
@@ -436,9 +436,9 @@ public class MainApplication {
                                                 }
 
                                                 // Edge case -> Invalid date format
-                                                if (!releaseDate.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                                                if (!releaseDate.matches("\\d{2}-\\d{2}-\\d{4}")) {
                                                         throw new IllegalArgumentException(
-                                                                        "Invalid date format. Use YYYY-MM-DD format.");
+                                                                        "Invalid date format. Use DD-MM-YYYY format.");
                                                 }
 
                                                 flushScreen();
