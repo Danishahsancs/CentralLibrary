@@ -254,9 +254,9 @@ public class MainApplication {
                                         scanner.nextLine(); // Consume newline
 
                                         System.out.print("Enter Genre: ");
-                                        String genre = scanner.nextLine().trim();
+                                        String genreBook = scanner.nextLine().trim();
 
-                                        newItem = new Book(id, title, librarychoice, author, isbn, pages, genre);
+                                        newItem = new Book(id, title, librarychoice, author, isbn, pages, genreBook);
                                         break;
 
                                 case "2":
@@ -264,13 +264,13 @@ public class MainApplication {
                                         System.out.print("Enter Artist: ");
                                         String artist = scanner.nextLine().trim();
 
-                                        System.out.print("Enter Album: ");
-                                        String album = scanner.nextLine().trim();
+                                        System.out.print("Enter Release Date (YYYY-MM-DD): ");
+                                        String releaseDate = scanner.nextLine().trim();
 
-                                        System.out.print("Enter Duration: ");
-                                        String duration = scanner.nextLine().trim();
+                                        System.out.print("Enter Genre: ");
+                                        String genreMusic = scanner.nextLine().trim();
 
-                                        newItem = new Music(id, title, librarychoice, artist, album, duration);
+                                        newItem = new Music(id, title, librarychoice, artist, releaseDate, genreMusic);
                                         break;
 
                                 case "3":
@@ -279,12 +279,15 @@ public class MainApplication {
                                         String director = scanner.nextLine().trim();
 
                                         System.out.print("Enter Duration (in minutes): ");
-                                        int durationDVD = scanner.nextInt();
+                                        int durationDVD = Integer.parseInt(scanner.nextLine().trim());
 
-                                        System.out.print("Enter Rating: (G, PG, PG-13, R) ");
+                                        System.out.print("Enter Rating (G, PG, PG-13, R): ");
                                         String rating = scanner.nextLine().trim();
 
-                                        newItem = new DVD(id, title, librarychoice, director, durationDVD, rating, null);
+                                        System.out.print("Enter Genre: ");
+                                        String genreMovie = scanner.nextLine().trim();
+
+                                        newItem = new DVD(id, title, librarychoice, director, durationDVD, rating, genreMovie);
                                         break;
                                 case "4":
                                         // Get periodical details
