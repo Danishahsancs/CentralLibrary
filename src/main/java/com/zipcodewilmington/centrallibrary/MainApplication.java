@@ -192,8 +192,6 @@ public class MainApplication {
         private static void libraryMemberOptions(Scanner scanner) {
                 flushScreen();
 
-                List<LibraryItem> temp;
-
                 int choice = -1;
                 do {
                         System.out.print(
@@ -228,21 +226,18 @@ public class MainApplication {
                                         System.out.print("Enter search parameter: ");
                                         String keyword = scanner.nextLine();
                                         System.out.println(currentLibrary.getLibraryName() + "'s Results:");
-                                        temp = currentLibrary.search(keyword);
+                                        List<LibraryItem> temp = currentLibrary.search(keyword);
                                         for (LibraryItem item : temp)
                                                 System.out.println(item.getItemType() + ":\t" + item.getTitle()+"\n");
                                         break;
                                 case 3:
                                         flushScreen();
-                                        checkout(scanner);
                                         break;
                                 case 4:
                                         flushScreen();
                                         checkInItemfromMember(scanner);
                                         break;
                                 case 5:
-                                        flushScreen();
-                                        reserve(scanner);
                                         break;
                                 case 6:
                                         flushScreen();
@@ -643,7 +638,7 @@ public class MainApplication {
                                                 }
 
                                                 flushScreen();
-                                                System.out.print("Enter Release Date (DD-MM-YYYY): ");
+                                                System.out.print("Enter Release Date (YYYY-MM-DD): ");
                                                 String releaseDate = scanner.nextLine().trim();
 
                                                 // Edge case -> if empty
@@ -655,7 +650,7 @@ public class MainApplication {
                                                 // Edge case -> Invalid date format - Input validated here
                                                 if (!releaseDate.matches("\\d{2}-\\d{2}-\\d{4}")) {
                                                         throw new IllegalArgumentException(
-                                                                        "Invalid date format. Use DD-MM-YYYY format.");
+                                                                        "Invalid date format. Use YYYY-MM-DD format.");
                                                 }
 
                                                 flushScreen();
@@ -775,7 +770,7 @@ public class MainApplication {
                                                 }
 
                                                 flushScreen();
-                                                System.out.print("Enter Publication Date (DD-MM-YYYY): ");
+                                                System.out.print("Enter Publication Date (YYYY-MM-DD): ");
                                                 String publicationDate = scanner.nextLine().trim();
 
                                                 // Edge case -> Empty publication date
@@ -787,7 +782,7 @@ public class MainApplication {
                                                 // Edge case -> Invalid date format - Input validated here
                                                 if (!publicationDate.matches("\\d{2}-\\d{2}-\\d{4}")) {
                                                         throw new IllegalArgumentException(
-                                                                        "Invalid date format. Use DD-MM-YYYY format.");
+                                                                        "Invalid date format. Use YYYY-MM-DD format.");
                                                 }
 
                                                 newItem = new Periodical((long) id, title, currentLibrary, publisher,
