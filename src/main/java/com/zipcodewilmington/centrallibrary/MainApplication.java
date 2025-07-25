@@ -48,6 +48,12 @@ public class MainApplication {
                 jounish.borrowItem(music2);
                 jounish.reserveItem(music1);
 
+                // library1.displayAllItems();
+                // System.out.println("\n"+library1);
+                // System.out.println("\n"+librarian);
+                // System.out.println("\n"+jounish);
+
+                /// jounish.returnItem(music2, 20);
                 jounish.removeReservedItem(music1);
 
                 Scanner scanner = new Scanner(System.in);
@@ -161,6 +167,8 @@ public class MainApplication {
                                         checkout(scanner);
                                         break;
                                 case 4:
+                                        flushScreen();
+                                        checkInItemfromMember(scanner);
                                         break;
                                 case 5:
                                         flushScreen();
@@ -179,12 +187,39 @@ public class MainApplication {
                                         currentLibraryMember.removeReservedItem(temp.get(x-1));
                                         break;
                                 case 7:
+                                        System.out.println("Member: " + currentLibraryMember.getName() + "Amount Owed:"
+                                                        + currentLibraryMember.getoutstandingFees());
+                                        System.out.print("How much would you like to pay: ");
+                                        Double amount = scanner.nextDouble();
+                                        scanner.nextLine();
+                                        currentLibraryMember.payFees(amount);
                                         break;
                                 default:
                                         break;
                         }
                 } while (choice != 0);
         }
+
+        private static void checkInItemfromMember(Scanner scanner) {
+                int i = 1;
+                System.out.print("Enter search parameter: ");
+                String keyword = scanner.nextLine();
+                System.out.println(currentLibrary.getLibraryName() + "'s Results:");
+                List<LibraryItem> temp = currentLibrary.search(keyword);
+                for (LibraryItem item : temp) {
+                        System.out.println(i + ". " + item); //
+                        i++;
+                }
+                if (temp.size() != 0) {
+                        System.out.println("Please enter number of item you would like to check in");
+                        int choice = scanner.nextInt();
+                        scanner.nextLine();
+                        LibraryItem item = temp.get(choice - 1);
+                        item.checkIn();
+                }
+
+        }
+
 
         private static List<LibraryItem> displayItemsChoice(Scanner scanner) {
                 int i = 1;
@@ -193,7 +228,7 @@ public class MainApplication {
                 System.out.println(currentLibrary.getLibraryName() + "'s Results:");
                 List<LibraryItem> temp = currentLibrary.search(keyword);
                 for (LibraryItem item : temp) {
-                        System.out.println(i + ". " + item); // displaying all library items
+                        System.out.println(i + ". " + item);
                         i++;
                 }
 
