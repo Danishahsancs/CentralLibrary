@@ -120,11 +120,11 @@ public class Library {
 
             // }
             
-            if (member.getoutstandingFees()>0.0)
+            if (member.getOutstandingFees()>0.0)
             {
                 System.out.println("********************************");
-                 System.out.println("Member: " + member.getName() + "Amount Owed:" + member.getoutstandingFees());
-                total = total + member.getoutstandingFees();
+                 System.out.println("Member: " + member.getName() + "Amount Owed:" + member.getOutstandingFees());
+                total = total + member.getOutstandingFees();
 
                 System.out.println("********************************");
                 

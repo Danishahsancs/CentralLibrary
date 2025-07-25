@@ -45,7 +45,9 @@ public class LibraryMember extends Person {
         if (borrowedItems.contains(item)) {
             item.checkIn();
             borrowedItems.remove(item);
-            double lateFee = item.calculateLateFee(daysLate);
+            // Calculate total days checked out: max borrow days + days late
+            int totalDaysCheckedOut = item.getMaxBorrowDays() + daysLate;
+            double lateFee = item.calculateLateFee(totalDaysCheckedOut);
             outstandingFees += lateFee;
         }
     }
@@ -74,7 +76,7 @@ public class LibraryMember extends Person {
         return borrowedItems;
     }
 
-    public Double getoutstandingFees() {
+    public Double getOutstandingFees() {
         return outstandingFees;
     }
 
