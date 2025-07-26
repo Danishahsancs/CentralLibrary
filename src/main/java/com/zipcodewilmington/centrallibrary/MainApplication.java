@@ -248,7 +248,7 @@ private static void waitForEnter(Scanner scanner, String message) {
                                 // Search for an item in the library
                                         flushScreen();
                                         displaySectionDivider("Search Library Items");
-                                        System.out.print("Enter key word: ");
+                                        System.out.print("Enter Keyword: ");
                                         String keyword = scanner.nextLine();
                                         System.out.println("\n" + currentLibrary.getLibraryName() + "'s Search Results:");
                                         System.out.println("-".repeat(55));
@@ -346,7 +346,7 @@ private static void waitForEnter(Scanner scanner, String message) {
                                 // Search for an item in the library
                                         flushScreen();
                                         displaySectionDivider("Search Library Items");
-                                        System.out.print("Enter search keyword: ");
+                                        System.out.print("Enter Keyword: ");
                                         String keyword = scanner.nextLine();
                                         System.out.println("\n" + currentLibrary.getLibraryName() + "'s Search Results:");
                                         System.out.println("-".repeat(50));
@@ -518,7 +518,7 @@ private static void waitForEnter(Scanner scanner, String message) {
 
         private static List<LibraryItem> displayItemsChoice(Scanner scanner) {
                 int i = 1;
-                System.out.print("Enter Key Word: ");
+                System.out.print("Enter Keyword: ");
                 String keyword = scanner.nextLine();
                 System.out.println(currentLibrary.getLibraryName() + "'s Results:");
                 List<LibraryItem> temp = currentLibrary.search(keyword);
