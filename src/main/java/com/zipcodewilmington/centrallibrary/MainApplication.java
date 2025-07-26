@@ -239,11 +239,13 @@ private static void waitForEnter(Scanner scanner, String message) {
                         
                         switch (choice) {
                                 case 1:
+                                // Display all items in the library
                                         flushScreen();
                                         currentLibrary.displayAllItems();
                                         waitForEnter(scanner, "Inventory display complete.");
                                         break;
                                 case 2:
+                                // Search for an item in the library
                                         flushScreen();
                                         displaySectionDivider("Search Library Items");
                                         System.out.print("Enter key word: ");
@@ -261,12 +263,15 @@ private static void waitForEnter(Scanner scanner, String message) {
                                         waitForEnter(scanner, "Search complete.");
                                         break;
                                 case 3:
+                                // Add an item to the library
                                         addItemToLibrary(scanner);
                                         break;
                                 case 4:
+                                // Remove an item from the library
                                         removeItemfromLibrary(scanner);
                                         break;
                                 case 5:
+                                // Generate a late fee report for the library
                                         flushScreen();
                                         displaySectionDivider("Late Fee Report");
                                         System.out.println(currentLibrary.getLibraryName() + "'s Late Fee Report:");
@@ -275,6 +280,7 @@ private static void waitForEnter(Scanner scanner, String message) {
                                         waitForEnter(scanner, "Report generation complete.");
                                         break;
                                 default:
+                                // Exit to main menu
                                         break;
                         }
                 } while (choice != 0);
@@ -330,12 +336,14 @@ private static void waitForEnter(Scanner scanner, String message) {
                         
                         switch (choice) {
                                 case 1:
+                                // View borrowed items
                                         flushScreen();
                                         displaySectionDivider("Your Borrowed Items");
                                         viewBorrowedItems();
                                         waitForEnter(scanner, "Borrowed items review complete.");
                                         break;
                                 case 2:
+                                // Search for an item in the library
                                         flushScreen();
                                         displaySectionDivider("Search Library Items");
                                         System.out.print("Enter search keyword: ");
@@ -353,21 +361,25 @@ private static void waitForEnter(Scanner scanner, String message) {
                                         waitForEnter(scanner, "Search complete.");
                                         break;
                                 case 3:
+                                // Check out an item from the library   
                                         flushScreen();
                                         displaySectionDivider("Check Out Item");
                                         checkout(scanner);
                                         break;
                                 case 4:
+                                // Return an item to the library
                                         flushScreen();
                                         displaySectionDivider("Return Item");
                                         checkInItemfromMember(scanner);
                                         break;
                                 case 5:
+                                // Reserve an item from the library
                                         flushScreen();
                                         displaySectionDivider("Reserve Item");
                                         reserve(scanner);
                                         break;
                                 case 6:
+                                // Cancel a reservation
                                         flushScreen();
                                         displaySectionDivider("Cancel Reservation");
                                         temp = currentLibraryMember.getReservedItems();
@@ -376,7 +388,7 @@ private static void waitForEnter(Scanner scanner, String message) {
                                             waitForEnter(scanner, "No reservations to cancel.");
                                             break;
                                         }
-                                        
+                                        // Display reserved items
                                         System.out.println("Your Reserved Items:");
                                         System.out.println("-".repeat(30));
                                         int i = 1;
@@ -386,12 +398,14 @@ private static void waitForEnter(Scanner scanner, String message) {
                                         }
                                         System.out.println();
                                         
+                                        // Input validation for item selection
                                         System.out.print("Enter item number to cancel (1-" + temp.size() + "): ");
                                         while (!scanner.hasNextInt()) {
                                             System.out.println("\nInvalid input. Please enter a valid number.");
                                             System.out.print("Enter item number to cancel (1-" + temp.size() + "): ");
                                             scanner.next();
                                         }
+                                        // Validate item number
                                         int x = scanner.nextInt();
                                         while (x < 1 || x > temp.size()) {
                                             System.out.println("\nInvalid choice. Please enter a number between 1 and " + temp.size());
@@ -403,12 +417,14 @@ private static void waitForEnter(Scanner scanner, String message) {
                                             }
                                             x = scanner.nextInt();
                                         }
+                                        // Remove reservation
                                         scanner.nextLine();
                                         currentLibraryMember.removeReservedItem(temp.get(x - 1));
                                         System.out.println("\nReservation cancelled successfully!");
                                         waitForEnter(scanner, "Reservation cancellation complete.");
                                         break;
                                 case 7:
+                                // Pay outstanding fees
                                         flushScreen();
                                         displaySectionDivider("Pay Outstanding Fees");
                                         System.out.println("Payment Portal");
@@ -441,6 +457,7 @@ private static void waitForEnter(Scanner scanner, String message) {
                                         waitForEnter(scanner, "Payment processing complete.");
                                         break;
                                 default:
+                                // Exit to main menu
                                         break;
                         }
                 } while (choice != 0);
@@ -1226,6 +1243,12 @@ private static void selectLibrarianOnly(Scanner scanner) {
         System.out.println("Salary: $" + String.format("%.2f", selectedLibrarian.getSalary()));
         System.out.println();
         System.out.println("Proceeding to librarian portal..."); 
+        
+        try {
+        Thread.sleep(1500); // Brief pause for user to see confirmation
+        } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+         }
     }
 
 
