@@ -17,18 +17,25 @@ import com.google.gson.JsonSyntaxException;
 public class MainApplication {
 
         private static Library currentLibrary = null;
+        private static Librarian currentLibrarian = null;
         private static LibraryMember currentLibraryMember = null;
 
         public static void main(String[] args) {
-                Library library1 = new Library("Library1", new Address("12 abc st", "wilmington", "Delaware", "19801"));
-                LibraryMember jounish = new LibraryMember("Jounish", 22, "Jounish@email.com", "123-456-7890", 1,
+                Library library1 = new Library("Central Library", new Address("123 Main St", "Wilmington", "Delaware", "19801"));
+                LibraryMember AliceJohnson = new LibraryMember("Alice Johnson", 25, "alice@email.com", "302-456-7890", 001,
                                 LocalDate.now().toString(),
-                                new Address("12 jump st", "new castle", "Delaware", "19720"));
-                Librarian librarian = new Librarian("librarian", 67, "librarian@library.com", "098-765-4321", "1",
-                                "front desk", 30000, null);
+                                new Address("12 Jump St", "New Castle", "Delaware", "19720"));
+                LibraryMember BobWilson = new LibraryMember("Bob Wilson", 35, "bob@email.com", "302-456-7890", 002,
+                                LocalDate.now().toString(),
+                                new Address("654 Maple St", "Media", "Pennsylvania", "19742"));
+                Librarian librarian = new Librarian("Hypatia", 67, "Hypatia58@library.com", "302-765-4321", "L001",
+                                "Front Desk", 45000, null);
+
+
 
                 library1.addLibrarian(librarian);
-                library1.addMember(jounish);
+                library1.addMember(AliceJohnson);
+                library1.addMember(BobWilson);
 
                 long autoIncrementedId = 0;
 
@@ -77,44 +84,70 @@ public class MainApplication {
                 List<Library> libraries = new ArrayList<>();
                 libraries.add(library1);
 
-                setStates(scanner, libraries);
+                // Call setStates once at startup to select library only
+                selectLibraryOnly(scanner, libraries);
 
                 int choice = -1;
                 do {
                         flushScreen();
-                        System.out.println(
-                                        "0. Quit\n1. Librarian\n2. Library Member\n3. Change Library and Member choice");
-                        System.out.print("Select Option:");
+                        displayMainTitle();
                         
-                        // Input validated here
+                        System.out.println("┌─────────────────────────────────────────────────────────────┐");
+                        System.out.println("│                        MAIN MENU                            │");
+                        System.out.println("├─────────────────────────────────────────────────────────────┤");
+                        System.out.println("│  0. Exit System                                             │");
+                        System.out.println("│  1. Librarian Portal                                        │");
+                        System.out.println("│  2. Library Member Portal                                   │");
+                       // System.out.println("│  3. Change Library and Member Selection                     │");
+                        System.out.println("└─────────────────────────────────────────────────────────────┘");
+                        System.out.println();
+                        System.out.print("Select Option (0-3): ");
+                        
+                        // Input validation
                         while (!scanner.hasNextInt()) {
-                                System.out.println("Invalid input. Please enter a number between 0 and 3.");
-                                System.out.print("Select Option:");
-                                scanner.next();
+                            System.out.println("\nInvalid input. Please enter a number between 0 and 3.");
+                            System.out.print("Select Option (0-3): ");
+                            scanner.next();
                         }
                         choice = scanner.nextInt();
                         while (choice < 0 || choice > 3) {
-                                System.out.println("Invalid choice. Please enter a number between 0 and 3.");
-                                System.out.print("Select Option:");
-                                while (!scanner.hasNextInt()) {
-                                        System.out.println("Invalid input. Please enter a number between 0 and 3.");
-                                        System.out.print("Select Option:");
-                                        scanner.next();
-                                }
-                                choice = scanner.nextInt();
+                            System.out.println("\nInvalid choice. Please enter a number between 0 and 3.");
+                            System.out.print("Select Option (0-3): ");
+                            while (!scanner.hasNextInt()) {
+                                System.out.println("\nInvalid input. Please enter a number between 0 and 3.");
+                                System.out.print("Select Option (0-3): ");
+                                scanner.next();
+                            }
+                            choice = scanner.nextInt();
                         }
                         scanner.nextLine();
 
                         switch (choice) {
                                 case 1:
+                                        //Select librarian before accessing librarian portal
+                                        if (currentLibrarian == null) {
+                                            selectLibrarianOnly(scanner);
+                                        }
                                         librarianOptions(scanner);
                                         break;
                                 case 2:
+                                        // Select member before accessing member portal
+                                        if (currentLibraryMember == null) {
+                                            selectMemberOnly(scanner);
+                                        }
                                         libraryMemberOptions(scanner);
                                         break;
-                                case 3:
+                                // case 3:
+                                //         flushScreen();
+                                //         setStates(scanner, libraries); // Full reconfiguration
+                                //         break;
+                                case 0:
                                         flushScreen();
-                                        setStates(scanner, libraries);
+                                        System.out.println("╔══════════════════════════════════════════════════════════════╗");
+                                        System.out.println("║                    Thank you for using                       ║");
+                                        System.out.println("║                  CENTRAL LIBRARY SYSTEM                      ║");
+                                        System.out.println("║                     See You Next Time!                       ║");
+                                        System.out.println("╚══════════════════════════════════════════════════════════════╝");
                                         break;
                                 default:
                                         break;
@@ -125,34 +158,82 @@ public class MainApplication {
         }
 
         private static void flushScreen() {
-                System.out.print("\033[H\033[2J");
-                System.out.flush();
-        }
+    System.out.print("\033[H\033[2J");
+    System.out.flush();
+}
+
+private static void displayMainTitle() {
+    System.out.println("╔══════════════════════════════════════════════════════════════╗");
+    System.out.println("║                    CENTRAL LIBRARY SYSTEM                    ║");
+    System.out.println("║                     Management Portal                        ║");
+    System.out.println("╚══════════════════════════════════════════════════════════════╝");
+    System.out.println();
+}
+
+private static void displayLibrarianTitle() {
+    System.out.println("╔══════════════════════════════════════════════════════════════╗");
+    System.out.println("║                      LIBRARIAN PORTAL                        ║");
+    System.out.println("║             " + currentLibrary.getLibraryName() + " - Admin Functions                ║");
+    System.out.println("╚══════════════════════════════════════════════════════════════╝");
+    System.out.println();
+}
+
+private static void displayMemberTitle() {
+    System.out.println("╔══════════════════════════════════════════════════════════════╗");
+    System.out.println("║                     MEMBER PORTAL                            ║");
+    System.out.println("║                   Welcome " + currentLibraryMember.getName() + "                      ║");
+    System.out.println("╚══════════════════════════════════════════════════════════════╝");
+    System.out.println();
+}
+
+private static void displaySectionDivider(String title) {
+    System.out.println("\n" + "=".repeat(60));
+    System.out.println("                    " + title.toUpperCase());
+    System.out.println("=".repeat(60) + "\n");
+}
+
+private static void waitForEnter(Scanner scanner, String message) {
+    System.out.println("\n" + "-".repeat(60));
+    System.out.println(message);
+    System.out.print("Press Enter to continue...");
+    scanner.nextLine();
+}
 
         private static void librarianOptions(Scanner scanner) {
-                flushScreen();
-
                 int choice = -1;
                 do {
-                        System.out.print(
-                                        "\n0. go back\n1. view all items\n2. search for item\n3. add item to library\n4. remove item from library\n5. print late fee report \n\nSelect Option: ");
+                        flushScreen();
+                        displayLibrarianTitle();
                         
-                        // Input validated here
+                        System.out.println("┌─────────────────────────────────────────────────────────────┐");
+                        System.out.println("│                    LIBRARIAN FUNCTIONS                      │");
+                        System.out.println("├─────────────────────────────────────────────────────────────┤");
+                        System.out.println("│  0. Return to Main Menu                                     │");
+                        System.out.println("│  1. View All Items                                          │");
+                        System.out.println("│  2. Search for Item                                         │");
+                        System.out.println("│  3. Add Item to Library                                     │");
+                        System.out.println("│  4. Remove Item from Library                                │");
+                        System.out.println("│  5. Generate Late Fee Report                                │");
+                        System.out.println("└─────────────────────────────────────────────────────────────┘");
+                        System.out.println();
+                        System.out.print("Select Option (0-5): ");
+                        
+                        // Input validation
                         while (!scanner.hasNextInt()) {
-                                System.out.println("Invalid input. Please enter a number between 0 and 5.");
-                                System.out.print("Select Option: ");
-                                scanner.next();
+                            System.out.println("\nInvalid input. Please enter a number between 0 and 5.");
+                            System.out.print("Select Option (0-5): ");
+                            scanner.next();
                         }
                         choice = scanner.nextInt();
                         while (choice < 0 || choice > 5) {
-                                System.out.println("Invalid choice. Please enter a number between 0 and 5.");
-                                System.out.print("Select Option: ");
-                                while (!scanner.hasNextInt()) {
-                                        System.out.println("Invalid input. Please enter a number between 0 and 5.");
-                                        System.out.print("Select Option: ");
-                                        scanner.next();
-                                }
-                                choice = scanner.nextInt();
+                            System.out.println("\nInvalid choice. Please enter a number between 0 and 5.");
+                            System.out.print("Select Option (0-5): ");
+                            while (!scanner.hasNextInt()) {
+                                System.out.println("\nInvalid input. Please enter a number between 0 and 5.");
+                                System.out.print("Select Option (0-5): ");
+                                scanner.next();
+                            }
+                            choice = scanner.nextInt();
                         }
                         scanner.nextLine();
                         
@@ -160,28 +241,38 @@ public class MainApplication {
                                 case 1:
                                         flushScreen();
                                         currentLibrary.displayAllItems();
+                                        waitForEnter(scanner, "Inventory display complete.");
                                         break;
                                 case 2:
                                         flushScreen();
-                                        System.out.print("Enter search parameter: ");
+                                        displaySectionDivider("Search Library Items");
+                                        System.out.print("Enter key word: ");
                                         String keyword = scanner.nextLine();
-                                        System.out.println(currentLibrary.getLibraryName() + "'s Results:");
+                                        System.out.println("\n" + currentLibrary.getLibraryName() + "'s Search Results:");
+                                        System.out.println("-".repeat(55));
                                         List<LibraryItem> temp = currentLibrary.search(keyword);
-                                        for (LibraryItem item : temp)
-                                                System.out.println(item.getItemType() + ":\t" + item.getTitle()+"\n");
+                                        if (temp.isEmpty()) {
+                                            System.out.println("No items found matching: " + keyword);
+                                        } else {
+                                            for (LibraryItem item : temp) {
+                                                System.out.println(item.getItemType() + ":\t" + item.getTitle());
+                                            }
+                                        }
+                                        waitForEnter(scanner, "Search complete.");
                                         break;
                                 case 3:
-                                        flushScreen();
                                         addItemToLibrary(scanner);
                                         break;
                                 case 4:
-                                        flushScreen();
                                         removeItemfromLibrary(scanner);
                                         break;
                                 case 5:
                                         flushScreen();
-                                        System.out.println(currentLibrary.getLibraryName() + "'s late fee report:");
+                                        displaySectionDivider("Late Fee Report");
+                                        System.out.println(currentLibrary.getLibraryName() + "'s Late Fee Report:");
+                                        System.out.println("-".repeat(50));
                                         currentLibrary.generateReportItems();
+                                        waitForEnter(scanner, "Report generation complete.");
                                         break;
                                 default:
                                         break;
@@ -190,112 +281,164 @@ public class MainApplication {
         }
 
         private static void libraryMemberOptions(Scanner scanner) {
-                flushScreen();
-
                 int choice = -1;
                 do {
-                        System.out.print(
-                                        "\n0. go back\n1. view borrowed items\n2. search for item \n3. checkout item\n4. check in item\n5. reserve item\n6. cancel reservation\n7. pay fees\n\nSelect Option: ");
+                        flushScreen();
+                        displayMemberTitle();
                         
-                        // Input validated here
+                        // Display member info
+                        System.out.println("Account Information:");
+                        System.out.println("   Member: " + currentLibraryMember.getName());
+                        System.out.println("   Outstanding Fees: $" + String.format("%.2f", currentLibraryMember.getOutstandingFees()));
+                        System.out.println("   Items Borrowed: " + currentLibraryMember.getBorrowedItems().size());
+                        System.out.println("   Items Reserved: " + currentLibraryMember.getReservedItems().size());
+                        System.out.println();
+                        
+                        System.out.println("┌─────────────────────────────────────────────────────────────┐");
+                        System.out.println("│                    MEMBER FUNCTIONS                         │");
+                        System.out.println("├─────────────────────────────────────────────────────────────┤");
+                        System.out.println("│  0. Return to Main Menu                                     │");
+                        System.out.println("│  1. View Borrowed Items                                     │");
+                        System.out.println("│  2. Search for Item                                         │");
+                        System.out.println("│  3. Check Out Item                                          │");
+                        System.out.println("│  4. Return Item                                             │");
+                        System.out.println("│  5. Reserve Item                                            │");
+                        System.out.println("│  6. Cancel Reservation                                      │");
+                        System.out.println("│  7. Pay Fees                                                │");
+                        System.out.println("└─────────────────────────────────────────────────────────────┘");
+                        System.out.println();
+                        System.out.print("Select Option (0-7): ");
+                        
+                        // Input validation
                         while (!scanner.hasNextInt()) {
-                                System.out.println("Invalid input. Please enter a number between 0 and 7.");
-                                System.out.print("Select Option: ");
-                                scanner.next();
+                            System.out.println("\nInvalid input. Please enter a number between 0 and 7.");
+                            System.out.print("Select Option (0-7): ");
+                            scanner.next();
                         }
                         choice = scanner.nextInt();
                         while (choice < 0 || choice > 7) {
-                                System.out.println("Invalid choice. Please enter a number between 0 and 7.");
-                                System.out.print("Select Option: ");
-                                while (!scanner.hasNextInt()) {
-                                        System.out.println("Invalid input. Please enter a number between 0 and 7.");
-                                        System.out.print("Select Option: ");
-                                        scanner.next();
-                                }
-                                choice = scanner.nextInt();
+                            System.out.println("\nInvalid choice. Please enter a number between 0 and 7.");
+                            System.out.print("Select Option (0-7): ");
+                            while (!scanner.hasNextInt()) {
+                                System.out.println("\nInvalid input. Please enter a number between 0 and 7.");
+                                System.out.print("Select Option (0-7): ");
+                                scanner.next();
+                            }
+                            choice = scanner.nextInt();
                         }
                         scanner.nextLine();
                         
                         switch (choice) {
                                 case 1:
                                         flushScreen();
+                                        displaySectionDivider("Your Borrowed Items");
                                         viewBorrowedItems();
+                                        waitForEnter(scanner, "Borrowed items review complete.");
                                         break;
                                 case 2:
                                         flushScreen();
-                                        System.out.print("Enter search parameter: ");
+                                        displaySectionDivider("Search Library Items");
+                                        System.out.print("Enter search keyword: ");
                                         String keyword = scanner.nextLine();
-                                        System.out.println(currentLibrary.getLibraryName() + "'s Results:");
+                                        System.out.println("\n" + currentLibrary.getLibraryName() + "'s Search Results:");
+                                        System.out.println("-".repeat(50));
                                         List<LibraryItem> temp = currentLibrary.search(keyword);
-                                        for (LibraryItem item : temp)
-                                                System.out.println(item.getItemType() + ":\t" + item.getTitle()+"\n");
+                                        if (temp.isEmpty()) {
+                                            System.out.println("No items found matching: " + keyword);
+                                        } else {
+                                            for (LibraryItem item : temp) {
+                                                System.out.println(item.getItemType() + ":\t" + item.getTitle());
+                                            }
+                                        }
+                                        waitForEnter(scanner, "Search complete.");
                                         break;
                                 case 3:
                                         flushScreen();
+                                        displaySectionDivider("Check Out Item");
                                         checkout(scanner);
                                         break;
                                 case 4:
                                         flushScreen();
+                                        displaySectionDivider("Return Item");
                                         checkInItemfromMember(scanner);
                                         break;
                                 case 5:
                                         flushScreen();
+                                        displaySectionDivider("Reserve Item");
                                         reserve(scanner);
                                         break;
                                 case 6:
                                         flushScreen();
+                                        displaySectionDivider("Cancel Reservation");
                                         temp = currentLibraryMember.getReservedItems();
-                                        int i = 1;
-                                        for (LibraryItem item : temp) {
-                                                System.out.println(i + ". " + item.getTitle());
-                                                i++;
+                                        if (temp.isEmpty()) {
+                                            System.out.println("You have no items reserved.");
+                                            waitForEnter(scanner, "No reservations to cancel.");
+                                            break;
                                         }
                                         
-                                        // Input validated here
-                                        System.out.print("Enter item number to cancel: ");
+                                        System.out.println("Your Reserved Items:");
+                                        System.out.println("-".repeat(30));
+                                        int i = 1;
+                                        for (LibraryItem item : temp) {
+                                            System.out.println("  " + i + ". " + item.getTitle());
+                                            i++;
+                                        }
+                                        System.out.println();
+                                        
+                                        System.out.print("Enter item number to cancel (1-" + temp.size() + "): ");
                                         while (!scanner.hasNextInt()) {
-                                                System.out.println("Invalid input. Please enter a valid number.");
-                                                System.out.print("Enter item number to cancel: ");
-                                                scanner.next();
+                                            System.out.println("\nInvalid input. Please enter a valid number.");
+                                            System.out.print("Enter item number to cancel (1-" + temp.size() + "): ");
+                                            scanner.next();
                                         }
                                         int x = scanner.nextInt();
                                         while (x < 1 || x > temp.size()) {
-                                                System.out.println("Invalid choice. Please enter a number between 1 and " + temp.size());
-                                                System.out.print("Enter item number to cancel: ");
-                                                while (!scanner.hasNextInt()) {
-                                                        System.out.println("Invalid input. Please enter a valid number.");
-                                                        System.out.print("Enter item number to cancel: ");
-                                                        scanner.next();
-                                                }
-                                                x = scanner.nextInt();
+                                            System.out.println("\nInvalid choice. Please enter a number between 1 and " + temp.size());
+                                            System.out.print("Enter item number to cancel (1-" + temp.size() + "): ");
+                                            while (!scanner.hasNextInt()) {
+                                                System.out.println("\nInvalid input. Please enter a valid number.");
+                                                System.out.print("Enter item number to cancel (1-" + temp.size() + "): ");
+                                                scanner.next();
+                                            }
+                                            x = scanner.nextInt();
                                         }
                                         scanner.nextLine();
                                         currentLibraryMember.removeReservedItem(temp.get(x - 1));
+                                        System.out.println("\nReservation cancelled successfully!");
+                                        waitForEnter(scanner, "Reservation cancellation complete.");
                                         break;
                                 case 7:
-                                        System.out.println("Member: " + currentLibraryMember.getName() + " Amount Owed:"
-                                                        + currentLibraryMember.getOutstandingFees());
-                                        System.out.print("How much would you like to pay: ");
+                                        flushScreen();
+                                        displaySectionDivider("Pay Outstanding Fees");
+                                        System.out.println("Payment Portal");
+                                        System.out.println("-".repeat(20));
+                                        System.out.println("Member: " + currentLibraryMember.getName());
+                                        System.out.println("Amount Owed: $" + String.format("%.2f", currentLibraryMember.getOutstandingFees()));
+                                        System.out.println();
+                                        System.out.print("How much would you like to pay: $");
                                         
-                                        // Input validated here
                                         while (!scanner.hasNextDouble()) {
-                                                System.out.println("Invalid input. Please enter a valid amount.");
-                                                System.out.print("How much would you like to pay: ");
-                                                scanner.next();
+                                            System.out.println("\nInvalid input. Please enter a valid amount.");
+                                            System.out.print("How much would you like to pay: $");
+                                            scanner.next();
                                         }
                                         Double amount = scanner.nextDouble();
                                         while (amount < 0) {
-                                                System.out.println("Amount cannot be negative. Please enter a positive amount.");
-                                                System.out.print("How much would you like to pay: ");
-                                                while (!scanner.hasNextDouble()) {
-                                                        System.out.println("Invalid input. Please enter a valid amount.");
-                                                        System.out.print("How much would you like to pay: ");
-                                                        scanner.next();
-                                                }
-                                                amount = scanner.nextDouble();
+                                            System.out.println("\nAmount cannot be negative. Please enter a positive amount.");
+                                            System.out.print("How much would you like to pay: $");
+                                            while (!scanner.hasNextDouble()) {
+                                                System.out.println("\nInvalid input. Please enter a valid amount.");
+                                                System.out.print("How much would you like to pay: $");
+                                                scanner.next();
+                                            }
+                                            amount = scanner.nextDouble();
                                         }
                                         scanner.nextLine();
                                         currentLibraryMember.payFees(amount);
+                                        System.out.println("\nPayment of $" + String.format("%.2f", amount) + " processed successfully!");
+                                        System.out.println("Remaining balance: $" + String.format("%.2f", currentLibraryMember.getOutstandingFees()));
+                                        waitForEnter(scanner, "Payment processing complete.");
                                         break;
                                 default:
                                         break;
@@ -358,7 +501,7 @@ public class MainApplication {
 
         private static List<LibraryItem> displayItemsChoice(Scanner scanner) {
                 int i = 1;
-                System.out.print("Enter search parameter: ");
+                System.out.print("Enter Key Word: ");
                 String keyword = scanner.nextLine();
                 System.out.println(currentLibrary.getLibraryName() + "'s Results:");
                 List<LibraryItem> temp = currentLibrary.search(keyword);
@@ -460,64 +603,159 @@ public class MainApplication {
                 }
         }
 
-        private static void setStates(Scanner scanner, List<Library> libraries) {
-                int i = 1;
-                for (Library library : libraries) {
-                        System.out.println(i + ". " + library.getLibraryName());
-                        i++;
-                }
-                System.out.print("Select Library: ");
+        // private static void setStates(Scanner scanner, List<Library> libraries) {
+        //         flushScreen();
                 
-                // Input validated here
-                while (!scanner.hasNextInt()) {
-                        System.out.println("Invalid input. Please enter a valid number.");
-                        System.out.print("Select Library: ");
-                        scanner.next();
-                }
-                int temp = scanner.nextInt();
-                while (temp < 1 || temp > libraries.size()) {
-                        System.out.println("Invalid choice. Please enter a number between 1 and " + libraries.size());
-                        System.out.print("Select Library: ");
-                        while (!scanner.hasNextInt()) {
-                                System.out.println("Invalid input. Please enter a valid number.");
-                                System.out.print("Select Library: ");
-                                scanner.next();
-                        }
-                        temp = scanner.nextInt();
-                }
-                scanner.nextLine();
-
-                currentLibrary = libraries.get(temp - 1);
-
-                int y = 1;
-                for (LibraryMember member : currentLibrary.getMembers()) {
-                        System.out.println(y + ". " + member.getName());
-                        y++;
-                }
-                System.out.print("Select Member: ");
+        //         // Library Selection Title Screen
+        //         System.out.println("╔══════════════════════════════════════════════════════════════╗");
+        //         System.out.println("║                     SELECT LIBRARY                           ║");
+        //         System.out.println("║                 Choose Your Library Branch                   ║");
+        //         System.out.println("╚══════════════════════════════════════════════════════════════╝");
+        //         System.out.println();
                 
-                // Input validated here
-                while (!scanner.hasNextInt()) {
-                        System.out.println("Invalid input. Please enter a valid number.");
-                        System.out.print("Select Member: ");
-                        scanner.next();
-                }
-                int x = scanner.nextInt();
-                while (x < 1 || x > currentLibrary.getMembers().size()) {
-                        System.out.println("Invalid choice. Please enter a number between 1 and " + currentLibrary.getMembers().size());
-                        System.out.print("Select Member: ");
-                        while (!scanner.hasNextInt()) {
-                                System.out.println("Invalid input. Please enter a valid number.");
-                                System.out.print("Select Member: ");
-                                scanner.next();
-                        }
-                        x = scanner.nextInt();
-                }
-                scanner.nextLine();
-                currentLibraryMember = currentLibrary.getMembers().get(x - 1);
+        //         System.out.println("┌─────────────────────────────────────────────────────────────┐");
+        //         System.out.println("│                    AVAILABLE LIBRARIES                      │");
+        //         System.out.println("├─────────────────────────────────────────────────────────────┤");
+                
+        //         int i = 1;
+        //         for (Library library : libraries) {
+        //             System.out.println("│  " + i + ". " + String.format("%-53s", library.getLibraryName()) + "   │");
+        //             System.out.println("│     " + String.format("%-51s", library.getAddress().getStreet() + ", " + 
+        //                               library.getAddress().getCity() + ", " + library.getAddress().getState()) + "     │");
+        //             System.out.println("│     Items: " + String.format("%-3d", library.getItems().size()) + 
+        //                               " | Members: " + String.format("%-34d", library.getMembers().size()) + "│");
+        //             if (i < libraries.size()) {
+        //                 System.out.println("├─────────────────────────────────────────────────────────────┤");
+        //             }
+        //             i++;
+        //         }
+        //         System.out.println("└─────────────────────────────────────────────────────────────┘");
+        //         System.out.println();
+        //         System.out.print("Select Library (1-" + libraries.size() + "): ");
+                
+        //         // Input validation for library selection
+        //         while (!scanner.hasNextInt()) {
+        //             System.out.println("\nInvalid input. Please enter a valid number.");
+        //             System.out.print("Select Library (1-" + libraries.size() + "): ");
+        //             scanner.next();
+        //         }
+        //         int temp = scanner.nextInt();
+        //         while (temp < 1 || temp > libraries.size()) {
+        //             System.out.println("\nInvalid choice. Please enter a number between 1 and " + libraries.size() + ".");
+        //             System.out.print("Select Library (1-" + libraries.size() + "): ");
+        //             while (!scanner.hasNextInt()) {
+        //                 System.out.println("\nInvalid input. Please enter a valid number.");
+        //                 System.out.print("Select Library (1-" + libraries.size() + "): ");
+        //                 scanner.next();
+        //             }
+        //             temp = scanner.nextInt();
+        //         }
+        //         scanner.nextLine();
 
-                System.out.println(currentLibrary + ": " + currentLibraryMember);
-        }
+        //         currentLibrary = libraries.get(temp - 1);
+                
+        //         // Confirmation message
+        //         flushScreen();
+
+        //         // Librarian Selection Title Screen
+        //         System.out.println("╔══════════════════════════════════════════════════════════════╗");
+        //         System.out.println("║                    SELECT LIBRARIAN                          ║");
+        //         System.out.println("║              Choose Library Staff Account                    ║");
+        //         System.out.println("╚══════════════════════════════════════════════════════════════╝");
+        //         System.out.println();
+        //         System.out.println("Library: " + currentLibrary.getLibraryName());
+        //         System.out.println();
+
+        //         System.out.println("┌─────────────────────────────────────────────────────────────┐");
+        //         System.out.println("│                   REGISTERED LIBRARIANS                     │");
+        //         System.out.println("├─────────────────────────────────────────────────────────────┤");
+
+        //         int z = 1;
+        //         for (Librarian librarian : currentLibrary.getLibrarians()) {
+        //             System.out.println("│  " + z + ". " + String.format("%-55s", librarian.getName()) + " │");
+        //             System.out.println("│     " + String.format("%-55s", librarian.getEmail() + " | " + librarian.getPhoneNumber()) + " │");
+        //             System.out.println("│     Employee ID: " + String.format("%-5s", librarian.getEmployeeId()) + "    | Salary: $" + String.format("%-20.2f", librarian.getSalary()) + "   │");
+        //             if (z < currentLibrary.getLibrarians().size()) {
+        //                 System.out.println("├─────────────────────────────────────────────────────────────┤");
+        //             }
+        //             z++;
+        //         }
+        //         System.out.println("└─────────────────────────────────────────────────────────────┘");
+        //         System.out.println();
+        //         System.out.print("Select Librarian (1-" + currentLibrary.getLibrarians().size() + "): ");
+
+        //         // Input validation for librarian selection
+        //         while (!scanner.hasNextInt()) {
+        //             System.out.println("\nInvalid input. Please enter a valid number.");
+        //             System.out.print("Select Librarian (1-" + currentLibrary.getLibrarians().size() + "): ");
+        //             scanner.next();
+        //         }
+        //         int librarianChoice = scanner.nextInt();
+        //         while (librarianChoice < 1 || librarianChoice > currentLibrary.getLibrarians().size()) {
+        //             System.out.println("\nInvalid choice. Please enter a number between 1 and " + currentLibrary.getLibrarians().size() + ".");
+        //             System.out.print("Select Librarian (1-" + currentLibrary.getLibrarians().size() + "): ");
+        //             while (!scanner.hasNextInt()) {
+        //                 System.out.println("\nInvalid input. Please enter a valid number.");
+        //                 System.out.print("Select Librarian (1-" + currentLibrary.getLibrarians().size() + "): ");
+        //                 scanner.next();
+        //             }
+        //             librarianChoice = scanner.nextInt();
+        //         }
+        //         scanner.nextLine();
+
+        //         Librarian selectedLibrarian = currentLibrary.getLibrarians().get(librarianChoice - 1);
+
+        //         flushScreen();
+        //         // Confirmation message for librarian selection
+        //         System.out.println("\nLibrarian Selected: " + selectedLibrarian.getName());
+        //         System.out.println("-".repeat(50));
+        //         System.out.println();
+
+        //         // Member Selection Title Screen
+        //         System.out.println("╔══════════════════════════════════════════════════════════════╗");
+        //         System.out.println("║                     SELECT MEMBER                            ║");
+        //         System.out.println("║              Choose Library Member Account                   ║");
+        //         System.out.println("╚══════════════════════════════════════════════════════════════╝");
+        //         System.out.println();
+                
+        //         System.out.println("┌─────────────────────────────────────────────────────────────┐");
+        //         System.out.println("│                    REGISTERED MEMBERS                       │");
+        //         System.out.println("├─────────────────────────────────────────────────────────────┤");
+
+        //         int y = 1;
+        //         for (LibraryMember member : currentLibrary.getMembers()) {
+        //             System.out.println("│  " + y + ". " + String.format("%-55s", member.getName()) + " │");
+        //             System.out.println("│     " + String.format("%-55s", member.getEmail() + "  | " + member.getPhoneNumber()) + " │");
+        //             if (y < currentLibrary.getMembers().size()) {
+        //                 System.out.println("├─────────────────────────────────────────────────────────────┤");
+        //             }
+        //             y++;
+        //         }
+        //         System.out.println("└─────────────────────────────────────────────────────────────┘");
+        //         System.out.println();
+        //         System.out.print("Select Member (1-" + currentLibrary.getMembers().size() + "): ");
+                
+        //         // Input validation for member selection
+        //         while (!scanner.hasNextInt()) {
+        //             System.out.println("\nInvalid input. Please enter a valid number.");
+        //             System.out.print("Select Member (1-" + currentLibrary.getMembers().size() + "): ");
+        //             scanner.next();
+        //         }
+        //         int x = scanner.nextInt();
+        //         while (x < 1 || x > currentLibrary.getMembers().size()) {
+        //             System.out.println("\nInvalid choice. Please enter a number between 1 and " + currentLibrary.getMembers().size() + ".");
+        //             System.out.print("Select Member (1-" + currentLibrary.getMembers().size() + "): ");
+        //             while (!scanner.hasNextInt()) {
+        //                 System.out.println("\nInvalid input. Please enter a valid number.");
+        //                 System.out.print("Select Member (1-" + currentLibrary.getMembers().size() + "): ");
+        //                 scanner.next();
+        //             }
+        //             x = scanner.nextInt();
+        //         }
+        //         scanner.nextLine();
+                
+        //         currentLibraryMember = currentLibrary.getMembers().get(x - 1);
+        //}
 
         private static void addItemToLibrary(Scanner scanner) {
                 // Display library name
@@ -531,12 +769,23 @@ public class MainApplication {
                 boolean validItemType = false;
                 while (!validItemType) {
 
-                        // Clear the screen
                         flushScreen();
 
-                        // Give option for book, music, dvd or periodical
-                        System.out.print("Select item type:\n 1: Book\n 2: Music\n 3: DVD\n 4: Periodical\n ");
-                        System.out.print("Enter Choice: ");
+                        // Display title screen for item type selection
+                        displaySectionDivider("Add New Item to Library");
+
+                        System.out.println("┌─────────────────────────┐");
+                        System.out.println("│     SELECT ITEM TYPE    │");
+                        System.out.println("├─────────────────────────┤");
+                        System.out.println("│  1. Book                │");
+                        System.out.println("│  2. Music               │");
+                        System.out.println("│  3. DVD                 │");
+                        System.out.println("│  4. Periodical          │");
+                        System.out.println("└─────────────────────────┘");
+                        System.out.println();
+                        System.out.println("Adding to: " + currentLibrary.getLibraryName());
+                        System.out.println();
+                        System.out.print("Enter your choice (1-4): ");
 
                         itemTypeChoice = scanner.nextLine().trim().toLowerCase();
 
@@ -588,7 +837,8 @@ public class MainApplication {
                                                 if (author.isEmpty()) {
                                                         throw new IllegalArgumentException("Author cannot be empty.");
                                                 }
-
+                                                
+                                                flushScreen();
                                                 System.out.print("Enter ISBN: ");
                                                 String isbn = scanner.nextLine().trim();
 
@@ -597,6 +847,7 @@ public class MainApplication {
                                                         throw new IllegalArgumentException("ISBN cannot be empty.");
                                                 }
 
+                                                flushScreen();
                                                 System.out.print("Enter Pages: ");
                                                 String pagesInput = scanner.nextLine().trim();
 
@@ -615,6 +866,7 @@ public class MainApplication {
                                                                         "Number of pages must be between 1 and 10000.");
                                                 }
 
+                                                flushScreen();
                                                 System.out.print("Enter Genre: ");
                                                 String genreBook = scanner.nextLine().trim();
 
@@ -641,7 +893,7 @@ public class MainApplication {
                                                 }
 
                                                 flushScreen();
-                                                System.out.print("Enter Release Date (YYYY-MM-DD): ");
+                                                System.out.print("Enter Release Date (DD-MM-YYYY): ");
                                                 String releaseDate = scanner.nextLine().trim();
 
                                                 // Edge case -> if empty
@@ -653,7 +905,7 @@ public class MainApplication {
                                                 // Edge case -> Invalid date format - Input validated here
                                                 if (!releaseDate.matches("\\d{2}-\\d{2}-\\d{4}")) {
                                                         throw new IllegalArgumentException(
-                                                                        "Invalid date format. Use YYYY-MM-DD format.");
+                                                                        "Invalid date format. Use DD-MM-YYYY format.");
                                                 }
 
                                                 flushScreen();
@@ -750,8 +1002,7 @@ public class MainApplication {
 
                                                 // Edge case -> Invalid ISSN - Input validated here
                                                 if (!issn.matches("\\d{4}-\\d{4}")) {
-                                                        throw new IllegalArgumentException(
-                                                                        "Invalid ISSN format. Use XXXX-XXXX format.");
+                                                    throw new IllegalArgumentException("Invalid ISSN format. Use XXXX-XXXX format.");
                                                 }
 
                                                 flushScreen();
@@ -827,4 +1078,219 @@ public class MainApplication {
                 }
         }
 
+private static void selectLibraryOnly(Scanner scanner, List<Library> libraries) {
+        flushScreen();
+    
+        // Library Selection Title Screen
+        System.out.println("╔══════════════════════════════════════════════════════════════╗");
+        System.out.println("║                     SELECT LIBRARY                           ║");
+        System.out.println("║                 Choose Your Library Branch                   ║");
+        System.out.println("╚══════════════════════════════════════════════════════════════╝");
+        System.out.println();
+    
+        System.out.println("┌─────────────────────────────────────────────────────────────┐");
+        System.out.println("│                    AVAILABLE LIBRARIES                      │");
+        System.out.println("├─────────────────────────────────────────────────────────────┤");
+    
+    int i = 1;
+    for (Library library : libraries) {
+        System.out.println("│  " + i + ". " + String.format("%-53s", library.getLibraryName()) + "   │");
+        System.out.println("│     " + String.format("%-51s", library.getAddress().getStreet() + ", " + 
+                          library.getAddress().getCity() + ", " + library.getAddress().getState()) + "     │");
+        System.out.println("│     Items: " + String.format("%-3d", library.getItems().size()) + 
+                          " | Members: " + String.format("%-34d", library.getMembers().size()) + "│");
+        if (i < libraries.size()) {
+            System.out.println("├─────────────────────────────────────────────────────────────┤");
+        }
+        i++;
+    }
+    System.out.println("└─────────────────────────────────────────────────────────────┘");
+    System.out.println();
+    System.out.print("Select Library (1-" + libraries.size() + "): ");
+    
+    // Input validation for library selection
+    while (!scanner.hasNextInt()) {
+        System.out.println("\nInvalid input. Please enter a valid number.");
+        System.out.print("Select Library (1-" + libraries.size() + "): ");
+        scanner.next();
+    }
+
+    int temp = scanner.nextInt();
+    while (temp < 1 || temp > libraries.size()) {
+        System.out.println("\nInvalid choice. Please enter a number between 1 and " + libraries.size() + ".");
+        System.out.print("Select Library (1-" + libraries.size() + "): ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("\nInvalid input. Please enter a valid number.");
+            System.out.print("Select Library (1-" + libraries.size() + "): ");
+            scanner.next();
+        }
+        temp = scanner.nextInt();
+    }
+    scanner.nextLine();
+
+    currentLibrary = libraries.get(temp - 1);
+    
+    // Confirmation message
+    flushScreen();
+    System.out.println("╔══════════════════════════════════════════════════════════════╗");
+    System.out.println("║                   LIBRARY SELECTED                           ║");
+    System.out.println("╚══════════════════════════════════════════════════════════════╝");
+    System.out.println();
+    System.out.println("Selected Library: " + currentLibrary.getLibraryName());
+    System.out.println("Address: " + currentLibrary.getAddress().getStreet() + ", " + 
+                      currentLibrary.getAddress().getCity() + ", " + currentLibrary.getAddress().getState());
+    System.out.println();
+    System.out.println("Proceeding to main menu...");
+    
+    try {
+        Thread.sleep(1500); // Brief pause for user to see confirmation
+    } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+    }
+}
+
+private static void selectLibrarianOnly(Scanner scanner) {
+    flushScreen();
+    // Librarian Selection Title Screen
+    System.out.println("╔══════════════════════════════════════════════════════════════╗");
+    System.out.println("║                    SELECT LIBRARIAN                          ║");
+    System.out.println("║              Choose Library Staff Account                    ║");
+    System.out.println("╚══════════════════════════════════════════════════════════════╝");
+    System.out.println();
+    System.out.println("Library: " + currentLibrary.getLibraryName());
+    System.out.println();
+
+    System.out.println("┌─────────────────────────────────────────────────────────────┐");
+    System.out.println("│                   REGISTERED LIBRARIANS                     │");
+    System.out.println("├─────────────────────────────────────────────────────────────┤");
+
+    int z = 1;
+    for (Librarian librarian : currentLibrary.getLibrarians()) {
+        System.out.println("│  " + z + ". " + String.format("%-55s", librarian.getName()) + " │");
+        System.out.println("│     " + String.format("%-55s", librarian.getEmail() + " | " + librarian.getPhoneNumber()) + " │");
+        System.out.println("│     Employee ID: " + String.format("%-5s", librarian.getEmployeeId()) + "    | Salary: $" + String.format("%-20.2f", librarian.getSalary()) + "   │");
+        if (z < currentLibrary.getLibrarians().size()) {
+            System.out.println("├─────────────────────────────────────────────────────────────┤");
+        }
+        z++;
+    }
+    System.out.println("└─────────────────────────────────────────────────────────────┘");
+    System.out.println();
+    System.out.print("Select Librarian (1-" + currentLibrary.getLibrarians().size() + "): ");
+
+    // Input validation for librarian selection
+    while (!scanner.hasNextInt()) {
+        System.out.println("\nInvalid input. Please enter a valid number.");
+        System.out.print("Select Librarian (1-" + currentLibrary.getLibrarians().size() + "): ");
+        scanner.next();
+    }
+    int librarianChoice = scanner.nextInt();
+    while (librarianChoice < 1 || librarianChoice > currentLibrary.getLibrarians().size()) {
+        System.out.println("\nInvalid choice. Please enter a number between 1 and " + currentLibrary.getLibrarians().size() + ".");
+        System.out.print("Select Librarian (1-" + currentLibrary.getLibrarians().size() + "): ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("\nInvalid input. Please enter a valid number.");
+            System.out.print("Select Librarian (1-" + currentLibrary.getLibrarians().size() + "): ");
+            scanner.next();
+        }
+        librarianChoice = scanner.nextInt();
+    }
+    scanner.nextLine();
+
+    Librarian selectedLibrarian = currentLibrary.getLibrarians().get(librarianChoice - 1);
+
+//     // Confirmation message for librarian selection
+//     System.out.println("\nLibrarian Selected: " + selectedLibrarian.getName());
+//     System.out.println("-".repeat(50));
+//     System.out.println();
+    
+//     //Ask do you want to select a member?
+//     System.out.print("Do you want to select a member? (yes/no): ");
+//     String response = scanner.nextLine().trim().toLowerCase();
+
+//     //ASK IF THEY WANT TO SELECT A MEMBER
+//     if (response.equals("yes")) {
+//         // Now select member
+//         selectMemberOnly(scanner);
+//         } else if (response.equals("no")) {
+
+        // Proceed to librarian portal
+        flushScreen();
+        System.out.println("╔══════════════════════════════════════════════════════════════╗");
+        System.out.println("║                   LIBRARIAN SELECTED                         ║");
+        System.out.println("╚══════════════════════════════════════════════════════════════╝");
+        System.out.println();
+        System.out.println("Selected Librarian: " + selectedLibrarian.getName());
+        System.out.println("Email: " + selectedLibrarian.getEmail());
+        System.out.println("Employee ID: " + selectedLibrarian.getEmployeeId());
+        System.out.println("Salary: $" + String.format("%.2f", selectedLibrarian.getSalary()));
+        System.out.println();
+        System.out.println("Proceeding to librarian portal..."); 
+    }
+
+
+private static void selectMemberOnly(Scanner scanner) {
+    flushScreen();
+    // Member Selection Title Screen
+    System.out.println("╔══════════════════════════════════════════════════════════════╗");
+    System.out.println("║                     SELECT MEMBER                            ║");
+    System.out.println("║              Choose Library Member Account                   ║");
+    System.out.println("╚══════════════════════════════════════════════════════════════╝");
+    System.out.println();
+    
+    System.out.println("┌─────────────────────────────────────────────────────────────┐");
+    System.out.println("│                    REGISTERED MEMBERS                       │");
+    System.out.println("├─────────────────────────────────────────────────────────────┤");
+
+    int y = 1;
+    for (LibraryMember member : currentLibrary.getMembers()) {
+        System.out.println("│  " + y + ". " + String.format("%-55s", member.getName()) + " │");
+        System.out.println("│     " + String.format("%-55s", member.getEmail() + " | " + member.getPhoneNumber()) + " │");
+        if (y < currentLibrary.getMembers().size()) {
+            System.out.println("├─────────────────────────────────────────────────────────────┤");
+        }
+        y++;
+    }
+    System.out.println("└─────────────────────────────────────────────────────────────┘");
+    System.out.println();
+    System.out.print("Select Member (1-" + currentLibrary.getMembers().size() + "): ");
+    
+    // Input validation for member selection
+    while (!scanner.hasNextInt()) {
+        System.out.println("\nInvalid input. Please enter a valid number.");
+        System.out.print("Select Member (1-" + currentLibrary.getMembers().size() + "): ");
+        scanner.next();
+    }
+    int x = scanner.nextInt();
+    while (x < 1 || x > currentLibrary.getMembers().size()) {
+        System.out.println("\nInvalid choice. Please enter a number between 1 and " + currentLibrary.getMembers().size() + ".");
+        System.out.print("Select Member (1-" + currentLibrary.getMembers().size() + "): ");
+        while (!scanner.hasNextInt()) {
+            System.out.println("\nInvalid input. Please enter a valid number.");
+            System.out.print("Select Member (1-" + currentLibrary.getMembers().size() + "): ");
+            scanner.next();
+        }
+        x = scanner.nextInt();
+    }
+    scanner.nextLine();
+    
+    currentLibraryMember = currentLibrary.getMembers().get(x - 1);
+    
+    // Confirmation message
+    flushScreen();
+    System.out.println("╔══════════════════════════════════════════════════════════════╗");
+    System.out.println("║                   MEMBER SELECTED                            ║");
+    System.out.println("╚══════════════════════════════════════════════════════════════╝");
+    System.out.println();
+    System.out.println("Selected Member: " + currentLibraryMember.getName());
+    System.out.println("Email: " + currentLibraryMember.getEmail());
+    System.out.println();
+    System.out.println("Proceeding to member portal...");
+    
+    try {
+        Thread.sleep(1500);
+    } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+    }
+}
 }

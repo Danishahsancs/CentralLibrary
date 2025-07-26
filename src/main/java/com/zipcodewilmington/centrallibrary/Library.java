@@ -26,6 +26,10 @@ public class Library {
         return members;
     }
 
+    public List<Librarian> getLibrarians() {
+        return librarians;
+    }
+
     public void addItem(LibraryItem item) {
         items.add(item);
         // System.out.println(libraryName + " added item: '" + item.getTitle() + "' (ID:
@@ -73,30 +77,40 @@ public class Library {
 
     // Prints a list of all items -> item type, title and availability
     public void displayAllItems() {
-        System.out.println("Items in " + libraryName + ":");
-        System.out.println("=====================================");
 
         // Edge case -> if items is empty, print a message and return
         if (items.isEmpty()) {
-            System.out.println("No items available in the library.");
-            return;
-        }
+            System.out.println("No items currently in the library inventory.");
+        return;
+    }
 
-        // header
-        System.out.printf("%-12s %-30s %-12s%n", "Type", "Title", "Available");
-        System.out.println("---------------------------------------------");
+    System.out.println("╔══════════════════════════════════════════════════════════════╗");
+    System.out.println("║                    LIBRARY INVENTORY                         ║");
+    System.out.println("╚══════════════════════════════════════════════════════════════╝");
+    System.out.println();
+    
+    System.out.println("┌─────────────────────────────────────────────────────────────┐");
+    System.out.println("│ ID    │ Type        │ Title                    │ Status     │");
+    System.out.println("├─────────────────────────────────────────────────────────────┤");
+
 
         // Print each item with formatted output
         for (LibraryItem item : items) {
             String itemType = item.getItemType();
             String title = item.getTitle();
-            String availability = item.isAvailable() ? "Yes" : "No";
+            String availability = item.isAvailable() ? "Available" : "Checked out";
 
-            System.out.printf("%-12s %-30s %-12s%n", itemType, title, availability);
+            System.out.printf("│ %-5d │ %-10s │ %-25s │ %-10s │%n", item.getId(), itemType, title, availability);
+
+        }
+            System.out.println("└─────────────────────────────────────────────────────────────┘");
+            System.out.println("Items in " + libraryName + ": " + items.size());
+            System.out.println();
+            // System.out.println("Total Items: " + items.size());
+            // System.out.println("Available: " + availability);
+            // System.out.printf("%-12s %-30s %-12s%n", itemType, title, availability);
         }
 
-        System.out.println("=====================================");
-    }
 
     public void generateReportItems()
     {
