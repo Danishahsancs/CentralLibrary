@@ -18,6 +18,13 @@ public class Library {
         this.librarians = new ArrayList<>();
     }
 
+
+    //truncatedTitle formatting for long titles 
+    private String truncateTitle(String title, int maxLength) {
+        if (title == null) return "";
+        if (title.length() <= maxLength) return title;
+        return title.substring(0, maxLength - 3) + "...";
+}
     public List<LibraryItem> getItems() {
         return items;
     }
@@ -76,40 +83,36 @@ public class Library {
     }
 
     // Prints a list of all items -> item type, title and availability
-    public void displayAllItems() {
-
-        // Edge case -> if items is empty, print a message and return
-        if (items.isEmpty()) {
-            System.out.println("No items currently in the library inventory.");
+public void displayAllItems() {
+    // Edge case -> if items is empty, print a message and return
+    if (items.isEmpty()) {
+        System.out.println("No items currently in the library inventory.");
         return;
     }
 
-    System.out.println("╔══════════════════════════════════════════════════════════════╗");
-    System.out.println("║                    LIBRARY INVENTORY                         ║");
-    System.out.println("╚══════════════════════════════════════════════════════════════╝");
+    System.out.println("╔════════════════════════════════════════════════════════════════════════════════════╗");
+    System.out.println("║                              LIBRARY INVENTORY                                     ║");
+    System.out.println("╚════════════════════════════════════════════════════════════════════════════════════╝");
     System.out.println();
     
-    System.out.println("┌─────────────────────────────────────────────────────────────┐");
-    System.out.println("│ ID    │ Type        │ Title                    │ Status     │");
-    System.out.println("├─────────────────────────────────────────────────────────────┤");
+    System.out.println("┌──────┬─────────────┬──────────────────────────────────────────────────┬─────────────┐");
+    System.out.println("│ ID   │ Type        │ Title                                            │ Status      │");
+    System.out.println("├──────┼─────────────┼──────────────────────────────────────────────────┼─────────────┤");
 
+    // Print each item with formatted output
+    for (LibraryItem item : items) {
+        String itemType = item.getItemType();
+        String availability = item.isAvailable() ? "Available" : "Checked out";
+        String truncatedTitle = truncateTitle(item.getTitle(), 48); // Increased to 48 characters
 
-        // Print each item with formatted output
-        for (LibraryItem item : items) {
-            String itemType = item.getItemType();
-            String title = item.getTitle();
-            String availability = item.isAvailable() ? "Available" : "Checked out";
-
-            System.out.printf("│ %-5d │ %-10s │ %-25s │ %-10s │%n", item.getId(), itemType, title, availability);
-
-        }
-            System.out.println("└─────────────────────────────────────────────────────────────┘");
-            System.out.println("Items in " + libraryName + ": " + items.size());
-            System.out.println();
-            // System.out.println("Total Items: " + items.size());
-            // System.out.println("Available: " + availability);
-            // System.out.printf("%-12s %-30s %-12s%n", itemType, title, availability);
-        }
+        System.out.printf("│ %-4d │ %-11s │ %-48s │ %-11s │%n", 
+                         item.getId(), itemType, truncatedTitle, availability);
+    }
+    
+    System.out.println("└──────┴─────────────┴──────────────────────────────────────────────────┴─────────────┘");
+    System.out.println();
+    System.out.println("Total Items: " + items.size());
+}
 
 
     public void generateReportItems()

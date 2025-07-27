@@ -521,11 +521,31 @@ private static void waitForEnter(Scanner scanner, String message) {
                 System.out.print("Enter Keyword: ");
                 String keyword = scanner.nextLine();
                 System.out.println(currentLibrary.getLibraryName() + "'s Results:");
+                System.out.println("-".repeat(80));
+
                 List<LibraryItem> temp = currentLibrary.search(keyword);
-                for (LibraryItem item : temp) {
-                        System.out.println(i + ". " + item+"\n");
-                        i++;
+                
+                if (temp.isEmpty()) {
+                    System.out.println("No items found matching: " + keyword);
+                    return temp;
                 }
+                
+                System.out.println("┌────┬──────────────┬────────────────────────────────────────┬─────────────┐");
+                System.out.println("│ #  │ Type         │ Title                                  │ Status      │");
+                System.out.println("├────┼──────────────┼────────────────────────────────────────┼─────────────┤");
+
+                for (LibraryItem item : temp) {
+                        String status = item.isAvailable() ? "Available" : "Checked Out";
+                        String truncatedTitle = truncateTitle(item.getTitle(), 38); // Match the new width
+                        String type = item.getItemType();
+
+                System.out.printf("│ %-2d │ %-12s │ %-38s │ %-11s │%n",
+                        i, type, truncatedTitle, status);
+                i++;
+        }
+
+                System.out.println("└────┴──────────────┴────────────────────────────────────────┴─────────────┘");
+                System.out.println();
 
                 return temp;
         }
@@ -612,13 +632,27 @@ private static void waitForEnter(Scanner scanner, String message) {
         }
 
         private static void viewBorrowedItems() {
-                System.out.println(currentLibraryMember.getName() + " borrowed items: ");
+                System.out.println(currentLibraryMember.getName() + " Borrowed Items: ");
+                System.out.println("-".repeat(70));
+
                 List<LibraryItem> temp = currentLibraryMember.getBorrowedItems();
 
-                for (LibraryItem item : temp) {
-                        System.out.println("Title: " + item.getTitle() + " ID: " + item.getId());
-                }
+                if (temp.isEmpty()) {
+                System.out.println("No items currently borrowed.");
+                return;
         }
+
+                System.out.println("┌──────┬────────────────────────────────────────┬─────────────────┐");
+                System.out.println("│ ID   │ Title                                  │ Type            │");
+                System.out.println("├──────┼────────────────────────────────────────┼─────────────────┤");
+
+                for (LibraryItem item : temp) {
+                        String truncatedTitle = truncateTitle(item.getTitle(), 38); // Match the new width
+                        System.out.printf("│ %-4d │ %-38s │ %-15s │%n",
+                                item.getId(), truncatedTitle, item.getItemType());
+                }
+                System.out.println("└──────┴────────────────────────────────────────┴─────────────────┘");
+}
 
         // private static void setStates(Scanner scanner, List<Library> libraries) {
         //         flushScreen();
@@ -1315,5 +1349,12 @@ private static void selectMemberOnly(Scanner scanner) {
     } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
     }
+}
+
+//fix long titles names for formatting 
+private static String truncateTitle(String title, int maxLength) {
+    if (title == null) return "";
+    if (title.length() <= maxLength) return title;
+    return title.substring(0, maxLength - 3) + "...";
 }
 }
