@@ -1272,9 +1272,7 @@ private static void selectLibrarianOnly(Scanner scanner) {
         System.out.println("╚══════════════════════════════════════════════════════════════╝");
         System.out.println();
         System.out.println("Selected Librarian: " + selectedLibrarian.getName());
-        System.out.println("Email: " + selectedLibrarian.getEmail());
         System.out.println("Employee ID: " + selectedLibrarian.getEmployeeId());
-        System.out.println("Salary: $" + String.format("%.2f", selectedLibrarian.getSalary()));
         System.out.println();
         System.out.println("Proceeding to librarian portal..."); 
         
