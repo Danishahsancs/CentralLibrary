@@ -152,7 +152,7 @@ public class MainApplication {
                         System.out.println("│  0. Exit System                                             │");
                         System.out.println("│  1. Librarian Portal                                        │");
                         System.out.println("│  2. Library Member Portal                                   │");
-                        // System.out.println("│ 3. Change Library and Member Selection │");
+                        System.out.println("│  3. Change Library                                          │");
                         System.out.println("└─────────────────────────────────────────────────────────────┘");
                         System.out.println();
                         System.out.print("Select Option (0-3): ");
@@ -191,10 +191,22 @@ public class MainApplication {
                                         }
                                         libraryMemberOptions(scanner);
                                         break;
-                                // case 3:
-                                // flushScreen();
-                                // setStates(scanner, libraries); // Full reconfiguration
-                                // break;
+                                case 3:
+                                // Change Library - Reset and select new library
+                                        flushScreen();
+                                        System.out.println("╔══════════════════════════════════════════════════════════════╗");
+                                        System.out.println("║                    CHANGE LIBRARY                           ║");
+                                        System.out.println("║              Select a Different Library Branch              ║");
+                                        System.out.println("╚══════════════════════════════════════════════════════════════╝");
+                                        System.out.println();
+    
+                                        // Reset current selections since we're changing libraries
+                                        currentLibrarian = null;
+                                        currentLibraryMember = null;
+    
+                                        // Go directly to library selection
+                                        selectLibraryOnly(scanner, libraries);
+                                        break;
                                 case 0:
                                         flushScreen();
                                         System.out.println(
