@@ -756,8 +756,8 @@ public class MainApplication {
                                         scanner.next();
                                 }
                                 choice = scanner.nextInt();
+                                scanner.nextLine();
                         }
-                        scanner.nextLine();
 
                         // Store the selected item for confirmation message
                         LibraryItem selectedItem = temp.get(choice - 1);
@@ -787,7 +787,7 @@ public class MainApplication {
                         }
                         int choice = scanner.nextInt();
                         scanner.nextLine();
-                        
+
                         while (choice < 1 || choice > temp.size()) {
                                 System.out.println(
                                                 "Invalid choice. Please enter a number between 1 and " + temp.size());
@@ -837,8 +837,8 @@ public class MainApplication {
                                         scanner.next();
                                 }
                                 choice = scanner.nextInt();
+                                scanner.nextLine();
                         }
-                        scanner.nextLine();
 
                         // Store the selected item for confirmation message
                         LibraryItem selectedItem = temp.get(choice - 1);
