@@ -65,15 +65,7 @@ public class Music extends LibraryItem
         // Return a string representation of the Music (title, id, and availability)
         return "Title: " + getTitle() + " ID: " + getId() + " Available: " + isAvailable();
     }
-    // @Override
-    // public boolean matchesKeyword(String keyWord) {
-    //     for (String field : this.getSearchableFields()) {
-    //         if (field != null && field.toLowerCase().contains(keyWord.toLowerCase())) {
-    //             return true;
-    //         }
-    //     }
-    //     return false;
-    // }
+   
 
     @Override
     public List<String> getSearchableFields() {

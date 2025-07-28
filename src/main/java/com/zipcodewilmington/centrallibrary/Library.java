@@ -137,18 +137,18 @@ public void displayAllItems() {
 
             // }
             
-            if (member.getOutstandingFees()>0.0)
+            if (member.getOutstandingFees()>0.0)    // checks if members has any outstanding fees
             {
                 System.out.println("********************************");
-                 System.out.println("Member: " + member.getName() + "Amount Owed:" + member.getOutstandingFees());
-                total = total + member.getOutstandingFees();
+                 System.out.println("Member: " + member.getName() + "Amount Owed:" + member.getOutstandingFees()); // prints member and their fees
+                total = total + member.getOutstandingFees(); // sums the total of fees
 
                 System.out.println("********************************");
                 
             }
             
             
-        } System.out.println("Amount of money owed to Libarary:"+ total);
+        } System.out.println("Amount of money owed to Libarary:"+ total);  // prints total fees
     }
 
     @Override

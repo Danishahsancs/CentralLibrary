@@ -90,7 +90,7 @@ public class Periodical extends LibraryItem {
                 '}';
     }
 
-    // @Override
+      // @Override
     // public boolean matchesKeyword(String keyWord) {
     //     for (String field : this.getSearchableFields()) {
     //         if (field != null && field.toLowerCase().contains(keyWord.toLowerCase())) {
@@ -99,7 +99,6 @@ public class Periodical extends LibraryItem {
     //     }
     //     return false;
     // }
-
     @Override
     public List<String> getSearchableFields() {
         List<String> fields = new ArrayList<>();
