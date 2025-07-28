@@ -608,9 +608,9 @@ public class MainApplication {
                                                 scanner.next();
                                         }
                                         Double amount = scanner.nextDouble();
-                                        while (amount < 0) {
+                                        while (amount < 0 || amount> currentLibraryMember.getOutstandingFees()) {
                                                 System.out.println(
-                                                                "\nAmount cannot be negative. Please enter a positive amount.");
+                                                                "\nAmount not valid. Please enter a positive amount.");
                                                 System.out.print("How much would you like to pay: $");
                                                 while (!scanner.hasNextDouble()) {
                                                         System.out.println(

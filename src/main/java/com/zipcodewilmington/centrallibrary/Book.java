@@ -1,6 +1,5 @@
 package com.zipcodewilmington.centrallibrary;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +62,7 @@ public class Book extends LibraryItem implements Reservable {
         this.isbn = isbn;
     }
 
-    // not sure about this
+   
     @Override
     public String getItemType() {
         return "Book";
@@ -116,13 +115,5 @@ public class Book extends LibraryItem implements Reservable {
         return reserved;
     }
 
-    // @Override
-    // public boolean matchesKeyword(String keyword) {
-    // for (String field : this.getSearchableFields()) {
-    // if (field != null && field.toLowerCase().contains(keyword.toLowerCase())) {
-    // return true;
-    // }
-    // }
-    // return false;
-    // }
+   
 }
