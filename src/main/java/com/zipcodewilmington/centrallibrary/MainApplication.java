@@ -786,6 +786,8 @@ public class MainApplication {
                                 scanner.next();
                         }
                         int choice = scanner.nextInt();
+                        scanner.nextLine();
+                        
                         while (choice < 1 || choice > temp.size()) {
                                 System.out.println(
                                                 "Invalid choice. Please enter a number between 1 and " + temp.size());
