@@ -714,21 +714,21 @@ public class MainApplication {
                         return temp;
                 }
 
-                System.out.println("┌────┬──────────────┬────────────────────────────────────────┬─────────────┐");
-                System.out.println("│ #  │ Type         │ Title                                  │ Status      │");
-                System.out.println("├────┼──────────────┼────────────────────────────────────────┼─────────────┤");
+                System.out.println("┌────────┬──────────────┬────────────────────────────────────────┬─────────────┐");
+                System.out.println("│ #      │ Type         │ Title                                  │ Status      │");
+                System.out.println("├────────┼──────────────┼────────────────────────────────────────┼─────────────┤");
 
                 for (LibraryItem item : temp) {
                         String status = item.isAvailable() ? "Available" : "Checked Out";
                         String truncatedTitle = truncateTitle(item.getTitle(), 38); // Match the new width
                         String type = item.getItemType();
 
-                        System.out.printf("│ %-2d │ %-12s │ %-38s │ %-11s │%n",
+                        System.out.printf("│ %-6d │ %-12s │ %-38s │ %-11s │%n",
                                         i, type, truncatedTitle, status);
                         i++;
                 }
 
-                System.out.println("└────┴──────────────┴────────────────────────────────────────┴─────────────┘");
+                System.out.println("└────────┴──────────────┴────────────────────────────────────────┴─────────────┘");
                 System.out.println();
 
                 return temp;
@@ -746,6 +746,8 @@ public class MainApplication {
                                 scanner.next();
                         }
                         int choice = scanner.nextInt();
+                        scanner.nextLine();
+
                         while (choice < 1 || choice > temp.size()) {
                                 System.out.println(
                                                 "Invalid choice. Please enter a number between 1 and " + temp.size());
@@ -798,8 +800,9 @@ public class MainApplication {
                                         scanner.next();
                                 }
                                 choice = scanner.nextInt();
+                                scanner.nextLine();
                         }
-                        scanner.nextLine();
+
                         // Store the selected item for confirmation message
                         LibraryItem selectedItem = temp.get(choice - 1);
         
@@ -827,6 +830,8 @@ public class MainApplication {
                                 scanner.next();
                         }
                         int choice = scanner.nextInt();
+                        scanner.nextLine();
+
                         while (choice < 1 || choice > temp.size()) {
                                 System.out.println(
                                                 "Invalid choice. Please enter a number between 1 and " + temp.size());
