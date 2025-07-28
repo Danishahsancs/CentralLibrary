@@ -30,29 +30,53 @@ public class MainApplication {
                 LibraryMember BobWilson = new LibraryMember("Bob Wilson", 35, "bob@email.com", "302-456-7890", 002,
                                 LocalDate.now().toString(),
                                 new Address("654 Maple St", "Media", "Pennsylvania", "19742"));
+                Library library2 = new Library("Northside Branch",
+                                new Address("789 Elm St", "Dover", "Delaware", "19901"));
+
+                LibraryMember CarolSmith = new LibraryMember("Carol Smith", 28, "carol@email.com", "302-123-4567", 003,
+                                LocalDate.now().toString(),
+                                new Address("34 Oak Ave", "Smyrna", "Delaware", "19977"));
+
+                LibraryMember DavidLee = new LibraryMember("David Lee", 42, "david@email.com", "302-987-6543", 004,
+                                LocalDate.now().toString(),
+                                new Address("98 Birch Rd", "Camden", "Delaware", "19934"));
+
                 Librarian librarian = new Librarian("Hypatia", 67, "Hypatia58@library.com", "302-765-4321", "L001",
                                 "Front Desk", 45000, null);
 
                 library1.addLibrarian(librarian);
                 library1.addMember(AliceJohnson);
                 library1.addMember(BobWilson);
+                library2.addLibrarian(librarian);
+                library2.addMember(DavidLee);
+                library2.addMember(CarolSmith);
 
                 long autoIncrementedId = 0;
 
                 try {
                         JsonArray jArray = JsonParser.parseReader(new FileReader(
-                                        "src/main/java/com/zipcodewilmington/centrallibrary/Data/music_json.json"))
+                                        "src/main/java/com/zipcodewilmington/centrallibrary/Data/full_music_json.json"))
                                         .getAsJsonArray();
+
+                        int half = jArray.size() / 2;
+                        int index = 0;
+
                         for (JsonElement element : jArray) {
                                 JsonObject obj = element.getAsJsonObject();
-                                Music music = new Music(autoIncrementedId, obj.get("track_name").getAsString(),
-                                                library1, obj.get("artist_name").getAsString(),
-                                                obj.get("release_date").getAsString(), obj.get("genre").getAsString());
-                                library1.addItem(music);
+                                Library targetLibrary = (index < half) ? library1 : library2;
+
+                                Music music = new Music(autoIncrementedId,
+                                                obj.get("track_name").getAsString(),
+                                                targetLibrary,
+                                                obj.get("artist_name").getAsString(),
+                                                obj.get("release_date").getAsString(),
+                                                obj.get("genre").getAsString());
+
+                                targetLibrary.addItem(music);
                                 autoIncrementedId++;
+                                index++;
                         }
                 } catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                 }
 
@@ -60,8 +84,13 @@ public class MainApplication {
                         JsonArray jArray = JsonParser.parseReader(new FileReader(
                                         "src/main/java/com/zipcodewilmington/centrallibrary/Data/final_movies_data.json"))
                                         .getAsJsonArray();
+
+                        int half = jArray.size() / 2;
+                        int index = 0;
+
                         for (JsonElement jsonElement : jArray) {
                                 JsonObject obj = jsonElement.getAsJsonObject();
+                                Library targetLibrary = (index < half) ? library1 : library2;
 
                                 // Safely extract genres
                                 String genres = "";
@@ -77,7 +106,7 @@ public class MainApplication {
                                 JsonElement el = obj.get("rating");
                                 String value = "no rating";
                                 if (el != null && !el.isJsonNull()) {
-                                        value = String.valueOf(el.getAsDouble());
+                                        value = String.valueOf(((int) el.getAsDouble()));
                                 }
 
                                 // Safely extract runtime
@@ -99,44 +128,104 @@ public class MainApplication {
                                         director = obj.get("director").getAsString();
                                 }
 
-                                // Create and add DVD object
-                                DVD dvd = new DVD(autoIncrementedId, title, library1, director, runtime, value, genres);
+                                DVD dvd = new DVD(autoIncrementedId, title, targetLibrary, director, runtime,
+                                                value,
+                                                genres);
                                 autoIncrementedId++;
-                                library1.addItem(dvd);
+                                targetLibrary.addItem(dvd);
+                                index++;
                         }
 
                 } catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                 }
 
                 try {
                         JsonArray jArray = JsonParser.parseReader(new FileReader(
-                                        "src/main/java/com/zipcodewilmington/centrallibrary/Data/book_json.json"))
+                                        "src/main/java/com/zipcodewilmington/centrallibrary/Data/full_book_json.json"))
                                         .getAsJsonArray();
+
+                        int half = jArray.size() / 2;
+                        int index = 0;
+
                         for (JsonElement jsonElement : jArray) {
                                 JsonObject obj = jsonElement.getAsJsonObject();
+                                Library targetLibrary = (index < half) ? library1 : library2;
+
                                 String genres = "";
                                 String authors = "";
+
                                 for (JsonElement gElement : obj.get("Genres").getAsJsonArray()) {
                                         genres += gElement.getAsString() + " ";
                                 }
+
                                 for (JsonElement gElement : obj.get("Authors").getAsJsonArray()) {
                                         authors += gElement.getAsString() + " ";
                                 }
-                                Book book = new Book(autoIncrementedId, obj.get("Title").getAsString(), library1, "hi",
-                                                obj.get("ISBN").getAsString(), obj.get("Pages").getAsInt(), authors);
+
+                                Book book = new Book(autoIncrementedId,
+                                                obj.get("Title").getAsString(),
+                                                targetLibrary,
+                                                authors,
+                                                obj.get("ISBN").getAsString(),
+                                                obj.get("Pages").getAsInt(),
+                                                genres);
+
                                 autoIncrementedId++;
-                                library1.addItem(book);
+                                targetLibrary.addItem(book);
+                                index++;
                         }
                 } catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
-                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                }
+
+                try {
+                        JsonArray jArray = JsonParser.parseReader(new FileReader(
+                                        "src/main/java/com/zipcodewilmington/centrallibrary/Data/processed_periodicals-etl.json"))
+                                        .getAsJsonArray();
+
+                        int half = jArray.size() / 2;
+                        int index = 0;
+
+                        for (JsonElement element : jArray) {
+                                JsonObject obj = element.getAsJsonObject();
+                                Library targetLibrary = (index < half) ? library1 : library2;
+
+                                String title = (obj.get("Title") != null && !obj.get("Title").isJsonNull())
+                                                ? obj.get("Title").getAsString()
+                                                : "Unknown";
+                                String publisher = (obj.get("Publisher") != null && !obj.get("Publisher").isJsonNull())
+                                                ? obj.get("Publisher").getAsString()
+                                                : "Unknown";
+                                String issn = (obj.get("Issn") != null && !obj.get("Issn").isJsonNull())
+                                                ? obj.get("Issn").getAsString()
+                                                : "Unknown";
+                                String description = (obj.get("Description") != null
+                                                && !obj.get("Description").isJsonNull())
+                                                                ? obj.get("Description").getAsString()
+                                                                : "Unknown";
+                                String issueId = (obj.get("Issue Id") != null && !obj.get("Issue Id").isJsonNull())
+                                                ? obj.get("Issue Id").getAsString()
+                                                : "Unknown";
+                                String date = (obj.get("Date") != null && !obj.get("Date").isJsonNull())
+                                                ? obj.get("Date").getAsString()
+                                                : "Unknown";
+
+                                Periodical periodical = new Periodical(autoIncrementedId,
+                                                title, targetLibrary, publisher, issn, description, issueId, date);
+
+                                targetLibrary.addItem(periodical);
+                                autoIncrementedId++;
+                                index++;
+                        }
+                } catch (JsonIOException | JsonSyntaxException | FileNotFoundException e) {
                         e.printStackTrace();
                 }
 
                 Scanner scanner = new Scanner(System.in);
                 List<Library> libraries = new ArrayList<>();
                 libraries.add(library1);
+                libraries.add(library2);
 
                 // Call setStates once at startup to select library only
                 selectLibraryOnly(scanner, libraries);
@@ -192,18 +281,22 @@ public class MainApplication {
                                         libraryMemberOptions(scanner);
                                         break;
                                 case 3:
-                                // Change Library - Reset and select new library
+                                        // Change Library - Reset and select new library
                                         flushScreen();
-                                        System.out.println("╔══════════════════════════════════════════════════════════════╗");
-                                        System.out.println("║                    CHANGE LIBRARY                           ║");
-                                        System.out.println("║              Select a Different Library Branch              ║");
-                                        System.out.println("╚══════════════════════════════════════════════════════════════╝");
+                                        System.out.println(
+                                                        "╔══════════════════════════════════════════════════════════════╗");
+                                        System.out.println(
+                                                        "║                    CHANGE LIBRARY                           ║");
+                                        System.out.println(
+                                                        "║              Select a Different Library Branch              ║");
+                                        System.out.println(
+                                                        "╚══════════════════════════════════════════════════════════════╝");
                                         System.out.println();
-    
+
                                         // Reset current selections since we're changing libraries
                                         currentLibrarian = null;
                                         currentLibraryMember = null;
-    
+
                                         // Go directly to library selection
                                         selectLibraryOnly(scanner, libraries);
                                         break;
