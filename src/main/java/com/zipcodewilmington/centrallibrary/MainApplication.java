@@ -696,7 +696,7 @@ public class MainApplication {
                         flushScreen();
                         displaySectionDivider("Return Confirmation");
                         System.out.println("You have successfully returned: " + selectedItem.getTitle());
-                        waitForEnter(scanner, "Return complete.");
+                waitForEnter(scanner, "Return complete.");
                 }
         }
 
@@ -869,7 +869,7 @@ public class MainApplication {
 
                 for (LibraryItem item : temp) {
                         String truncatedTitle = truncateTitle(item.getTitle(), 38); // Match the new width
-                        System.out.printf("│ %-4d │ %-38s │ %-15s │%n",
+                        System.out.printf("│ %-5d │ %-38s │ %-15s │%n",
                                         item.getId(), truncatedTitle, item.getItemType());
                 }
                 System.out.println("└───────┴────────────────────────────────────────┴─────────────────┘");
