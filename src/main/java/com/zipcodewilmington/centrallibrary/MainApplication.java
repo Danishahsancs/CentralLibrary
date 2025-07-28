@@ -283,14 +283,10 @@ public class MainApplication {
                                 case 3:
                                         // Change Library - Reset and select new library
                                         flushScreen();
-                                        System.out.println(
-                                                        "╔══════════════════════════════════════════════════════════════╗");
-                                        System.out.println(
-                                                        "║                    CHANGE LIBRARY                           ║");
-                                        System.out.println(
-                                                        "║              Select a Different Library Branch              ║");
-                                        System.out.println(
-                                                        "╚══════════════════════════════════════════════════════════════╝");
+                                        System.out.println("╔══════════════════════════════════════════════════════════════╗");
+                                        System.out.println("║                    CHANGE LIBRARY                            ║");
+                                        System.out.println("║              Select a Different Library Branch               ║");
+                                        System.out.println("╚══════════════════════════════════════════════════════════════╝");
                                         System.out.println();
 
                                         // Reset current selections since we're changing libraries
