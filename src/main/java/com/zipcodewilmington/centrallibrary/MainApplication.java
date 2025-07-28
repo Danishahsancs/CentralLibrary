@@ -686,7 +686,17 @@ public class MainApplication {
                                 late = scanner.nextInt();
                         }
                         scanner.nextLine();
-                        currentLibraryMember.returnItem(temp.get(choice - 1), late);
+
+                        // Store the selected item for confirmation message
+                        LibraryItem selectedItem = temp.get(choice - 1);
+        
+                        // Perform the return
+                        currentLibraryMember.returnItem(selectedItem, late);
+
+                        flushScreen();
+                        displaySectionDivider("Return Confirmation");
+                        System.out.println("You have successfully returned: " + selectedItem.getTitle());
+                        waitForEnter(scanner, "Return complete.");
                 }
         }
 
@@ -748,7 +758,19 @@ public class MainApplication {
                                 choice = scanner.nextInt();
                         }
                         scanner.nextLine();
-                        currentLibraryMember.reserveItem(temp.get(choice - 1));
+
+                        // Store the selected item for confirmation message
+                        LibraryItem selectedItem = temp.get(choice - 1);
+        
+                         // Perform the reservation
+                        currentLibraryMember.reserveItem(selectedItem);
+
+                        flushScreen();
+                        displaySectionDivider("Reservation Confirmation");
+                        System.out.println("You have successfully reserved: " + selectedItem.getTitle());
+                        System.out.println();
+                        System.out.println("Thank you for using our library services!");
+                        waitForEnter(scanner, "Reservation complete.");
                 }
         }
 
@@ -776,7 +798,18 @@ public class MainApplication {
                                 choice = scanner.nextInt();
                         }
                         scanner.nextLine();
-                        currentLibraryMember.borrowItem(temp.get(choice - 1));
+                        // Store the selected item for confirmation message
+                        LibraryItem selectedItem = temp.get(choice - 1);
+        
+                        // Perform the checkout
+                        currentLibraryMember.borrowItem(selectedItem);
+
+                        flushScreen();
+                        displaySectionDivider("Checkout Confirmation");
+                        System.out.println("You have successfully checked out: " + selectedItem.getTitle());
+                        System.out.println();
+                        System.out.println("Thank you for using our library services!");
+                        waitForEnter(scanner, "Checkout complete.");
                 }
         }
 
@@ -804,7 +837,18 @@ public class MainApplication {
                                 choice = scanner.nextInt();
                         }
                         scanner.nextLine();
-                        currentLibrary.removeItem(temp.get(choice - 1));
+
+                        // Store the selected item for confirmation message
+                        LibraryItem selectedItem = temp.get(choice - 1);
+
+                        currentLibrary.removeItem(selectedItem);
+
+                        flushScreen();
+                        displaySectionDivider("Item Removal Confirmation");
+                        System.out.println("You have successfully removed: " + selectedItem.getTitle());
+                        System.out.println();
+                        System.out.println("Thank you for managing our library inventory!");
+                        waitForEnter(scanner, "Item removal complete.");
                 } // using method to remove item from Library
         }
 
@@ -819,16 +863,16 @@ public class MainApplication {
                         return;
                 }
 
-                System.out.println("┌──────┬────────────────────────────────────────┬─────────────────┐");
-                System.out.println("│ ID   │ Title                                  │ Type            │");
-                System.out.println("├──────┼────────────────────────────────────────┼─────────────────┤");
+                System.out.println("┌───────┬────────────────────────────────────────┬─────────────────┐");
+                System.out.println("│ ID    │ Title                                  │ Type            │");
+                System.out.println("├───────┼────────────────────────────────────────┼─────────────────┤");
 
                 for (LibraryItem item : temp) {
                         String truncatedTitle = truncateTitle(item.getTitle(), 38); // Match the new width
                         System.out.printf("│ %-4d │ %-38s │ %-15s │%n",
                                         item.getId(), truncatedTitle, item.getItemType());
                 }
-                System.out.println("└──────┴────────────────────────────────────────┴─────────────────┘");
+                System.out.println("└───────┴────────────────────────────────────────┴─────────────────┘");
         }
 
         private static void addItemToLibrary(Scanner scanner) {
@@ -1133,7 +1177,7 @@ public class MainApplication {
                                         System.out.println("\nNewly added item:");
                                         System.out.println(newItem);
                                         System.out.println("\nPress Enter to continue...");
-                                        scanner.nextLine();
+                                        waitForEnter(scanner, "Item addition complete.");
                                 }
 
                         } catch (NumberFormatException e) {
