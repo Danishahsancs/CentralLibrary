@@ -403,8 +403,8 @@ public class MainApplication {
                                 case 1:
                                         // Display all items in the library
                                         flushScreen();
-                                        currentLibrary.displayAllItems();
-                                        waitForEnter(scanner, "Inventory display complete.");
+                                         // Display library inventory with options
+                                        displayLibraryInventoryMenu(scanner);
                                         break;
                                 case 2:
                                         // Search for an item in the library
@@ -419,10 +419,7 @@ public class MainApplication {
                                         if (temp.isEmpty()) {
                                                 System.out.println("No items found matching: " + keyword);
                                         } else {
-                                                for (LibraryItem item : temp) {
-                                                        System.out.println(
-                                                                        item.getItemType() + ":\t" + item.getTitle());
-                                                }
+                                                displayItemsPaginated(temp, scanner, "Search Results: " + keyword);
                                         }
                                         waitForEnter(scanner, "Search complete.");
                                         break;
@@ -520,10 +517,7 @@ public class MainApplication {
                                         if (temp.isEmpty()) {
                                                 System.out.println("No items found matching: " + keyword);
                                         } else {
-                                                for (LibraryItem item : temp) {
-                                                        System.out.println(
-                                                                        item.getItemType() + ":\t" + item.getTitle());
-                                                }
+                                                displayItemsPaginated(temp, scanner, "Search Results: " + keyword);
                                         }
                                         waitForEnter(scanner, "Search complete.");
                                         break;
@@ -836,183 +830,6 @@ public class MainApplication {
                 }
                 System.out.println("└──────┴────────────────────────────────────────┴─────────────────┘");
         }
-
-        // private static void setStates(Scanner scanner, List<Library> libraries) {
-        // flushScreen();
-
-        // // Library Selection Title Screen
-        // System.out.println("╔══════════════════════════════════════════════════════════════╗");
-        // System.out.println("║ SELECT LIBRARY ║");
-        // System.out.println("║ Choose Your Library Branch ║");
-        // System.out.println("╚══════════════════════════════════════════════════════════════╝");
-        // System.out.println();
-
-        // System.out.println("┌─────────────────────────────────────────────────────────────┐");
-        // System.out.println("│ AVAILABLE LIBRARIES │");
-        // System.out.println("├─────────────────────────────────────────────────────────────┤");
-
-        // int i = 1;
-        // for (Library library : libraries) {
-        // System.out.println("│ " + i + ". " + String.format("%-53s",
-        // library.getLibraryName()) + " │");
-        // System.out.println("│ " + String.format("%-51s",
-        // library.getAddress().getStreet() + ", " +
-        // library.getAddress().getCity() + ", " + library.getAddress().getState()) + "
-        // │");
-        // System.out.println("│ Items: " + String.format("%-3d",
-        // library.getItems().size()) +
-        // " | Members: " + String.format("%-34d", library.getMembers().size()) + "│");
-        // if (i < libraries.size()) {
-        // System.out.println("├─────────────────────────────────────────────────────────────┤");
-        // }
-        // i++;
-        // }
-        // System.out.println("└─────────────────────────────────────────────────────────────┘");
-        // System.out.println();
-        // System.out.print("Select Library (1-" + libraries.size() + "): ");
-
-        // // Input validation for library selection
-        // while (!scanner.hasNextInt()) {
-        // System.out.println("\nInvalid input. Please enter a valid number.");
-        // System.out.print("Select Library (1-" + libraries.size() + "): ");
-        // scanner.next();
-        // }
-        // int temp = scanner.nextInt();
-        // while (temp < 1 || temp > libraries.size()) {
-        // System.out.println("\nInvalid choice. Please enter a number between 1 and " +
-        // libraries.size() + ".");
-        // System.out.print("Select Library (1-" + libraries.size() + "): ");
-        // while (!scanner.hasNextInt()) {
-        // System.out.println("\nInvalid input. Please enter a valid number.");
-        // System.out.print("Select Library (1-" + libraries.size() + "): ");
-        // scanner.next();
-        // }
-        // temp = scanner.nextInt();
-        // }
-        // scanner.nextLine();
-
-        // currentLibrary = libraries.get(temp - 1);
-
-        // // Confirmation message
-        // flushScreen();
-
-        // // Librarian Selection Title Screen
-        // System.out.println("╔══════════════════════════════════════════════════════════════╗");
-        // System.out.println("║ SELECT LIBRARIAN ║");
-        // System.out.println("║ Choose Library Staff Account ║");
-        // System.out.println("╚══════════════════════════════════════════════════════════════╝");
-        // System.out.println();
-        // System.out.println("Library: " + currentLibrary.getLibraryName());
-        // System.out.println();
-
-        // System.out.println("┌─────────────────────────────────────────────────────────────┐");
-        // System.out.println("│ REGISTERED LIBRARIANS │");
-        // System.out.println("├─────────────────────────────────────────────────────────────┤");
-
-        // int z = 1;
-        // for (Librarian librarian : currentLibrary.getLibrarians()) {
-        // System.out.println("│ " + z + ". " + String.format("%-55s",
-        // librarian.getName()) + " │");
-        // System.out.println("│ " + String.format("%-55s", librarian.getEmail() + " | "
-        // + librarian.getPhoneNumber()) + " │");
-        // System.out.println("│ Employee ID: " + String.format("%-5s",
-        // librarian.getEmployeeId()) + " | Salary: $" + String.format("%-20.2f",
-        // librarian.getSalary()) + " │");
-        // if (z < currentLibrary.getLibrarians().size()) {
-        // System.out.println("├─────────────────────────────────────────────────────────────┤");
-        // }
-        // z++;
-        // }
-        // System.out.println("└─────────────────────────────────────────────────────────────┘");
-        // System.out.println();
-        // System.out.print("Select Librarian (1-" +
-        // currentLibrary.getLibrarians().size() + "): ");
-
-        // // Input validation for librarian selection
-        // while (!scanner.hasNextInt()) {
-        // System.out.println("\nInvalid input. Please enter a valid number.");
-        // System.out.print("Select Librarian (1-" +
-        // currentLibrary.getLibrarians().size() + "): ");
-        // scanner.next();
-        // }
-        // int librarianChoice = scanner.nextInt();
-        // while (librarianChoice < 1 || librarianChoice >
-        // currentLibrary.getLibrarians().size()) {
-        // System.out.println("\nInvalid choice. Please enter a number between 1 and " +
-        // currentLibrary.getLibrarians().size() + ".");
-        // System.out.print("Select Librarian (1-" +
-        // currentLibrary.getLibrarians().size() + "): ");
-        // while (!scanner.hasNextInt()) {
-        // System.out.println("\nInvalid input. Please enter a valid number.");
-        // System.out.print("Select Librarian (1-" +
-        // currentLibrary.getLibrarians().size() + "): ");
-        // scanner.next();
-        // }
-        // librarianChoice = scanner.nextInt();
-        // }
-        // scanner.nextLine();
-
-        // Librarian selectedLibrarian =
-        // currentLibrary.getLibrarians().get(librarianChoice - 1);
-
-        // flushScreen();
-        // // Confirmation message for librarian selection
-        // System.out.println("\nLibrarian Selected: " + selectedLibrarian.getName());
-        // System.out.println("-".repeat(50));
-        // System.out.println();
-
-        // // Member Selection Title Screen
-        // System.out.println("╔══════════════════════════════════════════════════════════════╗");
-        // System.out.println("║ SELECT MEMBER ║");
-        // System.out.println("║ Choose Library Member Account ║");
-        // System.out.println("╚══════════════════════════════════════════════════════════════╝");
-        // System.out.println();
-
-        // System.out.println("┌─────────────────────────────────────────────────────────────┐");
-        // System.out.println("│ REGISTERED MEMBERS │");
-        // System.out.println("├─────────────────────────────────────────────────────────────┤");
-
-        // int y = 1;
-        // for (LibraryMember member : currentLibrary.getMembers()) {
-        // System.out.println("│ " + y + ". " + String.format("%-55s", member.getName())
-        // + " │");
-        // System.out.println("│ " + String.format("%-55s", member.getEmail() + " | " +
-        // member.getPhoneNumber()) + " │");
-        // if (y < currentLibrary.getMembers().size()) {
-        // System.out.println("├─────────────────────────────────────────────────────────────┤");
-        // }
-        // y++;
-        // }
-        // System.out.println("└─────────────────────────────────────────────────────────────┘");
-        // System.out.println();
-        // System.out.print("Select Member (1-" + currentLibrary.getMembers().size() +
-        // "): ");
-
-        // // Input validation for member selection
-        // while (!scanner.hasNextInt()) {
-        // System.out.println("\nInvalid input. Please enter a valid number.");
-        // System.out.print("Select Member (1-" + currentLibrary.getMembers().size() +
-        // "): ");
-        // scanner.next();
-        // }
-        // int x = scanner.nextInt();
-        // while (x < 1 || x > currentLibrary.getMembers().size()) {
-        // System.out.println("\nInvalid choice. Please enter a number between 1 and " +
-        // currentLibrary.getMembers().size() + ".");
-        // System.out.print("Select Member (1-" + currentLibrary.getMembers().size() +
-        // "): ");
-        // while (!scanner.hasNextInt()) {
-        // System.out.println("\nInvalid input. Please enter a valid number.");
-        // System.out.print("Select Member (1-" + currentLibrary.getMembers().size() +
-        // "): ");
-        // scanner.next();
-        // }
-        // x = scanner.nextInt();
-        // }
-        // scanner.nextLine();
-
-        // currentLibraryMember = currentLibrary.getMembers().get(x - 1);
-        // }
 
         private static void addItemToLibrary(Scanner scanner) {
                 // Display library name
@@ -1358,7 +1175,7 @@ public class MainApplication {
                                         library.getAddress().getCity() + ", " + library.getAddress().getState())
                                         + "     │");
                         System.out.println("│     Items: " + String.format("%-3d", library.getItems().size()) +
-                                        " | Members: " + String.format("%-34d", library.getMembers().size()) + "│");
+                                        " | Members: " + String.format("%-32d", library.getMembers().size()) + "│");
                         if (i < libraries.size()) {
                                 System.out.println("├─────────────────────────────────────────────────────────────┤");
                         }
@@ -1465,23 +1282,9 @@ public class MainApplication {
                 scanner.nextLine();
 
                 Librarian selectedLibrarian = currentLibrary.getLibrarians().get(librarianChoice - 1);
+                currentLibrarian = selectedLibrarian;
 
-                // // Confirmation message for librarian selection
-                // System.out.println("\nLibrarian Selected: " + selectedLibrarian.getName());
-                // System.out.println("-".repeat(50));
-                // System.out.println();
 
-                // //Ask do you want to select a member?
-                // System.out.print("Do you want to select a member? (yes/no): ");
-                // String response = scanner.nextLine().trim().toLowerCase();
-
-                // //ASK IF THEY WANT TO SELECT A MEMBER
-                // if (response.equals("yes")) {
-                // // Now select member
-                // selectMemberOnly(scanner);
-                // } else if (response.equals("no")) {
-
-                // Proceed to librarian portal
                 flushScreen();
                 System.out.println("╔══════════════════════════════════════════════════════════════╗");
                 System.out.println("║                   LIBRARIAN SELECTED                         ║");
@@ -1574,5 +1377,116 @@ public class MainApplication {
                 if (title.length() <= maxLength)
                         return title;
                 return title.substring(0, maxLength - 3) + "...";
+        }
+
+        private static void displayLibraryInventoryMenu(Scanner scanner) {
+        // go directly to paginated view
+        displayItemsPaginated(currentLibrary.getItems(), scanner, "Library Inventory");
+        }
+
+        // Display items in a paginated format
+        private static void displayItemsPaginated(List<LibraryItem> items, Scanner scanner, String title) {
+        if (items.isEmpty()) {
+                System.out.println("No items to display.");
+        return;
+        }
+
+        final int ITEMS_PER_PAGE = 40; // Show 40 items per page
+        int totalPages = (int) Math.ceil((double) items.size() / ITEMS_PER_PAGE);
+        int currentPage = 1;
+
+        while (true) {
+        flushScreen();
+        
+        // Display header
+        System.out.println("╔══════════════════════════════════════════════════════════════╗");
+        System.out.println("║                    " + String.format("%-38s", title.toUpperCase()) + "    ║");
+        System.out.println("╚══════════════════════════════════════════════════════════════╝");
+        System.out.println();
+        
+        // Calculate start and end indexes
+        int startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+        int endIndex = Math.min(startIndex + ITEMS_PER_PAGE, items.size());
+        
+        // Display table header
+        System.out.println("┌───────┬──────────────┬────────────────────────────────────────┬─────────────┐");
+        System.out.println("│ #     │ Type         │ Title                                  │ Status      │");
+        System.out.println("├───────┼──────────────┼────────────────────────────────────────┼─────────────┤");
+
+        // Display items for current page
+        for (int i = startIndex; i < endIndex; i++) {
+            LibraryItem item = items.get(i);
+            String status = item.isAvailable() ? "Available" : "Checked Out";
+            String truncatedTitle = truncateTitle(item.getTitle(), 38);
+            String type = item.getItemType();
+            
+            System.out.printf("│ %-5d │ %-12s │ %-38s │ %-11s │%n",
+                    (i + 1), type, truncatedTitle, status);
+        }
+
+        System.out.println("└───────┴──────────────┴────────────────────────────────────────┴─────────────┘");
+        System.out.println();
+        
+        // Display pagination info
+        System.out.println("Page " + currentPage + " of " + totalPages + 
+                          " (Showing " + (startIndex + 1) + "-" + endIndex + " of " + items.size() + " items)");
+        System.out.println();
+        
+        // Display navigation options
+        System.out.println("Navigation Options:");
+        if (currentPage > 1) System.out.println("  P - Previous Page");
+        if (currentPage < totalPages) System.out.println("  N - Next Page");
+        System.out.println("  G - Go to Page");
+        System.out.println("  Q - Return to Menu");
+        System.out.println();
+        System.out.print("Enter choice: ");
+        
+        String choice = scanner.nextLine().trim().toLowerCase();
+        
+        switch (choice) {
+            case "p":
+                if (currentPage > 1) {
+                    currentPage--;
+                } else {
+                    System.out.println("Already on first page!");
+                    System.out.print("Press Enter to continue...");
+                    scanner.nextLine();
+                }
+                break;
+            case "n":
+                if (currentPage < totalPages) {
+                    currentPage++;
+                } else {
+                    System.out.println("Already on last page!");
+                    System.out.print("Press Enter to continue...");
+                    scanner.nextLine();
+                }
+                break;
+            case "g":
+                System.out.print("Enter page number (1-" + totalPages + "): ");
+                try {
+                    int pageNum = Integer.parseInt(scanner.nextLine().trim());
+                    if (pageNum >= 1 && pageNum <= totalPages) {
+                        currentPage = pageNum;
+                    } else {
+                        System.out.println("Invalid page number!");
+                        System.out.print("Press Enter to continue...");
+                        scanner.nextLine();
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input!");
+                    System.out.print("Press Enter to continue...");
+                    scanner.nextLine();
+                }
+                break;
+            case "q":
+                return;
+            default:
+                System.out.println("Invalid choice!");
+                System.out.print("Press Enter to continue...");
+                scanner.nextLine();
+                }
+        }
+
         }
 }
