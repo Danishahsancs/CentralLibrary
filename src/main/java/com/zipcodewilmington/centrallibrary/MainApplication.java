@@ -696,7 +696,7 @@ public class MainApplication {
                         flushScreen();
                         displaySectionDivider("Return Confirmation");
                         System.out.println("You have successfully returned: " + selectedItem.getTitle());
-                        waitForEnter(scanner, "Return complete.");
+                waitForEnter(scanner, "Return complete.");
                 }
         }
 
@@ -756,8 +756,8 @@ public class MainApplication {
                                         scanner.next();
                                 }
                                 choice = scanner.nextInt();
+                                scanner.nextLine();
                         }
-                        scanner.nextLine();
 
                         // Store the selected item for confirmation message
                         LibraryItem selectedItem = temp.get(choice - 1);
@@ -786,6 +786,8 @@ public class MainApplication {
                                 scanner.next();
                         }
                         int choice = scanner.nextInt();
+                        scanner.nextLine();
+
                         while (choice < 1 || choice > temp.size()) {
                                 System.out.println(
                                                 "Invalid choice. Please enter a number between 1 and " + temp.size());
@@ -835,8 +837,8 @@ public class MainApplication {
                                         scanner.next();
                                 }
                                 choice = scanner.nextInt();
+                                scanner.nextLine();
                         }
-                        scanner.nextLine();
 
                         // Store the selected item for confirmation message
                         LibraryItem selectedItem = temp.get(choice - 1);
@@ -869,7 +871,7 @@ public class MainApplication {
 
                 for (LibraryItem item : temp) {
                         String truncatedTitle = truncateTitle(item.getTitle(), 38); // Match the new width
-                        System.out.printf("│ %-4d │ %-38s │ %-15s │%n",
+                        System.out.printf("│ %-5d │ %-38s │ %-15s │%n",
                                         item.getId(), truncatedTitle, item.getItemType());
                 }
                 System.out.println("└───────┴────────────────────────────────────────┴─────────────────┘");
